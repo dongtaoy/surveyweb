@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+    Survey Builder
+{% endblock %}
+
+{% block plugincss %}
+    <link href="{% static 'assets/global/css/components-rounded.css' %}" id="style_components" rel="stylesheet"
+          type="text/css">
+    <link href="{% static 'assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css' %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static 'assets/global/plugins/wysiwyg/wysiwyg-editor.css' %}" rel="stylesheet"
+          type="text/css">
+{% endblock %}
+
+{% block header %}
+    Survey
+{% endblock %}
+
+{% block subheader %}
+    Builder
+{% endblock %}
+
+{% block breadcrumb %}
+
+    <ul class="page-breadcrumb breadcrumb">
+        <li>
+            <a href="{% url 'home' %}">Home</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li class="active">
+            Survey Builder
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+    <div class="col-md-12">
+        <div class="todo-sidebar col-md-3">
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption" data-toggle="collapse" data-target=".todo-project-list-content-1">
+                        <span class="caption-subject font-green-sharp bold uppercase">BUILDER </span>
+                    </div>
+                </div>
+                <div class="portlet-body todo-project-list-content-1" id="test1">
+                    <div class="todo-project-list">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="active" id="mult">
+                                <a class="dragtest"><i class="icon-home"></i> | Multiple Choice </a>
+                            </li>
+                            <li id="drop">
+                                <a href="javascript:;"><i class="icon-user"></i> | Dropdown </a>
+                            </li>
+                            <li id="elo">
+                                <a href="javascript:;"><i class="icon-notebook"></i> | Elo Ranking </a>
+                            </li>
+                            <li id="singletext">
+                                <a href="javascript:;"><i class="icon-wallet"></i> | Single Textbox </a>
+                            </li>
+                            <li id="comment">
+                                <a href="javascript:;"><i class="icon-speech"></i> | Comment Box </a>
+                            </li>
+                            <li id="image">
+                                <a href="javascript:;"><i class="icon-picture"></i> | Image </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Page
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row" id="sortable_portlets">
+                        <div class="col-md-12 column sortable">
+                            {% include "builder/question/singletext-edit.html" %}
+                            {% include "builder/question/radio-display.html" %}
+                            {% include "builder/question/radio-edit.html" %}
+                            {% include "builder/question/singletext-display.html" %}
+
+                            <div class="portlet portlet-sortable light bordered">
+                                <div class="portlet-title">
+                                    <div class="caption font-green-sharp">
+                                        <i class="icon-speech font-green-sharp"></i>
+                                        <span class="caption-subject bold uppercase"> Portlet</span>
+                                        <span class="caption-helper">details...</span>
+                                    </div>
+                                    <div class="actions">
+                                        <a href="javascript:;" class="btn btn-circle btn-default btn-sm">
+                                            <i class="fa fa-plus"></i> Add </a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="scroller" style="height:200px" data-rail-visible="1"
+                                         data-rail-color="yellow" data-handle-color="#a1b2bd">
+                                        <h4>Heading Text</h4>
+
+                                        <p>
+                                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget
+                                            lacinia odio sem nec elit. Cras mattis consectetur purus sit amet
+                                            fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor
+                                            ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus
+                                            sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat
+                                            porttitor ligula, eget lacinia odio sem nec elit. Cras mattis
+                                            consectetur purus sit amet fermentum. Duis mollis, est non commodo
+                                            luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras
+                                            mattis consectetur purus sit amet fermentum. consectetur purus sit amet
+                                            fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor
+                                            ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus
+                                            sit amet fermentum.
+                                        </p>
+
+                                        <p>
+                                            nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis
+                                            consectetur purus sit amet fermentum. Duis mollis, est non commodo
+                                            luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras
+                                            mattis consectetur purus sit amet fermentum. consectetur purus sit amet
+                                            fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor
+                                            ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus
+                                            sit amet fermentum.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="portlet portlet-sortable light bg-inverse">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="icon-paper-plane font-green-haze"></i>
+										<span class="caption-subject bold font-green-haze uppercase">
+										Input </span>
+                                        <span class="caption-helper"></span>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="portlet-input input-inline input-small">
+                                            <div class="input-icon right">
+                                                <i class="icon-magnifier"></i>
+                                                <input type="text" class="form-control input-circle"
+                                                       placeholder="search...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <h4>Heading text goes here...</h4>
+
+                                    <p>
+                                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget
+                                        lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.
+                                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget
+                                        lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.
+                                        Duis mollis.
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- empty sortable porlet required for each columns! -->
+                            <div class="portlet portlet-sortable-empty">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block pluginjs %}
+    <script type="text/javascript"
+            src="{% static "assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" %}"></script>
+    <script type="text/javascript"
+            src="{% static "assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" %}"></script>
+    <script src="{% static "assets/admin/pages/scripts/components-editors.js" %}"></script>
+
+    <script src="{% static "assets/admin/pages/scripts/portlet-draggable.js" %}"></script>
+
+    <script src="{% static 'assets/global/plugins/wysiwyg/wysiwyg-editor.js' %}"></script>
+
+    <script src="{% static 'assets/global/plugins/wysiwyg/wysiwyg.js' %}"></script>
+
+    {#        //$('#test1').draggable();#}
+
+    {##}
+    {#        //$(".panel").draggable();#}
+    {#	function rebindDraggables() {#}
+    {#		$('.li').draggable({#}
+    {#			stop: function() {#}
+    {#				rebindDraggables();#}
+    {#			}#}
+    {#		})#}
+    {#	}#}
+    {##}
+    {#        $("#accordion1").sortable({#}
+    {#            placeholder: "ui-state-highlight", helper: 'clone'#}
+    {#        });#}
+    {##}
+    {#        var count = 7;#}
+    {##}
+    {##}
+    {#        var stockArea = $('#accordion1').droppable({#}
+    {#            drop: function (event, ui) {#}
+    {#                var target = $(event.target);#}
+    {##}
+    {#                //alert($('#accordion1_$'));#}
+    {#                //var app = document.getElementById()#}
+    {#                //rebindDraggables();#}
+    {#                var droppedItem = ui.draggable.prop('tagName').toLowerCase();#}
+    {#                //var droppedItem = ui.draggable.attr('class').toLowerCase();#}
+    {##}
+    {#                var droppedType = ui.draggable.attr('id');#}
+    {#                if (droppedItem == 'li') {#}
+    {#                    //alert(droppedType);#}
+    {#                    //alert(1);#}
+    {#                    var count = $('#accordion1 .panel-heading').length + 1;#}
+    {#                    //alert(count);#}
+    {#                    //alert(("<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordion1\" href=\"$id$count\">$id</a></h4></div><div id=\"$id$count\" class=\"panel-collapse collapse\"><div class=\"panel-body\">$id $count</div></div></div>").replace('$id', droppedType));#}
+    {#                    target.append("<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordion1\" href=\"#" + droppedType + count + "\">" + count + ". " + droppedType + "</a></h4></div><div id=\"" + droppedType + count + "\" class=\"panel-collapse collapse\" aria-expanded=\"false\"><div class=\"panel-body\">" + droppedType + count + "<p>This is just for Test Purpose</p></div></div></div>");#}
+    {#                }#}
+    {#            }#}
+    {#        });#}
+
+
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        jQuery(document).ready(function () {
+            $('.wysihtml5').wysihtml5();
+
+            PortletDraggable.init();
+            $("li").draggable({
+                helper: function () {
+                    return "<div class='dragbox' style=\"width: 300px;height:100px;background-color:#7FDBFF;opacity: 0.4; z-index:10000\"></div>"
+                }
+            });
+        });
+
+
+        function add(element) {
+            var container = $(element).parent();
+            container.prepend('<div class="addchoice" style="margin-top: 5px; margin-bottom: 5px">Please enter a choice<input type="text" size="20" style="margin-left: 20px;"><div class="actions pull-right" style="margin-right: 30px"><a onclick="removeChoice(this)" class="btn btn-circle btn-default btn-xs"><i class="fa fa-minus"></i> Remove </a></div></div>');
+
+        }
+
+        function removeChoice(element) {
+            var container = $(element).parent().parent();
+            container.remove();
+        }
+
+
+        var stockArea = $('.col-md-12.column.sortable').droppable({
+            drop: function (event, ui) {
+                var target = $(event.target);
+
+                //alert($('#accordion1_$'));
+                //var app = document.getElementById()
+                //rebindDraggables();
+                var droppedItem = ui.draggable.prop('tagName').toLowerCase();
+                //var droppedItem = ui.draggable.attr('class').toLowerCase();
+
+                var droppedType = ui.draggable.attr('id');
+                if (droppedItem == 'li') {
+                    //alert(droppedType);
+                    //alert(1);
+                    var count = $('.portlet').length + 1;
+                    //alert(count);
+                    //alert(("<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordion1\" href=\"$id$count\">$id</a></h4></div><div id=\"$id$count\" class=\"panel-collapse collapse\"><div class=\"panel-body\">$id $count</div></div></div>").replace('$id', droppedType));
+                    $.ajax({
+                        url: "{% static 'singletext-edit.html' %}",
+                        success: function (data) {
+                            target.append(data);
+                        },
+                        dataType: 'html'
+                    });
+                    //target.append("<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordion1\" href=\"#" + droppedType + count + "\">" + count + ". " + droppedType + "</a></h4></div><div id=\"" + droppedType + count + "\" class=\"panel-collapse collapse\" aria-expanded=\"false\"><div class=\"panel-body\">" + droppedType + count + "<p>This is just for Test Purpose</p></div></div></div>");
+                }
+            }
+        });
+    </script>
+{% endblock %}
