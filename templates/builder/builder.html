@@ -81,12 +81,15 @@
                 <div class="portlet-body">
                     <div class="row" id="sortable_portlets">
                         <div class="col-md-12 column sortable">
+                            {% include "builder/question/singletext-edit.html" %}
+                            {% include "builder/question/singletext-display.html" %}
+
                             {% include "builder/question/radio-display.html" %}
                             {% include "builder/question/radio-edit.html" %}
-                            {% include "builder/question/singletext-edit.html" %}
 
 
-                            {% include "builder/question/singletext-display.html" %}
+
+
                             <div class="portlet portlet-sortable light bordered">
                                 <div class="portlet-title">
                                     <div class="caption font-green-sharp">
@@ -248,8 +251,9 @@
 
         function add(element) {
             var container = $(element);
+            count++;
             container.append('\
-                    <div class="input-group" style="margin:2px 0"> \
+                    <div class="input-group " style="margin:2px 0"> \
                         <span class="input-group-addon count">' + count + '.</span> \
                         <div class="input-group-control"> \
                             <input type="text" class="form-control" placeholder="Choice"> \
@@ -260,19 +264,16 @@
                         </span> \
                     </div> \
                     ');
-            count++;
-            $(".addchoice > .form-group > div:nth-child("+i+") > .count").in = 10;
         }
 
         function removeChoice(element) {
             var container = $(element).parent().parent();
             count -- ;
             container.remove();
-            for (var i=1; i < count; i++){
-                $(".addchoice > .form-group > div:nth-child("+i+") > .count").text = i;
+            for (var i=1; i <= count; i++){
+                $(".addchoice > .form-group > div:nth-child("+i+") > .count").html(i+".");
             }
         }
-
 
         var stockArea = $('.col-md-12.column.sortable').droppable({
             drop: function (event, ui) {
