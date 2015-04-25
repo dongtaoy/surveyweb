@@ -1,25 +1,57 @@
-<div class="portlet portlet-sortable light bordered" xmlns="http://www.w3.org/1999/html">
+<div class="portlet light bordered" xmlns="http://www.w3.org/1999/html">
     <div class="portlet-title">
+
         <div class="caption font-green-sharp">
             <i class="icon-speech font-green-sharp"></i>
-            <span class="caption-subject bold uppercase"> Multiple Choice</span>
+            <span class="caption-subject bold uppercase"> Multiple Choice Display</span>
         </div>
+
         <div class="actions">
-            <a href="javascript:;" class="btn btn-circle btn-default btn-sm">
-                <i class="fa fa-plus"></i> Add </a>
+            <a class="btn btn-circle btn-default btn-sm">
+                <i class="fa fa-edit fa-fw"></i>Edit
+            </a>
+            <a class="btn btn-circle btn-default btn-sm">
+                <i class="fa fa-arrow-circle-o-up fa-fw"></i>Move up
+            </a>
+            <a class="btn btn-circle btn-default btn-sm">
+                <i class="fa  fa-arrow-circle-o-down fa-fw"></i>Move down
+            </a>
         </div>
     </div>
     <div class="portlet-body">
-        <div class="scroller" style="height:200px" data-rail-visible="1"
+        <div class="scroller" data-rail-visible="1"
              data-rail-color="yellow" data-handle-color="#a1b2bd">
-            <h4>Heading Text</h4>
+            <div class="form-group form-md-radios">
+                <h4 class="well">Question 1: Please choose the best one you like in the following options</h4>
 
-            <div style="margin-left: 20px; margin-top: 30px;">
-                <p><input type="radio" value="1" name="1">Choice A</p>
-                <p><input type="radio" value="2" name="1">Choice B</p>
-                <p><input type="radio" value="3" name="1">Choice C</p>
-
+                <div class="md-radio-list" style="margin:30px">
+                    <div class="md-radio">
+                        <input type="radio" id="radio1" name="radio1" class="md-radiobtn">
+                        <label for="radio1">
+                            <span></span>
+                            <span class="check"></span>
+                            <span class="box"></span>
+                            Option 1 </label>
+                    </div>
+                    <div class="md-radio">
+                        <input type="radio" id="radio2" name="radio1" class="md-radiobtn" checked>
+                        <label for="radio2">
+                            <span></span>
+                            <span class="check"></span>
+                            <span class="box"></span>
+                            Option 2 </label>
+                    </div>
+                    <div class="md-radio">
+                        <input type="radio" id="radio3" name="radio1" class="md-radiobtn">
+                        <label for="radio3">
+                            <span></span>
+                            <span class="check"></span>
+                            <span class="box"></span>
+                            Option 3 </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
