@@ -11,7 +11,10 @@
           type="text/css">
     <link href="{% static 'assets/global/plugins/wysiwyg/wysiwyg-editor.css' %}" rel="stylesheet"
           type="text/css">
+    <link rel="stylesheet" href="{% static 'assets/global/plugins/dropzone-new/dropzone.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/global/plugins/dropzone-new/basic.min.css' %}"/>
 {% endblock %}
+
 
 {% block header %}
     Survey
@@ -81,92 +84,22 @@
                 <div class="portlet-body">
                     <div class="row" id="sortable_portlets">
                         <div class="col-md-12 column sortable">
+                            {% include "builder/question/helptext-display.html" %}
+                            {% include "builder/question/helptext-edit.html" %}
+                            {##}
                             {% include "builder/question/singletext-edit.html" %}
                             {% include "builder/question/singletext-display.html" %}
-
+                            {##}
                             {% include "builder/question/radio-display.html" %}
                             {% include "builder/question/radio-edit.html" %}
-
-
-
-
-                            <div class="portlet portlet-sortable light bordered">
-                                <div class="portlet-title">
-                                    <div class="caption font-green-sharp">
-                                        <i class="icon-speech font-green-sharp"></i>
-                                        <span class="caption-subject bold uppercase"> Portlet</span>
-                                        <span class="caption-helper">details...</span>
-                                    </div>
-                                    <div class="actions">
-                                        <a href="javascript:;" class="btn btn-circle btn-default btn-sm">
-                                            <i class="fa fa-plus"></i> Add </a>
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                    <div class="scroller" style="height:200px" data-rail-visible="1"
-                                         data-rail-color="yellow" data-handle-color="#a1b2bd">
-                                        <h4>Heading Text</h4>
-
-                                        <p>
-                                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget
-                                            lacinia odio sem nec elit. Cras mattis consectetur purus sit amet
-                                            fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor
-                                            ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus
-                                            sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat
-                                            porttitor ligula, eget lacinia odio sem nec elit. Cras mattis
-                                            consectetur purus sit amet fermentum. Duis mollis, est non commodo
-                                            luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras
-                                            mattis consectetur purus sit amet fermentum. consectetur purus sit amet
-                                            fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor
-                                            ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus
-                                            sit amet fermentum.
-                                        </p>
-
-                                        <p>
-                                            nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis
-                                            consectetur purus sit amet fermentum. Duis mollis, est non commodo
-                                            luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras
-                                            mattis consectetur purus sit amet fermentum. consectetur purus sit amet
-                                            fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor
-                                            ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus
-                                            sit amet fermentum.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="portlet portlet-sortable light bg-inverse">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <i class="icon-paper-plane font-green-haze"></i>
-										<span class="caption-subject bold font-green-haze uppercase">
-										Input </span>
-                                        <span class="caption-helper"></span>
-                                    </div>
-                                    <div class="actions">
-                                        <div class="portlet-input input-inline input-small">
-                                            <div class="input-icon right">
-                                                <i class="icon-magnifier"></i>
-                                                <input type="text" class="form-control input-circle"
-                                                       placeholder="search...">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                    <h4>Heading text goes here...</h4>
-
-                                    <p>
-                                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget
-                                        lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.
-                                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget
-                                        lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.
-                                        Duis mollis.
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- empty sortable porlet required for each columns! -->
-                            <div class="portlet portlet-sortable-empty">
-                            </div>
+                            {% include "builder/question/checkbox-display.html" %}
+                            {% include "builder/question/checkbox-edit.html" %}
+                            {% include "builder/question/select-edit.html" %}
+                            {% include "builder/question/select-display.html" %}
+                            {% include "builder/question/image-display.html" %}
+                            {% include "builder/question/image-edit.html" %}
+                            {% include "builder/question/elo-edit.html" %}
+                            {% include "builder/question/elo-display.html" %}
                         </div>
                     </div>
                 </div>
@@ -188,7 +121,8 @@
     <script src="{% static 'assets/global/plugins/wysiwyg/wysiwyg-editor.js' %}"></script>
 
     <script src="{% static 'assets/global/plugins/wysiwyg/wysiwyg.js' %}"></script>
-
+    <script src="{% static 'assets/global/plugins/dropzone-new/dropzone-amd-module.min.js' %}"></script>
+    <script src="{% static 'assets/global/plugins/dropzone-new/dropzone.min.js' %}"></script>
     {#        //$('#test1').draggable();#}
 
     {##}
@@ -245,6 +179,10 @@
                     return "<div class='dragbox' style=\"width: 300px;height:100px;background-color:#7FDBFF;opacity: 0.4; z-index:10000\"></div>"
                 }
             });
+
+            {#            $('.toolbar').tooltip();#}
+            $("#image-edit-upload").dropzone({dictDefaultMessage: "Please drag your images and drop into these area :)"});
+            $("#elo-edit-upload").dropzone({dictDefaultMessage: "Please drag your images and drop into these area :)"});
         });
 
         var count = 1;
@@ -268,10 +206,10 @@
 
         function removeChoice(element) {
             var container = $(element).parent().parent();
-            count -- ;
+            count--;
             container.remove();
-            for (var i=1; i <= count; i++){
-                $(".addchoice > .form-group > div:nth-child("+i+") > .count").html(i+".");
+            for (var i = 1; i <= count; i++) {
+                $(".addchoice > .form-group > div:nth-child(" + i + ") > .count").html(i + ".");
             }
         }
 
