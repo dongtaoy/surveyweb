@@ -84,22 +84,22 @@
                 <div class="portlet-body">
                     <div class="row" id="sortable_portlets">
                         <div class="col-md-12 column sortable">
+                            {% include "builder/question/elo-display.html" %}
                             {% include "builder/question/helptext-display.html" %}
-                            {% include "builder/question/helptext-edit.html" %}
-                            {##}
-                            {% include "builder/question/singletext-edit.html" %}
                             {% include "builder/question/singletext-display.html" %}
-                            {##}
                             {% include "builder/question/radio-display.html" %}
-                            {% include "builder/question/radio-edit.html" %}
                             {% include "builder/question/checkbox-display.html" %}
-                            {% include "builder/question/checkbox-edit.html" %}
-                            {% include "builder/question/select-edit.html" %}
                             {% include "builder/question/select-display.html" %}
                             {% include "builder/question/image-display.html" %}
+
+
+                            {% include "builder/question/radio-edit.html" %}
+                            {% include "builder/question/checkbox-edit.html" %}
+                            {% include "builder/question/select-edit.html" %}
                             {% include "builder/question/image-edit.html" %}
                             {% include "builder/question/elo-edit.html" %}
-                            {% include "builder/question/elo-display.html" %}
+                            {% include "builder/question/helptext-edit.html" %}
+                            {% include "builder/question/singletext-edit.html" %}
                         </div>
                     </div>
                 </div>
