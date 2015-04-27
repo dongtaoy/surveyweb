@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+    Survey Summary
+{% endblock %}
+
+{% block plugincss %}
+{% endblock %}
+
+{% block header %}
+    Survey
+{% endblock %}
+
+{% block subheader %}
+    Summary
+{% endblock %}
+
+{% block breadcrumb %}
+
+    <ul class="page-breadcrumb breadcrumb">
+        <li>
+            <a href="{% url 'home' %}">Home</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li class="active">
+            Survey Summary
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-gift"></i> DESIGN SUMMARY
+                    </div>
+                </div>
+                <div class="portlet-body util-btn-group-margin-bottom-5 blog-sidebar">
+                    <div class="top-news">
+                        <a href="javascript:;" class="btn blue">
+                            <h2>Your Survey Title </h2>
+                            <em>Posted on: April 14, 2013</em>
+                            <i class="fa fa-file-text top-news-icon fa-2x"></i>
+                        </a>
+                    </div>
+                    <hr/>
+                    <div style="margin-left: 10px;">
+                        <p><i class="fa fa-question-circle fa-2x"></i><span style="font-size: 1.5em;margin-left: 20px;">Questions: 2</span>
+                        </p>
+                        <hr/>
+                        <p><i class="fa fa-file-text fa-2x"></i><span style="font-size: 1.5em;margin-left: 20px;">Pages: 2</span>
+                        </p>
+                    </div>
+                    <hr/>
+                    <div class="btn-group btn-group btn-group-justified">
+                        <a class="btn purple" id="backCarousel"><i
+                                class="fa fa-edit"> </i> Edit Design
+                        </a>
+                        <a class="btn btn-warning">Preview Survey <i
+                                class="fa fa-file-powerpoint-o"> </i>
+                        </a>
+
+                    </div>
+                    <div class="btn-group btn-group btn-group-justified">
+                        <a class="btn btn-danger">Delete Survey <i
+                                class="fa fa-trash-o"> </i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <!-- END DROPDOWNS PORTLET-->
+        </div>
+        <div class="col-md-8">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-gift"></i> RESPONSE SUMMARY
+                    </div>
+                </div>
+                <div class="portlet-body util-btn-group-margin-bottom-5">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 margin-bottom-10">
+                            <a class="dashboard-stat dashboard-stat-light grey" href="javascript:;">
+                                <div class="visual">
+                                    <i class="fa fa-archive fa-icon-medium"></i>
+                                </div>
+                                <div class="details">
+                                    <div class="number">
+                                        7838
+                                    </div>
+                                    <div class="desc">
+                                        Total Responses
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <a class="dashboard-stat dashboard-stat-light grey" href="javascript:;">
+                                <div class="visual">
+                                    <i class="fa fa-bell"></i>
+                                </div>
+                                <div class="details">
+                                    <div class="number">
+                                        OPEN
+                                    </div>
+                                    <div class="desc">
+                                        Overall Survey Status
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <hr/>
+                    {#                    <div id="chart_1_1_legendPlaceholder"></div>#}
+                    <h2>DATA TRENDS CHART</h2>
+
+                    <p>The data trends chart shows you when you received responses to your survey.</p>
+
+                    <div id="chart_1_1" class="chart"></div>
+                </div>
+                <!-- END DROPDOWNS PORTLET-->
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block pluginjs %}
+    <script src="{% static 'assets/global/plugins/flot/jquery.flot.min.js' %}"></script>
+
+    <script src="{% static 'assets/admin/pages/scripts/charts-flotcharts.js' %}"></script>
+{% endblock %}
+
+{% block script %}
+    <script>
+        jQuery(document).ready(function () {
+            // bar chart:
+            var data = GenerateSeries(0);
+
+            function GenerateSeries(added) {
+                var data = [];
+                var start = 100 + added;
+                var end = 200 + added;
+
+                for (i = 1; i <= 20; i++) {
+                    var d = Math.floor(Math.random() * (end - start + 1) + start);
+                    data.push([i, d]);
+                    start++;
+                    end++;
+                }
+
+                return data;
+            }
+
+            var options = {
+                series: {
+                    bars: {
+                        show: true
+                    },
+                },
+                bars: {
+                    barWidth: 0.8,
+                    lineWidth: 0, // in pixels
+                    shadowSize: 0,
+                    align: 'left'
+                },
+
+                grid: {
+                    tickColor: "#eee",
+                    borderColor: "#eee",
+                    borderWidth: 1
+                }
+
+
+            };
+
+            if ($('#chart_1_1').size() !== 0) {
+                $.plot($("#chart_1_1"), [{
+                    data: data,
+                    lines: {
+                        lineWidth: 1,
+                    },
+                    shadowSize: 0
+                }], options);
+            }
+
+        });
+    </script>
+{% endblock %}

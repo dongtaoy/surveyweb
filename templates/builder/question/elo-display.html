@@ -1,0 +1,92 @@
+{% load staticfiles %}
+<div class="portlet light bordered">
+    <div class="portlet-title">
+        <div class="caption font-green-sharp">
+            <i class="icon-speech font-green-sharp"></i>
+            <span class="caption-subject bold uppercase"> Elo Display</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse">
+            </a>
+            <a href="javascript:;" class="fullscreen">
+            </a>
+        </div>
+        <div class="actions">
+            <div class="btn-group">
+                <a class="btn btn-sm btn-default" href="javascript:;" data-toggle="dropdown">
+                    <i class="fa fa-user"></i> User <i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-arrow-up"></i> Upward </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-arrow-down"></i> Downward </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-edit"></i> Edit </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-trash-o"></i> Delete </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div>
+            <h4 class="well">Question 1: Please describe what kinds of world you like?</h4>
+
+            <div class="row">
+                <div class="active item">
+                    <div class="col-md-6">
+                        <a href=""><img src="{% static 'assets/admin/pages/media/gallery/image5.jpg' %}"
+                                        class="img-responsive"
+                                        alt=""></a>
+
+                        <div class="well" style="text-align: center"> First Thumbnail label
+                            <a href="#myModal2" role="button" class="btn btn-default btn-sm pull-right btn-circle"
+                               data-toggle="modal"> More Details </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <a href=""><img src="{% static 'assets/admin/pages/media/gallery/image2.jpg' %}"
+                                        class="img-responsive"
+                                        alt=""></a>
+
+                        <div class="well" style="text-align: center"> First Thumbnail label
+                           <a href="#myModal2" role="button" class="btn btn-default btn-sm pull-right btn-circle"
+                               data-toggle="modal"> More Details </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <button class="btn btn-default btn-sm btn-circle btn-block" style="">I don't know.</button>
+
+            <div id="myModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">First Thumbnail label</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                First Thumbnail label First Thumbnail label First Thumbnail label
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn green">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

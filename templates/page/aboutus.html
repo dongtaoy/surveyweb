@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+    About Us
+{% endblock %}
+
+{% block plugincss %}
+    <link href="{% static 'assets/admin/pages/css/about-us.css' %}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'assets/core/css/carousel.css' %}"/>
+{% endblock %}
+
+{% block header %}
+    About Us
+{% endblock %}
+
+{% block subheader %}
+    page
+{% endblock %}
+
+{% block breadcrumb %}
+
+    <ul class="page-breadcrumb breadcrumb">
+        <li>
+            <a href="{% url 'home' %}">Home</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li class="active">
+            About us
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="portlet light">
+        <div class="portlet-body">
+            <div class="row margin-bottom-30">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Carousel</h3>
+                    </div>
+                    <div class="panel-body">
+                        <section class="carouselContainer">
+                            <div id="carousel">
+                                <a href="{% static 'assets/core/img/index.jpg' %}" target="_blank"><img
+                                        src="{% static 'assets/core/img/index.jpg' %}"/></a>
+                                <a href="{% static 'assets/core/img/dashboard.png' %}" target="_blank"><img
+                                        src="{% static 'assets/core/img/dashboard.png' %}"/></a>
+                                <a href="{% static 'assets/core/img/aboutus.png' %}" target="_blank"><img
+                                        src="{% static 'assets/core/img/aboutus.png' %}"/></a>
+                                <a href="{% static 'assets/core/img/survey_summary.png' %}" target="_blank"><img
+                                        src="{% static 'assets/core/img/survey_summary.png' %}"/></a>
+                                <a href="{% static 'assets/core/img/survey_builder.png' %}" target="_blank"><img
+                                        src="{% static 'assets/core/img/survey_builder.png' %}"/></a>
+                                <a href="{% static 'assets/core/img/survey_create.png' %}" target="_blank"><img
+                                        src="{% static 'assets/core/img/survey_create.png' %}"/></a>
+                                <a href="{% static 'assets/core/img/signin.jpg' %}" target="_blank"><img
+                                        src="{% static 'assets/core/img/signin.jpg' %}"/></a>
+                                <a href="{% static 'assets/core/img/signout.jpg' %}" target="_blank"><img
+                                        src="{% static 'assets/core/img/signout.jpg' %}"/></a>
+                                <a href="{% static 'assets/core/img/signup.jpg' %}" target="_blank"><img
+                                        src="{% static 'assets/core/img/signup.jpg' %}"/></a>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="btn-group btn-group btn-group-justified">
+                            <a type="button" class="btn btn-success" id="backCarousel"><i
+                                    class="fa fa-backward"> </i> Back
+                            </a>
+                            <a type="button" class="btn btn-primary btn-block" id="nextCarousel">Next <i
+                                    class="fa fa-forward"> </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--/row-->
+            <!-- Meer Our Team -->
+            <div class="headline">
+                <h3>Meet Our Team - Team 423</h3>
+            </div>
+            <div class="row thumbnails">
+                <div class="col-md-3">
+                    <div class="meet-our-team">
+                        <h3>Aashwin Gaur
+                            <small>Team Leader</small>
+                        </h3>
+                        <img src="http://identicon.rmhdev.net/aashwin/rhombus.png" alt="" class="img-responsive"/>
+
+                        <div class="team-info">
+                            <p>
+                                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus
+                                etiam porta sem...
+                            </p>
+                            <ul class="social-icons pull-right">
+                                <li>
+                                    <a href="javascript:;" data-original-title="twitter" class="twitter">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-original-title="facebook" class="facebook">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-original-title="linkedin" class="linkedin">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-original-title="Goole Plus" class="googleplus">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-original-title="skype" class="skype">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="meet-our-team">
+                        <h3>Danny Yu
+                            <small>Backend Manager</small>
+                        </h3>
+                        <img src="http://identicon.rmhdev.net/dongtaoy/circle.png" alt="" class="img-responsive"/>
+
+                        <div class="team-info">
+                            <p>
+                                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus
+                                etiam porta sem...
+                            </p>
+                            <ul class="social-icons pull-right">
+                                <li>
+                                    <a href="javascript:;" data-original-title="twitter" class="twitter">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-original-title="facebook" class="facebook">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-original-title="linkedin" class="linkedin">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-original-title="Goole Plus" class="googleplus">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-original-title="skype" class="skype">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="meet-our-team">
+                        <h3>George Cai
+                            <small>Frontend Manager</small>
+                        </h3>
+                        <img src="http://identicon.rmhdev.net/georgecai/pyramid.png" alt="" class="img-responsive"/>
+
+                        <div class="team-info">
+                            <p>
+                                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus
+                                etiam porta sem...
+                            </p>
+                            <ul class="social-icons pull-right">
+                                <li>
+                                    <a href="javascript:;" data-original-title="twitter" class="twitter">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-original-title="facebook" class="facebook">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-original-title="linkedin" class="linkedin">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-original-title="Goole Plus" class="googleplus">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-original-title="skype" class="skype">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="meet-our-team">
+                        <h3>Jingyuan Zhang
+                            <small>Database Manager</small>
+                        </h3>
+                        <img src="http://identicon.rmhdev.net/xuxucao/circle.png" alt="" class="img-responsive"/>
+
+                        <div class="team-info">
+                            <p>
+                                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus
+                                etiam porta sem...
+                            </p>
+                            <ul class="social-icons pull-right">
+                                <li>
+                                    <a href="javascript:;" data-original-title="twitter" class="twitter">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-original-title="facebook" class="facebook">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-original-title="linkedin" class="linkedin">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-original-title="Goole Plus" class="googleplus">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-original-title="skype" class="skype">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/thumbnails-->
+            <!-- //End Meer Our Team -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block pluginjs %}
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="http://ricostacruz.com/jquery.transit/jquery.transit.min.js"></script>
+    <script type="text/javascript" src="{% static 'assets/core/js/carousel.js' %}"></script>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

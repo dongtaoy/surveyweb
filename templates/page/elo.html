@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+
+{% endblock %}
+
+{% block plugincss %}
+<link href="{% static 'assets/global/plugins/fancybox/source/jquery.fancybox.css' %}" rel="stylesheet" type="text/css"/>
+<link href="{% static 'assets/admin/pages/css/portfolio.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block subheader %}
+
+{% endblock %}
+
+{% block breadcrumb %}
+
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#">Home</a>
+        <i class="fa fa-circle"></i>
+    </li>
+    <li class="active">
+         Amchart
+    </li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="row mix-grid thumbnails">
+            <div class="col-md-6 col-sm-6">
+                <div class="mix-inner">
+                    <img class="img-responsive" src="{% static 'assets/admin/pages/media/works/img1.jpg' %}" alt="">
+                    <div class="mix-details">
+                        <h4>Cascusamus et iusto odio</h4>
+                        <p>
+                             At vero eos et accusamus et iusto odio digniss imos duc sasdimus qui sint blanditiis prae sentium.
+                        </p>
+                        <a class="mix-link">
+                        <i class="fa fa-link"></i>
+                        </a>
+                        <a class="mix-preview fancybox-button" href="{% static 'assets/admin/pages/media/works/img1.jpg' %}" title="Project Name" data-rel="fancybox-button">
+                        <i class="fa fa-search"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div>
+                    <img class="img-responsive" src="{% static 'assets/admin/pages/media/works/img2.jpg' %}" alt="">
+                    <div>
+                        <h4>Cascusamus et iusto odio</h4>
+                        <p>
+                             At vero eos et accusamus et iusto odio digniss imos duc sasdimus qui sint blanditiis prae sentium voluptatum.
+                        </p>
+                        <a class="mix-link">
+                        <i class="fa fa-link"></i>
+                        </a>
+                        <a class="mix-preview fancybox-button" href="{% static 'assets/admin/pages/media/works/img2.jpg' %}" title="Project Name" data-rel="fancybox-button">
+                        <i class="fa fa-search"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div><a href="" class="btn btn-warning col-md-12">I don't know</a></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block pluginjs %}
+<script type="text/javascript" src="{% static 'assets/global/plugins/jquery-mixitup/jquery.mixitup.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/global/plugins/fancybox/source/jquery.fancybox.pack.js' %}"></script>
+{#<script src="{% static 'assets/admin/pages/scripts/portfolio.js' %}"></script>#}
+{% endblock %}
+
+{% block script %}
+<script>
+jQuery(document).ready(function() {
+    var Portfolio = function () {
+        return {
+            //main function to initiate the module
+            init: function () {
+                $('.mix-grid').mixitup();
+            }
+        };
+    }();
+});
+</script>
+{% endblock %}

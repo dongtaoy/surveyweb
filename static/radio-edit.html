@@ -1,0 +1,48 @@
+<div class="portlet portlet-sortable light bordered" xmlns="http://www.w3.org/1999/html">
+    <div class="portlet-title">
+        <div class="caption font-green-sharp">
+            <i class="icon-speech font-green-sharp"></i>
+            <span class="caption-subject bold uppercase"> Multiple Choice</span>
+        </div>
+
+    </div>
+    <div class="portlet-body">
+        <div class="scroller" style="height:200px" data-rail-visible="1"
+             data-rail-color="yellow" data-handle-color="#a1b2bd">
+            <h4>Heading Text</h4>
+
+            <div>
+                <p>
+                    Please enter a choice
+                </p>
+                <textarea class="wysihtml5 form-control" rows="3"></textarea>
+            </div>
+
+            <div class="addchoice" style="margin-top: 5px; margin-bottom: 5px">
+                Please enter a choice
+                <input type="text" size="20" style="margin-left: 20px;">
+                <div class="actions pull-right align-left">
+                    <a onclick="removeChoice(this)" class="btn btn-circle btn-default btn-xs">
+                        <i class="fa fa-minus"></i> Remove </a>
+                </div>
+            </div>
+
+            <div class="actions pull-left">
+                <a onclick="add(this)" class="btn btn-circle btn-default btn-sm">
+                    <i class="fa fa-plus"></i> Add </a>
+            </div>
+        </div>
+
+    </div>
+    <div class="portlet-footer">
+
+
+        <div class="row">
+
+            <div class="col-m-3 pull-right" style="margin-right: 50px">
+                <button class="btn blue" onclick="">&nbspSave&nbsp</button>
+                <button class="btn red ">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
