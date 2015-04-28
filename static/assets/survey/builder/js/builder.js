@@ -4,14 +4,9 @@
 jQuery(document).ready(function () {
     $('.wysihtml5').wysihtml5();
 
-    //PortletDraggable.init();
-    //$("li").draggable({
-    //    helper: function () {
-    //        return "<div class='dragbox' style=\"width: 300px;height:100px;background-color:#7FDBFF;opacity: 0.4; z-index:10000\"></div>"
-    //    }
-    //});
 
     $("#image-edit-upload").dropzone({dictDefaultMessage: "Please drag your images and drop into these area :)"});
+
     $("#elo-edit-upload").dropzone({dictDefaultMessage: "Please drag your images and drop into these area :)"});
 
     $(".nav-pills li")
@@ -25,7 +20,18 @@ jQuery(document).ready(function () {
         .click(function (){
             $(".pageBody").append('{% include "survey/builder/question/elo-edit.html" %}');
         });
+
     $('[data-toggle="tooltip"]').tooltip();
+
+    //$('form').ajaxForm();
+
+    $('.pageCreateForm').submit(function(){
+        $(this).ajaxSubmit({
+            success: function(response){
+                alert(response);
+            }
+        });
+    })
 });
 
 var radioCount = 1, checkboxCount = 1, selectCount = 1;
