@@ -75,6 +75,11 @@ class TextContainer(Container):
 class QuestionType(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
     helper = models.TextField(null=True, blank=True)
+    order = models.IntegerField(null=True, blank=True)
+    icon_css = models.CharField(max_length=100, null=True, blank=True)
+
+    def __unicode__(self):
+        return self.name
 
 
 class QuestionContainer(Container):
@@ -125,9 +130,21 @@ class AnswerCheck(AnswerBase):
 # class AnswerInteger(AnswerBase):
 #     choice = models.IntegerField(null=False, blank=False)
 
-
-
-
+#
+#
+# Community
+# Customer Feedback
+# Demographics
+# Education
+# Events
+# Healthcare
+# Human Resources
+# Industry Specific
+# Just for Fun
+# Market Research
+# Non-Profit
+# Political
+# Other
 
 
 

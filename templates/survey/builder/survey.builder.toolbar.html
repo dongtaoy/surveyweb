@@ -9,27 +9,11 @@
         <div class="portlet-body todo-project-list-content-1" id="test1">
             <div class="todo-project-list">
                 <ul class="nav nav-pills nav-stacked">
+                    {% for questiontype in questiontypes|dictsort:"order" %}
                     <li>
-                        <a  data-placement="right" data-toggle="tooltip" href="#" title="" data-original-title="Tooltip on top"><i class="icon-list"></i> | Multiple Choice <span style="padding-top: 1px"></span></a>
+                        <a  data-placement="right" data-toggle="tooltip" href="#" title="" data-original-title="{{ questiontype.icon_css }} "><i class="{{ questiontype.icon_css }} "></i> | {{ questiontype.name }} <span style="padding-top: 1px"></span></a>
                     </li>
-                    <li>
-                        <a  data-placement="right" data-toggle="tooltip" href="#" title="" data-original-title="Tooltip on top"><i class="icon-arrow-down"></i> | Dropdown <span style="padding-top: 1px"></span></a>
-                    </li>
-                    <li>
-                        <a  data-placement="right" data-toggle="tooltip" href="#" title="" data-original-title="Tooltip on top"><i class="icon-calendar"></i> | Checkbox <span style="padding-top: 1px"></span></a>
-                    </li>
-                    <li>
-                        <a  data-placement="right" data-toggle="tooltip" href="#" title="" data-original-title="Tooltip on top"><i class="icon-bar-chart"></i> | Elo Ranking <span style="padding-top: 1px"></span></a>
-                    </li>
-                    <li>
-                        <a  data-placement="right" data-toggle="tooltip" href="#" title="" data-original-title="Tooltip on top"><i class="icon-question"></i> | Single Textbox <span style="padding-top: 1px"></span></a>
-                    </li>
-                    <li>
-                        <a  data-placement="right" data-toggle="tooltip" href="#" title="" data-original-title="Tooltip on top"><i class="icon-speech"></i> | Help Text <span style="padding-top: 1px"></span></a>
-                    </li>
-                    <li>
-                        <a  data-placement="right" data-toggle="tooltip" href="#" title="" data-original-title="Tooltip on top"><i class="icon-picture"></i> | Image Carousel <span style="padding-top: 1px"></span></a>
-                    </li>
+                    {% endfor %}
                     <hr/>
                     <a href="" class="btn btn-default pull-right" style="margin: 0;"> Collect Response <i
                         class="fa fa-angle-right"></i></a>

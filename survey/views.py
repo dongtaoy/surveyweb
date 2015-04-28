@@ -1,12 +1,13 @@
 __author__ = 'dongtao'
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import DetailView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.db.transaction import atomic
 from guardian.mixins import PermissionRequiredMixin
-from survey.models import Survey
+from survey.models import Survey, QuestionType
 from survey.forms import SurveyFrom
+
 
 
 class SurveryDetailView(PermissionRequiredMixin, DetailView):
@@ -28,6 +29,20 @@ class SurveyCreateView(CreateView):
             survey.creator = self.request.user
             survey.save()
         return redirect(reverse_lazy("survey.detail", kwargs={"survey": survey.id}))
+
+
+class SurveyUpdateView(PermissionRequiredMixin, UpdateView):
+    form_class = SurveyFrom
+    model = Survey
+    pk_url_kwarg = 'survey'
+    permission_required = 'survey.change_survey'
+    template_name = 'survey/builder/survey.builder.html'
+    raise_exception = True
+
+    def get_context_data(self, **kwargs):
+        context = super(SurveyUpdateView, self).get_context_data(**kwargs)
+        context['questiontypes'] = QuestionType.objects.all()
+        return context
 
 
 class SurveyDeleteView(PermissionRequiredMixin, DeleteView):

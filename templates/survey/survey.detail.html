@@ -39,7 +39,7 @@
                 </div>
                 <div class="portlet-body util-btn-group-margin-bottom-5 blog-sidebar">
                     <div class="top-news">
-                        <a href="javascript:;" class="btn blue">
+                        <a href="{% url 'survey.builder' object.id %}" class="btn blue">
                             <h2>{{ object.name }}</h2>
                             <em>{{ object.created }}</em>
                             <i class="fa fa-file-text top-news-icon fa-2x"></i>
