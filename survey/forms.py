@@ -7,4 +7,4 @@ class SurveyFrom(ModelForm):
     class Meta:
         model = Survey
         fields = '__all__'
-        exclude = ['creator']
+        exclude = ['creator', 'status']
