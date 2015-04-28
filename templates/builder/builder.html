@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}
-    Survey Builder
 {% endblock %}
 
 {% block plugincss %}
@@ -17,24 +16,14 @@
 
 
 {% block header %}
-    Survey
+    <a href="#surveyEdit" data-toggle="modal" role="button">Survey Name</a>
 {% endblock %}
 
 {% block subheader %}
-    Builder
+    <div style="margin-top: 2px;"><i class="fa fa-tags fa-fw"></i>Category: food</div>
 {% endblock %}
 
 {% block breadcrumb %}
-
-    <ul class="page-breadcrumb breadcrumb">
-        <li>
-            <a href="{% url 'home' %}">Home</a>
-            <i class="fa fa-circle"></i>
-        </li>
-        <li class="active">
-            Survey Builder
-        </li>
-    </ul>
 {% endblock %}
 
 {% block content %}
@@ -107,6 +96,24 @@
 
         </div>
     </div>
+    <div id="surveyEdit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">First Thumbnail label</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        First Thumbnail label First Thumbnail label First Thumbnail label
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn green">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block pluginjs %}
@@ -123,6 +130,8 @@
     <script src="{% static 'assets/global/plugins/wysiwyg/wysiwyg.js' %}"></script>
     <script src="{% static 'assets/global/plugins/dropzone-new/dropzone-amd-module.min.js' %}"></script>
     <script src="{% static 'assets/global/plugins/dropzone-new/dropzone.min.js' %}"></script>
+
+    <script src="{% static 'assets/core/js/../../static/assets/survey/builder/js/builder.js' %}"></script>
     {#        //$('#test1').draggable();#}
 
     {##}
@@ -166,80 +175,4 @@
 
 
 
-{% endblock %}
-
-{% block script %}
-    <script>
-        jQuery(document).ready(function () {
-            $('.wysihtml5').wysihtml5();
-
-            PortletDraggable.init();
-            $("li").draggable({
-                helper: function () {
-                    return "<div class='dragbox' style=\"width: 300px;height:100px;background-color:#7FDBFF;opacity: 0.4; z-index:10000\"></div>"
-                }
-            });
-
-            {#            $('.toolbar').tooltip();#}
-            $("#image-edit-upload").dropzone({dictDefaultMessage: "Please drag your images and drop into these area :)"});
-            $("#elo-edit-upload").dropzone({dictDefaultMessage: "Please drag your images and drop into these area :)"});
-        });
-
-        var count = 1;
-
-        function add(element) {
-            var container = $(element);
-            count++;
-            container.append('\
-                    <div class="input-group " style="margin:2px 0"> \
-                        <span class="input-group-addon count">' + count + '.</span> \
-                        <div class="input-group-control"> \
-                            <input type="text" class="form-control" placeholder="Choice"> \
-                        </div> \
-                        <span class="input-group-btn btn-right actions"> \
-                            <button class="btn blue-madison"  onclick="removeChoice(this)" type="button"><i class="fa fa-minus fa-fw"></i>Remove \
-                            </button> \
-                        </span> \
-                    </div> \
-                    ');
-        }
-
-        function removeChoice(element) {
-            var container = $(element).parent().parent();
-            count--;
-            container.remove();
-            for (var i = 1; i <= count; i++) {
-                $(".addchoice > .form-group > div:nth-child(" + i + ") > .count").html(i + ".");
-            }
-        }
-
-        var stockArea = $('.col-md-12.column.sortable').droppable({
-            drop: function (event, ui) {
-                var target = $(event.target);
-
-                //alert($('#accordion1_$'));
-                //var app = document.getElementById()
-                //rebindDraggables();
-                var droppedItem = ui.draggable.prop('tagName').toLowerCase();
-                //var droppedItem = ui.draggable.attr('class').toLowerCase();
-
-                var droppedType = ui.draggable.attr('id');
-                if (droppedItem == 'li') {
-                    //alert(droppedType);
-                    //alert(1);
-                    var count = $('.portlet').length + 1;
-                    //alert(count);
-                    //alert(("<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordion1\" href=\"$id$count\">$id</a></h4></div><div id=\"$id$count\" class=\"panel-collapse collapse\"><div class=\"panel-body\">$id $count</div></div></div>").replace('$id', droppedType));
-                    $.ajax({
-                        url: "{% static 'singletext-edit.html' %}",
-                        success: function (data) {
-                            target.append(data);
-                        },
-                        dataType: 'html'
-                    });
-                    //target.append("<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordion1\" href=\"#" + droppedType + count + "\">" + count + ". " + droppedType + "</a></h4></div><div id=\"" + droppedType + count + "\" class=\"panel-collapse collapse\" aria-expanded=\"false\"><div class=\"panel-body\">" + droppedType + count + "<p>This is just for Test Purpose</p></div></div></div>");
-                }
-            }
-        });
-    </script>
 {% endblock %}

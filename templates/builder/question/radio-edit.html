@@ -47,7 +47,7 @@
             <p class="note">Please create your choices for the answers:</p>
 
             <div>
-                <div class="addchoice">
+                <div class="radioAddChoice">
                     <div class="form-group">
                         <div class="input-group " style="margin:2px 0">
                             <span class="input-group-addon count">1.</span>
@@ -56,7 +56,7 @@
                                 <input type="text" class="form-control" placeholder="Choice">
                             </div>
                         <span class="input-group-btn btn-right actions">
-                            <button class="btn blue-madison" onclick="removeChoice(this)" type="button"><i
+                            <button class="btn blue-madison" onclick="radioRemove(this)" type="button"><i
                                     class="fa fa-minus fa-fw"></i>Remove
                             </button>
                         </span>
@@ -67,7 +67,7 @@
 
                 <div class="row" style="margin: 0px;">
                     <div class="pull-left">
-                        <button onclick="add('.addchoice > .form-group')" class="btn btn-default btn-sm">
+                        <button onclick="radioAdd('.radioAddChoice > .form-group')" class="btn btn-default btn-sm">
                             <i class="fa  fa-plus fa-fw"></i>Add
                         </button>
                     </div>

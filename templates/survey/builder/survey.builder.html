@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load bootstrap3 %}
 {% block title %}
     Survey Builder
 {% endblock %}
@@ -17,94 +18,103 @@
 
 
 {% block header %}
-    Survey
+    <a href="#surveyEdit" data-toggle="modal" role="button">{{ object.name }}</a>
 {% endblock %}
 
 {% block subheader %}
-    Builder
+    <div style="margin-top: 2px;"><i class="fa fa-tags fa-fw"></i>Category: {{ object.category }}</div>
 {% endblock %}
 
 {% block breadcrumb %}
-
-    <ul class="page-breadcrumb breadcrumb">
-        <li>
-            <a href="{% url 'home' %}">Home</a>
-            <i class="fa fa-circle"></i>
-        </li>
-        <li class="active">
-            Survey Builder
-        </li>
-    </ul>
 {% endblock %}
 
 {% block content %}
     <div class="row">
-    <div class="col-md-12">
-        <div class="todo-sidebar col-md-3">
-            <div class="portlet light">
-                <div class="portlet-title">
-                    <div class="caption" data-toggle="collapse" data-target=".todo-project-list-content-1">
-                        <span class="caption-subject font-green-sharp bold uppercase">BUILDER </span>
+        <div class="col-md-12">
+            <div class="todo-sidebar col-md-3">
+                <div class="portlet light">
+                    <div class="portlet-title">
+                        <div class="caption" data-toggle="collapse" data-target=".todo-project-list-content-1">
+                            <span class="caption-subject font-green-sharp bold uppercase">BUILDER </span>
+                        </div>
                     </div>
-                </div>
-                <div class="portlet-body todo-project-list-content-1" id="test1">
-                    <div class="todo-project-list">
-                        <ul class="nav nav-pills nav-stacked">
-                            <li class="active" id="mult">
-                                <a class="dragtest"><i class="icon-home"></i> | Multiple Choice </a>
-                            </li>
-                            <li id="drop">
-                                <a href="javascript:;"><i class="icon-user"></i> | Dropdown </a>
-                            </li>
-                            <li id="elo">
-                                <a href="javascript:;"><i class="icon-notebook"></i> | Elo Ranking </a>
-                            </li>
-                            <li id="singletext">
-                                <a href="javascript:;"><i class="icon-wallet"></i> | Single Textbox </a>
-                            </li>
-                            <li id="comment">
-                                <a href="javascript:;"><i class="icon-speech"></i> | Comment Box </a>
-                            </li>
-                            <li id="image">
-                                <a href="javascript:;"><i class="icon-picture"></i> | Image </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-9">
-            <div class="portlet light">
-                <div class="portlet-title">
-                    <div class="caption">
-                        Page
-                    </div>
-                </div>
-                <div class="portlet-body">
-                    <div class="row" id="sortable_portlets">
-                        <div class="col-md-12 column sortable">
-                            {% include "builder/question/elo-display.html" %}
-                            {% include "builder/question/helptext-display.html" %}
-                            {% include "builder/question/singletext-display.html" %}
-                            {% include "builder/question/radio-display.html" %}
-                            {% include "builder/question/checkbox-display.html" %}
-                            {% include "builder/question/select-display.html" %}
-                            {% include "builder/question/image-display.html" %}
-
-
-                            {% include "builder/question/radio-edit.html" %}
-                            {% include "builder/question/checkbox-edit.html" %}
-                            {% include "builder/question/select-edit.html" %}
-                            {% include "builder/question/image-edit.html" %}
-                            {% include "builder/question/elo-edit.html" %}
-                            {% include "builder/question/helptext-edit.html" %}
-                            {% include "builder/question/singletext-edit.html" %}
+                    <div class="portlet-body todo-project-list-content-1" id="test1">
+                        <div class="todo-project-list">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li class="active" id="mult">
+                                    <a class="dragtest"><i class="icon-home"></i> | Multiple Choice </a>
+                                </li>
+                                <li id="drop">
+                                    <a href="javascript:;"><i class="icon-user"></i> | Dropdown </a>
+                                </li>
+                                <li id="elo">
+                                    <a href="javascript:;"><i class="icon-notebook"></i> | Elo Ranking </a>
+                                </li>
+                                <li id="singletext">
+                                    <a href="javascript:;"><i class="icon-wallet"></i> | Single Textbox </a>
+                                </li>
+                                <li id="comment">
+                                    <a href="javascript:;"><i class="icon-speech"></i> | Comment Box </a>
+                                </li>
+                                <li id="image">
+                                    <a href="javascript:;"><i class="icon-picture"></i> | Image </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="col-md-9">
+                <div class="portlet light">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Page
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="row" id="sortable_portlets">
+                            <div class="col-md-12 column sortable">
+                                {% include "builder/question/elo-display.html" %}
+                                {% include "builder/question/helptext-display.html" %}
+                                {% include "builder/question/singletext-display.html" %}
+                                {% include "builder/question/radio-display.html" %}
+                                {% include "builder/question/checkbox-display.html" %}
+                                {% include "builder/question/select-display.html" %}
+                                {% include "builder/question/image-display.html" %}
+
+
+                                {% include "builder/question/radio-edit.html" %}
+                                {% include "builder/question/checkbox-edit.html" %}
+                                {% include "builder/question/select-edit.html" %}
+                                {% include "builder/question/image-edit.html" %}
+                                {% include "builder/question/elo-edit.html" %}
+                                {% include "builder/question/helptext-edit.html" %}
+                                {% include "builder/question/singletext-edit.html" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div id="surveyEdit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title">First Thumbnail label</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            {% bootstrap_form form %}
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn green">OK</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -123,123 +133,10 @@
     <script src="{% static 'assets/global/plugins/wysiwyg/wysiwyg.js' %}"></script>
     <script src="{% static 'assets/global/plugins/dropzone-new/dropzone-amd-module.min.js' %}"></script>
     <script src="{% static 'assets/global/plugins/dropzone-new/dropzone.min.js' %}"></script>
-    {#        //$('#test1').draggable();#}
-
-    {##}
-    {#        //$(".panel").draggable();#}
-    {#	function rebindDraggables() {#}
-    {#		$('.li').draggable({#}
-    {#			stop: function() {#}
-    {#				rebindDraggables();#}
-    {#			}#}
-    {#		})#}
-    {#	}#}
-    {##}
-    {#        $("#accordion1").sortable({#}
-    {#            placeholder: "ui-state-highlight", helper: 'clone'#}
-    {#        });#}
-    {##}
-    {#        var count = 7;#}
-    {##}
-    {##}
-    {#        var stockArea = $('#accordion1').droppable({#}
-    {#            drop: function (event, ui) {#}
-    {#                var target = $(event.target);#}
-    {##}
-    {#                //alert($('#accordion1_$'));#}
-    {#                //var app = document.getElementById()#}
-    {#                //rebindDraggables();#}
-    {#                var droppedItem = ui.draggable.prop('tagName').toLowerCase();#}
-    {#                //var droppedItem = ui.draggable.attr('class').toLowerCase();#}
-    {##}
-    {#                var droppedType = ui.draggable.attr('id');#}
-    {#                if (droppedItem == 'li') {#}
-    {#                    //alert(droppedType);#}
-    {#                    //alert(1);#}
-    {#                    var count = $('#accordion1 .panel-heading').length + 1;#}
-    {#                    //alert(count);#}
-    {#                    //alert(("<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordion1\" href=\"$id$count\">$id</a></h4></div><div id=\"$id$count\" class=\"panel-collapse collapse\"><div class=\"panel-body\">$id $count</div></div></div>").replace('$id', droppedType));#}
-    {#                    target.append("<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordion1\" href=\"#" + droppedType + count + "\">" + count + ". " + droppedType + "</a></h4></div><div id=\"" + droppedType + count + "\" class=\"panel-collapse collapse\" aria-expanded=\"false\"><div class=\"panel-body\">" + droppedType + count + "<p>This is just for Test Purpose</p></div></div></div>");#}
-    {#                }#}
-    {#            }#}
-    {#        });#}
-
-
+    <script src="{% static 'assets/survey/builder/js/builder.js' %}"></script>
 
 {% endblock %}
 
 {% block script %}
-    <script>
-        jQuery(document).ready(function () {
-            $('.wysihtml5').wysihtml5();
 
-            PortletDraggable.init();
-            $("li").draggable({
-                helper: function () {
-                    return "<div class='dragbox' style=\"width: 300px;height:100px;background-color:#7FDBFF;opacity: 0.4; z-index:10000\"></div>"
-                }
-            });
-
-            {#            $('.toolbar').tooltip();#}
-            $("#image-edit-upload").dropzone({dictDefaultMessage: "Please drag your images and drop into these area :)"});
-            $("#elo-edit-upload").dropzone({dictDefaultMessage: "Please drag your images and drop into these area :)"});
-        });
-
-        var count = 1;
-
-        function add(element) {
-            var container = $(element);
-            count++;
-            container.append('\
-                    <div class="input-group " style="margin:2px 0"> \
-                        <span class="input-group-addon count">' + count + '.</span> \
-                        <div class="input-group-control"> \
-                            <input type="text" class="form-control" placeholder="Choice"> \
-                        </div> \
-                        <span class="input-group-btn btn-right actions"> \
-                            <button class="btn blue-madison"  onclick="removeChoice(this)" type="button"><i class="fa fa-minus fa-fw"></i>Remove \
-                            </button> \
-                        </span> \
-                    </div> \
-                    ');
-        }
-
-        function removeChoice(element) {
-            var container = $(element).parent().parent();
-            count--;
-            container.remove();
-            for (var i = 1; i <= count; i++) {
-                $(".addchoice > .form-group > div:nth-child(" + i + ") > .count").html(i + ".");
-            }
-        }
-
-        var stockArea = $('.col-md-12.column.sortable').droppable({
-            drop: function (event, ui) {
-                var target = $(event.target);
-
-                //alert($('#accordion1_$'));
-                //var app = document.getElementById()
-                //rebindDraggables();
-                var droppedItem = ui.draggable.prop('tagName').toLowerCase();
-                //var droppedItem = ui.draggable.attr('class').toLowerCase();
-
-                var droppedType = ui.draggable.attr('id');
-                if (droppedItem == 'li') {
-                    //alert(droppedType);
-                    //alert(1);
-                    var count = $('.portlet').length + 1;
-                    //alert(count);
-                    //alert(("<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordion1\" href=\"$id$count\">$id</a></h4></div><div id=\"$id$count\" class=\"panel-collapse collapse\"><div class=\"panel-body\">$id $count</div></div></div>").replace('$id', droppedType));
-                    $.ajax({
-                        url: "{% static 'singletext-edit.html' %}",
-                        success: function (data) {
-                            target.append(data);
-                        },
-                        dataType: 'html'
-                    });
-                    //target.append("<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordion1\" href=\"#" + droppedType + count + "\">" + count + ". " + droppedType + "</a></h4></div><div id=\"" + droppedType + count + "\" class=\"panel-collapse collapse\" aria-expanded=\"false\"><div class=\"panel-body\">" + droppedType + count + "<p>This is just for Test Purpose</p></div></div></div>");
-                }
-            }
-        });
-    </script>
 {% endblock %}
