@@ -27,7 +27,7 @@
                     <span class="caption-subject theme-font bold uppercase">Survey Status</span>
                 </div>
                 <div class="actions">
-                    <a href="{% url 'survey_create' %}" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Create Survey</a>
+                    <a href="{% url 'survey.create' %}" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Create Survey</a>
                 </div>
             </div>
             <div class="portlet-body">
@@ -108,7 +108,7 @@
                         {% for survey in surveys %}
                             <tr>
                                 <td>
-                                    <a href="javascript:;" class="primary-link">{{ survey.name }}</a>
+                                    <a href="{% url 'survey.detail' survey.id %}" class="primary-link">{{ survey.name }}</a>
                                 </td>
                                 <td>
                                     {{ survey.category }}
@@ -142,7 +142,7 @@
                     <span class="caption-subject font-green-sharp bold uppercase">Support</span>
                 </div>
                 <div class="actions">
-                    <a href="{% url 'survey_create' %}" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Create Survey</a>
+                    <a href="{% url 'survey.create' %}" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Create Survey</a>
                 </div>
             </div>
             <div class="portlet-body">

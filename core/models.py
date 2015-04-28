@@ -14,11 +14,16 @@ class Survey(models.Model):
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    OPEN = 'OPEN'
+    CLOSED = 'CLOSED'
+
+    STATUS_CHOICES = (
+        (OPEN, 'open'),
+        
+    )
 
     def get_questions(self):
         import itertools
-
-        #print list(itertools.chain.from_iterable(map(lambda p: getattr(p, 'containers').all(), self.pages.all())))
         return list(itertools.chain.from_iterable(map(lambda p: getattr(p, 'containers').all(), self.pages.all())))
 
 

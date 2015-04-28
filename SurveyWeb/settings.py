@@ -50,6 +50,10 @@ INSTALLED_APPS = (
     # bootstrap3 form
     'bootstrap3',
 
+    # guardian
+    # object level permission
+    'guardian',
+
     # app
     'core',
     'survey',
@@ -65,12 +69,18 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
     "django.contrib.auth.backends.ModelBackend",
+
     # `allauth` specific authentication methods, such as login by e-mail
-    "allauth.account.auth_backends.AuthenticationBackend"
+    "allauth.account.auth_backends.AuthenticationBackend",
+
+    # guardian backends
+    "guardian.backends.ObjectPermissionBackend",
 )
+
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
@@ -81,21 +91,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 
 
-
-
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
 )
-
-# TEMPLATE_DIRS = (
-#     # allauth templates: you could copy this directory into your
-#     # project and tweak it according to your needs
-#     # os.path.join(PROJECT_ROOT, 'templates', 'uniform', 'allauth'),
-#     # example project specific templates
-#     os.path.join(BASE_DIR, 'templates', 'uniform', 'allauth'),
-# )
 
 SITE_ID = 1
 
@@ -146,26 +145,18 @@ TEMPLATE_DIRS = (
 )
 
 
-# all auth settings
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/collected/')
 
 
-# bootstrap3
-#
-# BOOTSTRAP3 = {
-#     # Label class to use in horizontal forms
-#     'horizontal_label_class': 'col-md-3',
-#
-#     # Field class to use in horizontal forms
-#     'horizontal_field_class': 'col-md-4',
-# }
-
-# auth and allauth settings
+# all auth settings
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
 LOGIN_REDIRECT_URL = '/'
 SOCIALACCOUNT_QUERY_EMAIL = True
+
+
 
 # Email Setting
 EMAIL_USE_TLS = True
@@ -175,6 +166,7 @@ EMAIL_HOST_USER = 'surveyweb423@gmail.com'
 EMAIL_HOST_PASSWORD = '<A4mu&!2G2sgfK}8t2Nb'
 
 
+# bootstrap 3 setting
 BOOTSTRAP3 = {
     # Label class to use in horizontal forms
     'horizontal_label_class': 'col-md-3',
@@ -182,3 +174,6 @@ BOOTSTRAP3 = {
     # Field class to use in horizontal forms
     'horizontal_field_class': 'col-md-4',
 }
+
+## guardians setting
+ANONYMOUS_USER_ID = -1

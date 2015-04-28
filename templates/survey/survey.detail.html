@@ -40,17 +40,17 @@
                 <div class="portlet-body util-btn-group-margin-bottom-5 blog-sidebar">
                     <div class="top-news">
                         <a href="javascript:;" class="btn blue">
-                            <h2>Your Survey Title </h2>
-                            <em>Posted on: April 14, 2013</em>
+                            <h2>{{ object.name }}</h2>
+                            <em>{{ object.created }}</em>
                             <i class="fa fa-file-text top-news-icon fa-2x"></i>
                         </a>
                     </div>
                     <hr/>
                     <div style="margin-left: 10px;">
-                        <p><i class="fa fa-question-circle fa-2x"></i><span style="font-size: 1.5em;margin-left: 20px;">Questions: 2</span>
+                        <p><i class="fa fa-question-circle fa-2x"></i><span style="font-size: 1.5em;margin-left: 20px;">Questions: {{ object.get_questions|length }}</span>
                         </p>
                         <hr/>
-                        <p><i class="fa fa-file-text fa-2x"></i><span style="font-size: 1.5em;margin-left: 20px;">Pages: 2</span>
+                        <p><i class="fa fa-file-text fa-2x"></i><span style="font-size: 1.5em;margin-left: 20px;">Pages:  {{ object.pages.count }}</span>
                         </p>
                     </div>
                     <hr/>
@@ -61,7 +61,6 @@
                         <a class="btn btn-warning">Preview Survey <i
                                 class="fa fa-file-powerpoint-o"> </i>
                         </a>
-
                     </div>
                     <div class="btn-group btn-group btn-group-justified">
                         <a class="btn btn-danger">Delete Survey <i
@@ -89,7 +88,7 @@
                                 </div>
                                 <div class="details">
                                     <div class="number">
-                                        7838
+                                        {{ object.responses.count }}
                                     </div>
                                     <div class="desc">
                                         Total Responses
@@ -116,9 +115,7 @@
                     <hr/>
                     {#                    <div id="chart_1_1_legendPlaceholder"></div>#}
                     <h2>DATA TRENDS CHART</h2>
-
                     <p>The data trends chart shows you when you received responses to your survey.</p>
-
                     <div id="chart_1_1" class="chart"></div>
                 </div>
                 <!-- END DROPDOWNS PORTLET-->
