@@ -111,7 +111,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': '52.64.17.0',
         'PORT': '3306',
-        'NAME': 'surveyweb',
+        'NAME': 'surveyweb_dev',
         'USER': 'root',
         'PASSWORD': 'PAWWbynM'
     }
