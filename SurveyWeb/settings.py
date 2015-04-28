@@ -55,8 +55,8 @@ INSTALLED_APPS = (
     'guardian',
 
     # app
-    'core',
     'survey',
+    'core',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -111,9 +111,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': '52.64.17.0',
         'PORT': '3306',
-        'NAME': 'surveyweb',
+        'NAME': 'surveyweb_dev',
         'USER': 'root',
-        'PASSWORD': 'PAWWbynM'
+        'PASSWORD': 'yudanny1',
+        'OPTIONS': {'init_command': 'SET storage_engine=INNODB;'},
     }
 }
 
