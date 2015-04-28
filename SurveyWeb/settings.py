@@ -113,7 +113,7 @@ DATABASES = {
         'PORT': '3306',
         'NAME': 'surveyweb_dev',
         'USER': 'root',
-        'PASSWORD': 'yudanny1',
+        'PASSWORD': 'q@\"8B669\'9Gs1$i',
         'OPTIONS': {'init_command': 'SET storage_engine=INNODB;'},
     }
 }
