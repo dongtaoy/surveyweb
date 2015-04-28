@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+    500 Page
+{% endblock %}
+{% block plugincss %}
+<link href="{% static 'assets/admin/pages/css/error.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{#page content#}
+{% block header %}
+    403
+{% endblock %}
+{% block subHeader %}
+    Page
+{% endblock %}
+{% block breadcrumb %}
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="{% url 'dashboard' %}">Home</a>
+        <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#">Error Page</a>
+        <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#">403 Page</a>
+    </li>
+</ul>
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12 page-404">
+        <div class="number">
+             403
+        </div>
+        <div class="details">
+            <h3>Oops! You're forbidden</h3>
+            <p>
+                 Forbidden: You don't have permission to access {{ directory }} on this server.<br/>
+                <a href="{% url 'dashboard' %}">
+                Return home </a>
+                or try the search bar below.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{#end page content#}
+
+{% block pluginjs %}
+{% endblock %}
+{% block script %}
+{% endblock %}

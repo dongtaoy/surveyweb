@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+    Delete Confirmation
+{% endblock %}
+{% block plugincss %}
+{% endblock %}
+
+{#page content#}
+{% block header %}
+    Delete
+{% endblock %}
+{% block subHeader %}
+    confirmation
+{% endblock %}
+{% block breadcrumb %}
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="note note-danger note-shadow">
+                <form method="POST">
+                    {% csrf_token %}
+                    <h3 class="block">Are you sure?</h3>
+
+                    <p>
+                        Are you sure you want to delete the <b>{{ object }}</b>? Warning: All of the related
+                        items will be deleted.
+                    </p>
+                    <button type="submit" class="btn btn-success">Yes, I'm sure</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{#end page content#}
+
+{% block pluginjs %}
+{% endblock %}
+{% block script %}
+{% endblock %}
