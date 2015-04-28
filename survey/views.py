@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.db.transaction import atomic
 from guardian.mixins import PermissionRequiredMixin
-from survey.models import Survey, QuestionType
+from survey.models import Survey, QuestionType, Page
 from survey.forms import SurveyFrom
 
 
@@ -28,6 +28,8 @@ class SurveyCreateView(CreateView):
             survey = form.save(commit=False)
             survey.creator = self.request.user
             survey.save()
+            page = Page.objects.create(survey=survey)
+            page.save()
         return redirect(reverse_lazy("survey.detail", kwargs={"survey": survey.id}))
 
 
@@ -42,6 +44,7 @@ class SurveyUpdateView(PermissionRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(SurveyUpdateView, self).get_context_data(**kwargs)
         context['questiontypes'] = QuestionType.objects.all()
+        context['pages'] = self.object.pages.all()
         return context
 
 
@@ -49,7 +52,6 @@ class SurveyDeleteView(PermissionRequiredMixin, DeleteView):
     model = Survey
     pk_url_kwarg = 'survey'
     permission_required = 'survey.delete_survey'
-
     pass
 
 

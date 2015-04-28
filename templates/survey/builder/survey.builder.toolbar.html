@@ -9,7 +9,7 @@
         <div class="portlet-body todo-project-list-content-1" id="test1">
             <div class="todo-project-list">
                 <ul class="nav nav-pills nav-stacked">
-                    {% for questiontype in questiontypes|dictsort:"order" %}
+                    {% for questiontype in questiontypes %}
                     <li>
                         <a  data-placement="right" data-toggle="tooltip" href="#" title="" data-original-title="{{ questiontype.icon_css }} "><i class="{{ questiontype.icon_css }} "></i> | {{ questiontype.name }} <span style="padding-top: 1px"></span></a>
                     </li>

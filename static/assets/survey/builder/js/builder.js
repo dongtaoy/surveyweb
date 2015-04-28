@@ -28,9 +28,12 @@ jQuery(document).ready(function () {
     $('.pageCreateForm').submit(function(){
         $(this).ajaxSubmit({
             success: function(response){
-                alert(response);
+
+                //return false;
             }
         });
+
+        return false
     })
 });
 

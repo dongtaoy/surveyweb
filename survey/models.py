@@ -8,6 +8,9 @@ class Category(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
 
+    def __unicode__(self):
+        return self.name
+
 
 class Survey(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
@@ -38,20 +41,29 @@ class Survey(models.Model):
         assign_perm('change_survey', self.creator, self)
         assign_perm('delete_survey', self.creator, self)
 
+    def __unicode__(self):
+        return "%s - %s" % (self.creator, self.name)
 
     def get_questions(self):
         import itertools
         return list(itertools.chain.from_iterable(map(lambda p: getattr(p, 'containers').all(), self.pages.all())))
 
 
-
-
-
 class Page(models.Model):
-    title = models.CharField(max_length=50, null=False, blank=False)
+    title = models.CharField(max_length=50, null=False, blank=False, default='Add a title')
     survey = models.ForeignKey(Survey, null=False, blank=False, related_name='pages')
+    order = models.IntegerField(null=False, blank=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if self.order is None:
+            self.order = self.survey.pages.count() + 1
+        # assign_perm
+        return super(Page, self).save(*args, **kwargs)
+
+    def __unicode__(self):
+        return "%s - %s - %d" % (self.survey, self.title, self.order)
 
 
 class ContainerType(models.Model):
@@ -60,8 +72,11 @@ class ContainerType(models.Model):
 
 class Container(models.Model):
     page = models.ForeignKey(Page, null=False, blank=False, related_name="containers")
-    sortid = models.IntegerField(null=False, blank=False)
-    containtertype = models.ForeignKey(ContainerType, null=True,  on_delete=models.SET_NULL)
+    order = models.IntegerField(null=False, blank=False)
+    containtertype = models.ForeignKey(ContainerType, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        ordering = ['order']
 
 
 class ImageContainer(Container):
@@ -77,6 +92,9 @@ class QuestionType(models.Model):
     helper = models.TextField(null=True, blank=True)
     order = models.IntegerField(null=True, blank=True)
     icon_css = models.CharField(max_length=100, null=True, blank=True)
+
+    class Meta:
+        ordering = ['order']
 
     def __unicode__(self):
         return self.name

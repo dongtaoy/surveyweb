@@ -32,10 +32,16 @@
     <div class="row">
         <div class="col-md-12">
             {% include "survey/builder/survey.builder.toolbar.html" %}
-
             <div class="col-md-9">
-                {% include "survey/builder/survey.builder.page.html" %}
-                <button class="btn btn-success btn-block"><i class="fa fa-plus fa-fw"></i>Add Page</button>
+                {% for page in pages %}
+                    {% include "survey/page/survey.builder.page.html" %}
+                {% endfor %}
+
+<form class="pageCreateForm" action="{% url 'page.create' object.id %}" method="POST" style="margin-bottom: 25px;">
+    {% csrf_token %}
+    <input type="hidden" name="survey" value="{{ object.id }}"/>
+    <button class="btn btn-success btn-block" type="submit" ><i class="fa fa-plus fa-fw"></i>Add Page</button>
+</form>
             </div>
         </div>
         <div id="surveyEdit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">

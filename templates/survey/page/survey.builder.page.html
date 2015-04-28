@@ -1,7 +1,8 @@
+{% load bootstrap3 %}
 <div class="portlet light">
     <div class="portlet-title">
         <div class="caption font-green-sharp">
-            <span class="caption-subject bold uppercase">Page 1</span>
+            <span class="caption-subject bold uppercase">Page {{ page.order }}</span>
         </div>
         <div class="actions">
             <a class="btn btn-sm btn-default">
@@ -16,7 +17,7 @@
     <div class="portlet-body">
         <div class="row">
             <div class="col-md-12 column pageBody">
-                {% if 1 %}
+                {% if page.containers.count == 0 %}
                     <div style="color: #808080;text-align: center;">
                         <h1>[ Empty Page ]</h1>
                         <h4>Add a question here by clicking the button from the left navigation bar.</h4>
@@ -24,7 +25,6 @@
                     <br/>
                 {% endif %}
             </div>
-
         </div>
     </div>
 </div>
