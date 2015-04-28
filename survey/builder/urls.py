@@ -9,5 +9,5 @@ urlpatterns = patterns('',
     # url(r'^$', 'SurveyWeb.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url('(?P<survey>\d+)', BuilderUpdateView.as_view()),
+    url(r'(?P<survey>\d+)$', BuilderUpdateView.as_view(), name="survey.builder"),
 )
