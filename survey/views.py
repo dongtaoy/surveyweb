@@ -13,7 +13,7 @@ class SurveryDetailView(PermissionRequiredMixin, DetailView):
     model = Survey
     template_name = "survey/survey.detail.html"
     pk_url_kwarg = 'survey'
-    permission_required = 'core.view_survey'
+    permission_required = 'survey.view_survey'
     raise_exception = True
 
 
@@ -33,7 +33,7 @@ class SurveyCreateView(CreateView):
 class SurveyDeleteView(PermissionRequiredMixin, DeleteView):
     model = Survey
     pk_url_kwarg = 'survey'
-    permission_required = 'core.delete_survey'
+    permission_required = 'survey.delete_survey'
 
     pass
 

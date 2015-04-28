@@ -34,28 +34,5 @@
     },
     "model": "socialaccount.socialapp",
     "pk": 3
-  },
-  {
-    "fields": {
-      "uid": "805016512913056",
-      "last_login": "2015-04-28T05:42:59.869Z",
-      "user": 2,
-      "provider": "facebook",
-      "extra_data": "{\"first_name\": \"Danny\", \"last_name\": \"Yu\", \"middle_name\": \"Dongtao\", \"name\": \"Danny Dongtao Yu\", \"locale\": \"en_US\", \"gender\": \"male\", \"updated_time\": \"2014-10-06T04:04:29+0000\", \"link\": \"https://www.facebook.com/app_scoped_user_id/805016512913056/\", \"timezone\": 10, \"id\": \"805016512913056\", \"verified\": true, \"email\": \"dongtao.yu2010@gmail.com\"}",
-      "date_joined": "2015-04-28T05:42:59.869Z"
-    },
-    "model": "socialaccount.socialaccount",
-    "pk": 1
-  },
-  {
-    "fields": {
-      "app": 1,
-      "token_secret": "",
-      "expires_at": "2015-06-26T12:56:02.888Z",
-      "account": 1,
-      "token": "CAAINQ6yOJbkBAADi8TuVblwT4UxHkZBG6KIwee2GUf1rnZASZAsQTYukkHILOIVwpoZBdrxMTLxycXZAyLxIeBnJCToaSZBfa1ZCd8NQi3uPynwSuJoa4Oj1rSNzHfsZAK57oHKQwF7nvT0ztHWMpEKEtNXZAOCQbzLbti5zJFWsaSn83c2QavUT8WOYT97ZAeDZCHXWWV9pGB0spnmc5ITZAe5K"
-    },
-    "model": "socialaccount.socialtoken",
-    "pk": 1
   }
 ]

@@ -8,10 +8,12 @@ urlpatterns = patterns('',
     # url(r'^$', 'SurveyWeb.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url("(?P<survey>\d+)/$", login_required(SurveryDetailView.as_view()), name="survey.detail"),
+    url(r"(?P<survey>\d+)/$", login_required(SurveryDetailView.as_view()), name="survey.detail"),
 
-    url("^create/$", login_required(SurveyCreateView.as_view()), name="survey.create"),
+    url(r"^create/$", login_required(SurveyCreateView.as_view()), name="survey.create"),
 
-    url("^delete/(?P<survey>\d+)$", login_required(SurveyDeleteView.as_view()), name="survey.delete"),
+    url(r"^delete/(?P<survey>\d+)$", login_required(SurveyDeleteView.as_view()), name="survey.delete"),
 
+
+    url(r"builder/", include('survey.builder.urls'))
 )
