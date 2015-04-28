@@ -25,7 +25,7 @@ class Survey(models.Model):
         (DRAFT, 'DRAFT'),
     )
 
-    status = models.CharField(choices=STATUS_CHOICES, max_length=2)
+    status = models.CharField(choices=STATUS_CHOICES, max_length=2, null=False, blank=False)
 
     class Meta:
         permissions = (
