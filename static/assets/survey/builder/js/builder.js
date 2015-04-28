@@ -25,7 +25,7 @@ jQuery(document).ready(function () {
         .click(function (){
             $(".pageBody").append('{% include "survey/builder/question/elo-edit.html" %}');
         });
-
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 var radioCount = 1, checkboxCount = 1, selectCount = 1;
