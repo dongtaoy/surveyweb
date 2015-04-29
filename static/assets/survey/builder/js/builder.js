@@ -28,8 +28,7 @@ jQuery(document).ready(function () {
     $('.pageCreateForm').submit(function(){
         $(this).ajaxSubmit({
             success: function(response){
-
-                //return false;
+                $('.portlet.light').last().after(response);
             }
         });
 

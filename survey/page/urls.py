@@ -1,5 +1,6 @@
 __author__ = 'dongtaoy'
 from django.conf.urls import patterns, include, url
+
 from .views import PageCreateView
 
 urlpatterns = patterns('',
