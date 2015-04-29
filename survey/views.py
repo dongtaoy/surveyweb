@@ -38,7 +38,8 @@ class SurveyUpdateView(PermissionRequiredMixin, UpdateView):
     model = Survey
     pk_url_kwarg = 'survey'
     permission_required = 'survey.change_survey'
-    template_name = 'survey/builder/survey.builder.html'
+    template_name = 'survey/survey.builder.html'
+    context_object_name = 'survey'
     raise_exception = True
 
     def get_context_data(self, **kwargs):

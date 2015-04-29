@@ -1,17 +1,18 @@
 {% load bootstrap3 %}
-<div class="portlet light">
+<div id="page_{{ page.id }}" class="portlet light">
     <div class="portlet-title">
         <div class="caption font-green-sharp">
             <span class="caption-subject bold uppercase">Page {{ page.order }}</span>
         </div>
         <div class="actions">
+            <a class="btn btn-sm btn-danger pageDelete">
+                <i class="fa fa-times"></i> Delete </a>
             <a class="btn btn-sm btn-default">
                 <i class="fa fa-arrow-up"></i> Move Up </a>
             </a>
             <a class="btn btn-sm btn-default">
                 <i class="fa fa-arrow-down"></i> Move Down </a>
             </a>
-
         </div>
     </div>
     <div class="portlet-body">

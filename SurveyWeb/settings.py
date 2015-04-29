@@ -54,6 +54,9 @@ INSTALLED_APPS = (
     # object level permission
     'guardian',
 
+    # djang.js
+    'djangojs',
+
     # app
     'survey',
     'core',
