@@ -22,21 +22,22 @@ var surveyBuilder = (function () {
             })
     };
 
-    var initPageCreateFormAjax = function () {
+    var initPageCreateAjax = function () {
         $('.pageCreateForm')
             .off('submit')
             .on('submit', function () {
                 $(this).ajaxSubmit({
                     success: function (response) {
                         $(response).insertBefore('.pageCreateForm');
-                        initPageDeleteFormAjax();
+                        initPageDeleteAjax();
+                        initPageEditAjax();
                     }
                 });
                 return false
             });
     };
 
-    var initPageDeleteFormAjax = function () {
+    var initPageDeleteAjax = function () {
         $('.actions a.pageDelete')
             .off('click')
             .on('click', function () {
@@ -75,6 +76,41 @@ var surveyBuilder = (function () {
     };
 
 
+    var initPageEditAjax = function () {
+        $('.pageEdit')
+            .off('click')
+            .on('click', function () {
+                pagePortlet = $(this).closest('.portlet');
+                pageId = pagePortlet.attr('id').replace(/[^\d.]/g, '');
+                pageOrder = pagePortlet.find('.caption-subject.bold.uppercase').text().replace(/[^\d.]/g, '');
+                console.log(pageId, pageOrder);
+                isUp = false;
+                if (/up/.test($(this).text().toLowerCase())) {
+                    isUp = true;
+                    pageOrder--;
+                }
+                else {
+                    pageOrder++;
+                }
+                $.post(Django.url('page.edit', surveyId, pageId), {"page": pageId, "order": pageOrder})
+                    .done(function (response) {
+                        if (response['content']) {
+                            if (isUp) {
+                                $(pagePortlet).insertBefore($(pagePortlet).prev('.portlet'));
+                            } else {
+                                $(pagePortlet).insertAfter($(pagePortlet).next('.portlet'));
+
+                            }
+                        } else {
+                            bootbox.alert({
+                                size: "medium",
+                                message: "<br/><div class='note note-danger'><h4>Error!</h4><p>Cannot move up the first page or move down the last page</p></div>"
+                            });
+                        }
+                    });
+            });
+    };
+
     return {
         init: function (id) {
 
@@ -83,8 +119,9 @@ var surveyBuilder = (function () {
             initTooltip();
             initNavbarMouseover();
 
-            initPageCreateFormAjax();
-            initPageDeleteFormAjax();
+            initPageCreateAjax();
+            initPageDeleteAjax();
+            initPageEditAjax();
         }
     }
 }());

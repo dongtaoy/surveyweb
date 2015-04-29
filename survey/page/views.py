@@ -1,5 +1,5 @@
 __author__ = 'dongtaoy'
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.shortcuts import render
 from django.db.transaction import atomic
 from guardian.mixins import PermissionRequiredMixin
@@ -26,14 +26,42 @@ class PageDeleteView(AJAXMixin, PermissionRequiredMixin, DeleteView):
         pass
 
     def delete(self, *args, **kwargs):
-        with atomic():
-            self.object = self.get_object()
-            for p in Page.objects.filter(order__gt=self.object.order).filter(survey=self.object.survey):
-                p.order -= 1
-                p.save()
-            self.object.delete()
-            return True
-        return False
+        try:
+            with atomic():
+                self.object = self.get_object()
+                for p in Page.objects.filter(order__gt=self.object.order).filter(survey=self.object.survey):
+                    p.order -= 1
+                    p.save()
+                self.object.delete()
+                return True
+        except:
+            return False
+
+
+class PageUpdateView(AJAXMixin, PermissionRequiredMixin, UpdateView):
+    model = Page
+    permission_required = 'survey.change_page'
+    raise_exception = True
+    pk_url_kwarg = 'page'
+    fields = ['order']
+
+    def form_valid(self, form):
+        self.object = self.get_object()
+        if form.cleaned_data['order'] == 0:
+            return False
+        else:
+            try:
+                with atomic():
+                    page = Page.objects.get(survey=self.object.survey, order=form.cleaned_data['order'])
+                    page.order = self.object.order
+                    page.save()
+                    form.save()
+                    return True
+            except:
+                return False
+
+
+
 
 
 
