@@ -34,3 +34,6 @@ class PageDeleteView(AJAXMixin, PermissionRequiredMixin, DeleteView):
             self.object.delete()
             return True
         return False
+
+
+

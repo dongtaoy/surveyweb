@@ -14,6 +14,7 @@ class SurveryDetailView(PermissionRequiredMixin, DetailView):
     model = Survey
     template_name = "survey/survey.detail.html"
     pk_url_kwarg = 'survey'
+    context_object_name = 'survey'
     permission_required = 'survey.view_survey'
     raise_exception = True
 
@@ -53,6 +54,6 @@ class SurveyDeleteView(PermissionRequiredMixin, DeleteView):
     model = Survey
     pk_url_kwarg = 'survey'
     permission_required = 'survey.delete_survey'
-    pass
+    success_url = reverse_lazy("dashboard")
 
 
