@@ -1,0 +1,38 @@
+[
+  {
+    "fields": {
+      "name": "Facebook",
+      "sites": [1],
+      "secret": "580ffa764040b29506b863ce562b37c2",
+      "client_id": "577534262388153",
+      "key": "",
+      "provider": "facebook"
+    },
+    "model": "socialaccount.socialapp",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "name": "Google",
+      "sites": [1],
+      "secret": "0qFgKVok0h2x-ztkIJ6yjKtj",
+      "client_id": "858566162025-fqvil74tkir2orqeie6javq0aoitgea2.apps.googleusercontent.com",
+      "key": "",
+      "provider": "google"
+    },
+    "model": "socialaccount.socialapp",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "name": "Twitter",
+      "sites": [1],
+      "secret": "yIbpcwKmKAGK3RVYLSk1Cioopi6tm02jFRFYtlrlfcQ8DJ6nf4",
+      "client_id": "gnFtIZ80TqVgVCZdUCIBW2CJY",
+      "key": "",
+      "provider": "twitter"
+    },
+    "model": "socialaccount.socialapp",
+    "pk": 3
+  }
+]

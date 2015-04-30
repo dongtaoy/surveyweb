@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load js %}
 {% block title %}
     Survey Summary
 {% endblock %}
@@ -31,7 +32,7 @@
 {% block content %}
     <div class="row">
         <div class="col-md-4">
-            <div class="portlet box green">
+            <div class="portlet box blue">
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="fa fa-gift"></i> DESIGN SUMMARY
@@ -39,29 +40,38 @@
                 </div>
                 <div class="portlet-body util-btn-group-margin-bottom-5 blog-sidebar">
                     <div class="top-news">
-                        <a href="javascript:;" class="btn blue">
-                            <h2>{{ object.name }}</h2>
-                            <em>{{ object.created }}</em>
+                        <a href="{% url 'survey.builder' survey.id %}" class="btn blue">
+                            <h2>{{ survey.name }}</h2>
+                            <em>{{ survey.created }}</em>
                             <i class="fa fa-file-text top-news-icon fa-2x"></i>
                         </a>
                     </div>
                     <hr/>
                     <div style="margin-left: 10px;">
-                        <p><i class="fa fa-question-circle fa-2x"></i><span style="font-size: 1.5em;margin-left: 20px;">Questions: {{ object.get_questions|length }}</span>
+                        <p><i class="fa fa-question-circle fa-2x"></i><span style="font-size: 1.5em;margin-left: 20px;">Questions: {{ survey.get_questions|length }}</span>
                         </p>
                         <hr/>
-                        <p><i class="fa fa-file-text fa-2x"></i><span style="font-size: 1.5em;margin-left: 20px;">Pages:  {{ object.pages.count }}</span>
+                        <p><i class="fa fa-file-text fa-2x"></i><span
+                                style="font-size: 1.5em;margin-left: 20px;">Pages: {{ survey.pages.count }}</span>
                         </p>
                     </div>
                     <hr/>
                     <div class="btn-group btn-group btn-group-justified">
-                        <a class="btn purple" id="backCarousel"><i
+                        <a class="btn btn-default" id="backCarousel" href="{% url 'survey.builder' survey.id %}"><i
                                 class="fa fa-edit"> </i> Edit Design
                         </a>
-                        <a class="btn btn-warning">Preview Survey <i
+                        <a class="btn btn-default">Preview Survey <i
                                 class="fa fa-file-powerpoint-o"> </i>
                         </a>
                     </div>
+                    <form id="surveyDeleteForm" action="{% url 'survey.delete' survey.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="btn-group btn-group btn-group-justified">
+                            <a class="btn btn-danger deleteSurvey">Delete Survey <i
+                                    class="fa fa-trash-o"> </i>
+                            </a>
+                        </div>
+                    </form>
                 </div>
 
             </div>
@@ -83,7 +93,7 @@
                                 </div>
                                 <div class="details">
                                     <div class="number">
-                                        {{ object.responses.count }}
+                                        {{ survey.responses.count }}
                                     </div>
                                     <div class="desc">
                                         Total Responses
@@ -92,25 +102,29 @@
                             </a>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <a class="dashboard-stat dashboard-stat-light grey" href="javascript:;">
+                            {% if survey.get_status_display == 'DRAFT' %}
+                            <a class="dashboard-stat dashboard-stat-light grey" href="{% url 'survey.builder' survey.id %}">
                                 <div class="visual">
                                     <i class="fa fa-bell"></i>
                                 </div>
                                 <div class="details">
                                     <div class="number">
-                                        OPEN
+                                        {{ survey.get_status_display }}
                                     </div>
                                     <div class="desc">
                                         Overall Survey Status
                                     </div>
                                 </div>
                             </a>
+                            {% endif %}
                         </div>
                     </div>
                     <hr/>
                     {#                    <div id="chart_1_1_legendPlaceholder"></div>#}
                     <h2>DATA TRENDS CHART</h2>
+
                     <p>The data trends chart shows you when you received responses to your survey.</p>
+
                     <div id="chart_1_1" class="chart"></div>
                 </div>
                 <!-- END DROPDOWNS PORTLET-->
@@ -125,61 +139,16 @@
 {% block pluginjs %}
     <script src="{% static 'assets/global/plugins/flot/jquery.flot.min.js' %}"></script>
 
-    <script src="{% static 'assets/admin/pages/scripts/charts-flotcharts.js' %}"></script>
+
+    <script src="{% static 'assets/global/plugins/bootbox/bootbox.min.js' %}"></script>
+    <script src="{% static 'assets/survey/js/survey.detail.js' %}"></script>
+    {% django_js jquery=false i18n=false %}
 {% endblock %}
 
 {% block script %}
     <script>
         jQuery(document).ready(function () {
-            // bar chart:
-            var data = GenerateSeries(0);
-
-            function GenerateSeries(added) {
-                var data = [];
-                var start = 100 + added;
-                var end = 200 + added;
-
-                for (i = 1; i <= 20; i++) {
-                    var d = Math.floor(Math.random() * (end - start + 1) + start);
-                    data.push([i, d]);
-                    start++;
-                    end++;
-                }
-
-                return data;
-            }
-
-            var options = {
-                series: {
-                    bars: {
-                        show: true
-                    },
-                },
-                bars: {
-                    barWidth: 0.8,
-                    lineWidth: 0, // in pixels
-                    shadowSize: 0,
-                    align: 'left'
-                },
-
-                grid: {
-                    tickColor: "#eee",
-                    borderColor: "#eee",
-                    borderWidth: 1
-                }
-
-
-            };
-
-            if ($('#chart_1_1').size() !== 0) {
-                $.plot($("#chart_1_1"), [{
-                    data: data,
-                    lines: {
-                        lineWidth: 1,
-                    },
-                    shadowSize: 0
-                }], options);
-            }
+            surveyDetail.init();
 
         });
     </script>

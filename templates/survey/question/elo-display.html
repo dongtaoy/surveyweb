@@ -1,0 +1,41 @@
+{% load staticfiles %}
+<div class="portlet">
+    <div class="portlet-title">
+        <div class="caption font-green-sharp">
+            <span class="caption-subject bold uppercase">Question 1</span>
+        </div>
+        <div class="actions">
+            <a class="btn btn-sm btn-default">
+                <i class="fa fa-edit"></i> Edit
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div>
+            <h4 class="well">Please describe what kinds of world you like?</h4>
+
+            <div class="row">
+                <div class="active item">
+                    <div class="col-md-6">
+                        <a href=""><img src="{% static 'assets/admin/pages/media/gallery/image5.jpg' %}"
+                                        class="img-responsive"
+                                        alt=""></a>
+
+                        <div class="well" style="text-align: center"> First Thumbnail label
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <a href=""><img src="{% static 'assets/admin/pages/media/gallery/image2.jpg' %}"
+                                        class="img-responsive"
+                                        alt=""></a>
+
+                        <div class="well" style="text-align: center"> First Thumbnail label
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <button class="btn btn-default btn-sm btn-block" style="">I don't know.</button>
+        </div>
+    </div>
+</div>

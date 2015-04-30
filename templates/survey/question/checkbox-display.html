@@ -3,7 +3,7 @@
 
         <div class="caption font-green-sharp">
             <i class="icon-speech font-green-sharp"></i>
-            <span class="caption-subject bold uppercase"> Multiple Choice Display</span>
+            <span class="caption-subject bold uppercase"> Check Box Display</span>
         </div>
 
         <div class="tools">
@@ -15,7 +15,7 @@
         <div class="actions">
             <div class="btn-group">
                 <a class="btn btn-sm btn-default" href="javascript:;" data-toggle="dropdown">
-                    <i class="fa fa-user"></i> User <i class="fa fa-angle-down"></i>
+                    <i class="fa fa-pencil"></i> Actions <i class="fa fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu pull-right">
                     <li>
@@ -42,42 +42,50 @@
         <div class="scroller" data-rail-visible="1"
              data-rail-color="yellow" data-handle-color="#a1b2bd">
             <div class="form-group form-md-radios">
-                <h4 class="well">Question 1: Please choose the best one you like in the following options</h4>
+                <h4 class="well">Question 1: Please choose the one you like in the following options</h4>
 
-                <div class="md-radio-list" style="margin:30px">
-                    <div class="md-radio">
-                        <input type="radio" id="radio1" name="radio1" class="md-radiobtn">
-                        <label for="radio1">
+                <div class="md-checkbox-list" style="margin-left: 30px;">
+                    <div class="md-checkbox">
+                        <input type="checkbox" id="checkbox1" class="md-check">
+                        <label for="checkbox1">
                             <span></span>
                             <span class="check"></span>
                             <span class="box"></span>
                             Option 1 </label>
                     </div>
-                    <div class="md-radio">
-                        <input type="radio" id="radio2" name="radio1" class="md-radiobtn" checked>
-                        <label for="radio2">
+                    <div class="md-checkbox">
+                        <input type="checkbox" id="checkbox2" class="md-check" checked>
+                        <label for="checkbox2">
                             <span></span>
                             <span class="check"></span>
                             <span class="box"></span>
                             Option 2 </label>
                     </div>
-                    <div class="md-radio">
-                        <input type="radio" id="radio3" name="radio1" class="md-radiobtn">
-                        <label for="radio3">
+                    <div class="md-checkbox">
+                        <input type="checkbox" id="checkbox3" class="md-check">
+                        <label for="checkbox3">
                             <span></span>
                             <span class="check"></span>
                             <span class="box"></span>
                             Option 3 </label>
                     </div>
+                    <div class="md-checkbox">
+                        <input type="checkbox" id="checkbox4" disabled class="md-check">
+                        <label for="checkbox4">
+                            <span></span>
+                            <span class="check"></span>
+                            <span class="box"></span>
+                            Disabled </label>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row" style="margin-right: 0px;">
-                <div class="pull-right">
-                    <button class="btn btn-success btn-sm">Submit</button>
-                    <button class="btn btn-warning btn-sm">Reset</button>
-                </div>
+            <div class="pull-right">
+                <button class="btn btn-success btn-sm">Submit</button>
+                <button class="btn btn-warning btn-sm">Reset</button>
             </div>
+        </div>
     </div>
 
 </div>

@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required
-from survey.views import SurveyCreateView, SurveryDetailView
+from survey.views import SurveyCreateView, SurveryDetailView, SurveyDeleteView, SurveyUpdateView
 
 
 urlpatterns = patterns('',
@@ -8,9 +8,13 @@ urlpatterns = patterns('',
     # url(r'^$', 'SurveyWeb.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url("(?P<survey>\d+)/$", login_required(SurveryDetailView.as_view()), name="survey.detail"),
+    url(r"^(?P<survey>\d+)/$", login_required(SurveryDetailView.as_view()), name="survey.detail"),
 
-    url("^create/$", login_required(SurveyCreateView.as_view()), name="survey.create"),
+    url(r"^create/$", login_required(SurveyCreateView.as_view()), name="survey.create"),
 
+    url(r"^(?P<survey>\d+)/delete/$", login_required(SurveyDeleteView.as_view()), name="survey.delete"),
 
+    url(r"^(?P<survey>\d+)/edit/$", login_required(SurveyUpdateView.as_view()), name="survey.builder"),
+
+    url(r"^page/", include('survey.page.urls')),
 )

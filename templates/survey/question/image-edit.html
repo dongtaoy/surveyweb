@@ -1,0 +1,62 @@
+<div class="portlet light bordered">
+    <div class="portlet-title">
+        <div class="caption font-green-sharp">
+            <i class="icon-speech font-green-sharp"></i>
+            <span class="caption-subject bold uppercase">Editor</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse">
+            </a>
+            <a href="javascript:;" class="fullscreen">
+            </a>
+        </div>
+        <div class="actions">
+            <div class="btn-group">
+                <a class="btn btn-sm btn-default" href="javascript:;" data-toggle="dropdown">
+                    <i class="fa fa-pencil"></i> Actions <i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-arrow-up"></i> Upward </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-arrow-down"></i> Downward </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-trash-o"></i> Delete </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-ban"></i> Hide </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <p class="well">Please drag your images into this Area:</p>
+
+{#        <form action="/file-upload" class="dropzone" style="border: 2px dotted #4DB3A2;" id="image-edit-upload">#}
+{#            <div class="fallback">#}
+{#                <input name="file" type="file" multiple/>#}
+{#            </div>#}
+{#        </form>#}
+
+        <form action="/file-upload" class="dropzone" id="image-edit-upload" style="border: 2px dotted #4DB3A2;"></form>
+        <br/>
+
+        <div class="portlet-footer">
+            <div class="row" style="margin: 0px;">
+                <div class="pull-right">
+                    <button class="btn btn-success btn-sm">Save</button>
+                    <button class="btn btn-warning btn-sm">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

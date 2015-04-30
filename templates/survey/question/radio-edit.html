@@ -1,0 +1,82 @@
+<div class="portlet light bordered" xmlns="http://www.w3.org/1999/html">
+    <div class="portlet-title">
+        <div class="caption font-green-sharp">
+            <i class="icon-speech font-green-sharp"></i>
+            <span class="caption-subject bold uppercase"> Multiple Choice Editing</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse">
+            </a>
+            <a href="javascript:;" class="fullscreen">
+            </a>
+        </div>
+        <div class="actions">
+            <div class="btn-group">
+                <a class="btn btn-sm btn-default" href="javascript:;" data-toggle="dropdown">
+                    <i class="fa fa-pencil"></i> Actions <i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-arrow-up"></i> Upward </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-arrow-down"></i> Downward </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-trash-o"></i> Delete </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-ban"></i> Hide </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div>
+            <div>
+                <textarea class="wysihtml5 form-control" rows="3"
+                          placeholder="Please enter your question here"></textarea>
+            </div>
+            <br/>
+
+            <p class="note">Please create your choices for the answers:</p>
+
+            <div>
+                <div class="radioAddChoice">
+                    <div class="form-group">
+                        <div class="input-group " style="margin:2px 0">
+                            <span class="input-group-addon count">1.</span>
+
+                            <div class="input-group-control">
+                                <input type="text" class="form-control" placeholder="Choice">
+                            </div>
+                        <span class="input-group-btn btn-right actions">
+                            <button class="btn blue-madison" onclick="radioRemove(this)" type="button"><i
+                                    class="fa fa-minus fa-fw"></i>Remove
+                            </button>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+
+                <div class="row" style="margin: 0px;">
+                    <div class="pull-left">
+                        <button onclick="radioAdd('.radioAddChoice > .form-group')" class="btn btn-default btn-sm">
+                            <i class="fa  fa-plus fa-fw"></i>Add
+                        </button>
+                    </div>
+                    <div class="pull-right">
+                        <button class="btn btn-success btn-sm">Save</button>
+                        <button class="btn btn-warning btn-sm">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

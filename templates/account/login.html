@@ -1,5 +1,6 @@
 {% extends 'account/base.html' %}
 {% load bootstrap3 %}
+{% load socialaccount %}
 {% block content %}
     <!-- BEGIN LOGIN FORM -->
     <form class="login-form" action="{% url 'account_login' %}" method="post">
@@ -15,21 +16,21 @@
         <div class="login-options">
             <h4>Or login with</h4>
         <ul class="socialaccount_providers">
-        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+{#        {% include "socialaccount/snippets/provider_list.html" with process="login" %}#}
         </ul>
 
             {% include "socialaccount/snippets/login_extra.html" %}
             <ul class="social-icons">
                 <li>
-                    <a class="facebook" data-original-title="facebook" href="javascript:allauth.facebook.login('', 'authenticate', 'login')">
+                    <a class="facebook" data-original-title="facebook" href="{% provider_login_url "facebook" %}">
                     </a>
                 </li>
                 <li>
-                    <a class="twitter" data-original-title="Twitter" href="/accounts/twitter/login/?process=login">
+                    <a class="twitter" data-original-title="Twitter" href="{% provider_login_url "twitter" %}">
                     </a>
                 </li>
                 <li>
-                    <a class="googleplus" data-original-title="Goole Plus" href="/accounts/google/login/?process=login">
+                    <a class="googleplus" data-original-title="Goole Plus" href="{% provider_login_url "google" %}">
                     </a>
                 </li>
                 <li>

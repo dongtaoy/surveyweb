@@ -2,7 +2,7 @@
     <div class="portlet-title">
         <div class="caption font-green-sharp">
             <i class="icon-speech font-green-sharp"></i>
-            <span class="caption-subject bold uppercase"> Multiple Choice Editing</span>
+            <span class="caption-subject bold uppercase">Editor</span>
         </div>
         <div class="tools">
             <a href="javascript:;" class="collapse">
@@ -13,7 +13,7 @@
         <div class="actions">
             <div class="btn-group">
                 <a class="btn btn-sm btn-default" href="javascript:;" data-toggle="dropdown">
-                    <i class="fa fa-user"></i> User <i class="fa fa-angle-down"></i>
+                    <i class="fa fa-pencil"></i> Actions <i class="fa fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu pull-right">
                     <li>
@@ -47,7 +47,7 @@
             <p class="note">Please create your choices for the answers:</p>
 
             <div>
-                <div class="addchoice">
+                <div class="checkbox-add-choice">
                     <div class="form-group">
                         <div class="input-group " style="margin:2px 0">
                             <span class="input-group-addon count">1.</span>
@@ -65,15 +65,17 @@
                 </div>
                 <br/>
 
-                <div class="row" style="margin: 0px;">
-                    <div class="pull-left">
-                        <button onclick="add('.addchoice > .form-group')" class="btn btn-default btn-sm">
-                            <i class="fa  fa-plus fa-fw"></i>Add
-                        </button>
-                    </div>
-                    <div class="pull-right">
-                        <button class="btn btn-success btn-sm">Save</button>
-                        <button class="btn btn-warning btn-sm">Cancel</button>
+                <div class="portlet-footer">
+                    <div class="row" style="margin: 0px;">
+                        <div class="pull-left">
+                            <button onclick="add('.checkbox-add-choice > .form-group')" class="btn btn-default btn-sm">
+                                <i class="fa  fa-plus fa-fw"></i>Add
+                            </button>
+                        </div>
+                        <div class="pull-right">
+                            <button class="btn btn-success btn-sm">Save</button>
+                            <button class="btn btn-warning btn-sm">Cancel</button>
+                        </div>
                     </div>
                 </div>
             </div>
