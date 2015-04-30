@@ -5,13 +5,12 @@
 
 var surveyBuilder = (function () {
 
-
     var initTooltip = function () {
         $('[data-toggle="tooltip"]').tooltip();
     };
 
     var initNavbarMouseover = function () {
-        $(".nav-pills li a")
+        $(".nav-pills li")
             .mouseover(function () {
                 //alert($(this).html());
                 $(this).find("span").attr("class", "icon-plus pull-right add");
@@ -19,29 +18,17 @@ var surveyBuilder = (function () {
             .mouseout(function () {
                 $(this).find("span").attr("class", "");
             })
-            .off('click')
-            .on('click', function(){
-
-                pagePortlet = $('[id^=page_]').first();//.attr('id').replace(/[^\d.]/g, '');
-                console.log($(this).attr('href'));
-                $.get($(this).attr('href'))
-                    .done(function(data){
-                        if(pagePortlet.find('.emptyPage').length){
-                            pagePortlet.find('.pageBody').html(data);
-                        }else {
-                            pagePortlet.find('.pageBody').append(data);
-                        }
-                    });
-                return false;
-            });
     };
 
+    //$.fn.scrollBottom = function() {
+    //    return $(document).height() - this.scrollTop() - this.height();
+    //};
 
     var initNavbarFixed = function () {
         var headerHeight = $('.page-header').height() + $('.page-head').height();
         var footerHeight = $('.page-footer').height() + $('.page-prefooter').height() + 0;
 
-        var navbarAdjust = function(){
+        var scrollfunction = function () {
             if ($(window).scrollTop() > headerHeight) {
                 if (($(window).scrollTop() + $('.todo-sidebar').height() + 150) < ($(document).height() - footerHeight)) {
                     $('.todo-sidebar').css({
@@ -54,10 +41,10 @@ var surveyBuilder = (function () {
                 });
 
             }
-        };
+        }
         $(window)
-            .scroll(navbarAdjust)
-            .on('scrollstop', navbarAdjust);
+            .scroll(scrollfunction)
+            .on('scrollstop', scrollfunction);
     };
 
     var initPageCreateAjax = function () {
@@ -153,6 +140,22 @@ var surveyBuilder = (function () {
             });
     };
 
+    var initPageNumDisplay = function () {
+        var currentTop = $(document).scrollTop();
+        var pageNumber = $("#surveyPages").children("div").length;
+        var toleranceHeight = 50;
+        $(document).scroll(function () {
+            currentTop = $(document).scrollTop();
+            for (var i = 1; i <= pageNumber; i++) {
+                var currentDiv = $("#surveyPages > div:nth-child(" + i + ")").offset().top;
+                if (currentDiv >= currentTop-toleranceHeight){
+                    $("#currentPage").html("Current page:"+i);
+                    return;
+                }
+            }
+        })
+    };
+
     return {
         init: function () {
 
@@ -164,6 +167,7 @@ var surveyBuilder = (function () {
             initPageCreateAjax();
             initPageDeleteAjax();
             initPageEditAjax();
+            initPageNumDisplay();
         }
     }
 }());
