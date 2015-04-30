@@ -29,6 +29,7 @@ function getTranslateX(obj) {
 };
 
 var clicked = false;
+var alerted = false;
 
 moveNext = function () {
 
@@ -36,11 +37,20 @@ moveNext = function () {
         return;
     }
     clicked = true;
-    if (current == total) {
-        alert("No more image");
+
+    if (current == 9) {
         clicked = false;
-        return;
+        if (alerted) {
+            return;
+        } else {
+            alerted = true;
+            alert("No more image");
+            return;
+        }
     }
+
+    alerted = false;
+
     var obj = $("#carousel > img:nth-child(" + current + ")");
     var x = getTranslateX(obj);
     var angle = getRotationDegrees(obj);
@@ -107,17 +117,26 @@ moveNext = function () {
     setTimeout(function () {
         clicked = false;
     }, DURATION);
-}
+};
+
 moveBack = function () {
     if (clicked) {
         return;
     }
     clicked = true;
+
     if (current == 1) {
-        alert("No more image");
         clicked = false;
-        return;
+        if (alerted) {
+            return;
+        } else {
+            alerted = true;
+            alert("No more image");
+            return;
+        }
     }
+
+    alerted = false;
 
     var obj = $("#carousel > img:nth-child(" + current + ")");
     var x = getTranslateX(obj);
@@ -184,20 +203,12 @@ moveBack = function () {
     setTimeout(function () {
         clicked = false;
     }, DURATION);
-}
-
-$("#nextCarousel").click(function () {
-    nextClick++;
-    backClick = 0;
-    moveNext();
-    nextClick_loop(nextClick - 1);
-});
+};
 
 function nextClick_loop(total_click) {
     setTimeout(function () {
         if (total_click <= 0) {
             nextClick = 0;
-            firstTime = true;
             return;
         } else {
             total_click--;
@@ -207,19 +218,10 @@ function nextClick_loop(total_click) {
     }, DURATION);
 }
 
-
-$("#backCarousel").click(function () {
-    backClick++;
-    nextClick = 0;
-    moveBack();
-    backClick_loop(backClick - 1);
-});
-
 function backClick_loop(total_click) {
     setTimeout(function () {
         if (total_click <= 0) {
             backClick = 0;
-            firstTime = true;
             return;
         } else {
             total_click--;
@@ -229,41 +231,31 @@ function backClick_loop(total_click) {
     }, DURATION);
 }
 
+$("#nextCarousel").click(function () {
+    nextClick++;
+    backClick = 0;
+    moveNext();
+    nextClick_loop(nextClick - 1);
+});
+
+
+$("#backCarousel").click(function () {
+    backClick++;
+    nextClick = 0;
+    moveBack();
+    backClick_loop(backClick - 1);
+});
 
 for (var i = 1; i <= total; i++) {
     $("#carousel > img:nth-child(" + i + ")").click(function () {
         var position = $(this).index() + 1;
         var diff = position - current;
         if (diff > 0) {
-            var j = diff;
             moveNext();
-            j--;
-            function forward_loop() {
-                setTimeout(function () {
-                    moveNext();
-                    j--;
-                    if (j > 0) {
-                        forward_loop();
-                    }
-                }, DURATION);
-            }
-
-            forward_loop();
+            nextClick_loop(diff - 1);
         } else if (diff < 0) {
-            var k = diff;
             moveBack();
-            k++;
-            function backward_loop() {
-                setTimeout(function () {
-                    moveBack();
-                    k++;
-                    if (k < 0) {
-                        backward_loop();
-                    }
-                }, DURATION);
-            }
-
-            backward_loop();
+            backClick_loop(Math.abs(diff) - 1);
         }
     })
 }
