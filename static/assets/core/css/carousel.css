@@ -76,6 +76,11 @@
     -webkit-transform: translateX(340px) translateZ(288px) rotateY(-45deg);
     transform: translateX(340px) translateZ(288px) rotateY(-45deg);
 }
+#carousel img:nth-child(10){
+    -ms-transform: translateX(360px) translateZ(288px) rotateY(-45deg);
+    -webkit-transform: translateX(360px) translateZ(288px) rotateY(-45deg);
+    transform: translateX(360px) translateZ(288px) rotateY(-45deg);
+}
 
 #carousel img:nth-child(5){
     visibility: hidden;
@@ -94,5 +99,9 @@
 }
 
 #carousel img:nth-child(9){
+    visibility: hidden;
+}
+
+#carousel img:nth-child(10){
     visibility: hidden;
 }

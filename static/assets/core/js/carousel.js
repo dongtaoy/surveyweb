@@ -1,4 +1,4 @@
-var total = 9;
+var total = 10;
 var current = 1;
 var DURATION = 1000;
 var nextClick = 0;
@@ -38,8 +38,9 @@ moveNext = function () {
     }
     clicked = true;
 
-    if (current == 9) {
+    if (current == total) {
         clicked = false;
+
         if (alerted) {
             return;
         } else {
