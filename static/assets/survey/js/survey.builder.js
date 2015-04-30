@@ -150,7 +150,7 @@ var surveyBuilder = (function () {
                 var currentDiv = $("#surveyPages > div:nth-child(" + i + ")").offset().top;
                 if (currentDiv >= currentTop-toleranceHeight){
                     $("#currentPage").html("Current page:"+i);
-                    return;
+                    return ;
                 }
             }
         })
