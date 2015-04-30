@@ -59,7 +59,7 @@ var surveyBuilder = (function () {
                                 // Post ajax request to delete a page
                                 $.post(Django.url('page.delete', surveyId, pageId), function (response) {
                                     // if successfully deleted a page
-                                    if (response['content']) {
+                                    if (response['status'] == 200) {
                                         // loop all the portlet that is after current, change the title
                                         pagePortlet.nextAll('.portlet').each(function () {
                                             $(this).find('.caption-subject.bold.uppercase').text("page " + (pageOrder++));
@@ -94,10 +94,14 @@ var surveyBuilder = (function () {
                 }
                 $.post(Django.url('page.edit', surveyId, pageId), {"page": pageId, "order": pageOrder})
                     .done(function (response) {
-                        if (response['content']) {
+                        if (response['status'] == 200) {
                             if (isUp) {
+                                $(pagePortlet).find('.caption-subject.bold.uppercase').text('Page ' + pageOrder);
+                                $(pagePortlet).prev('.portlet').find('.caption-subject.bold.uppercase').text('Page ' + (pageOrder + 1));
                                 $(pagePortlet).insertBefore($(pagePortlet).prev('.portlet'));
                             } else {
+                                $(pagePortlet).find('.caption-subject.bold.uppercase').text('Page ' + pageOrder);
+                                $(pagePortlet).prev('.portlet').find('.caption-subject.bold.uppercase').text('Page ' + (pageOrder - 1));
                                 $(pagePortlet).insertAfter($(pagePortlet).next('.portlet'));
 
                             }

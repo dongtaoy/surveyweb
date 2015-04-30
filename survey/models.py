@@ -62,9 +62,9 @@ class Page(models.Model):
     def save(self, *args, **kwargs):
         if self.order is None:
             self.order = self.survey.pages.count() + 1
-        assign_perm('survey.delete_page', self.survey.creator)
-        assign_perm('survey.change_page', self.survey.creator)
-        return super(Page, self).save(*args, **kwargs)
+        super(Page, self).save(*args, **kwargs)
+        assign_perm('survey.delete_page', self.survey.creator, self)
+        assign_perm('survey.change_page', self.survey.creator, self)
 
     def __unicode__(self):
         return "%s - %s - %d" % (self.survey, self.title, self.order)

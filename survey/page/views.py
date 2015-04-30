@@ -26,16 +26,13 @@ class PageDeleteView(AJAXMixin, PermissionRequiredMixin, DeleteView):
         pass
 
     def delete(self, *args, **kwargs):
-        try:
-            with atomic():
-                self.object = self.get_object()
-                for p in Page.objects.filter(order__gt=self.object.order).filter(survey=self.object.survey):
-                    p.order -= 1
-                    p.save()
-                self.object.delete()
-                return True
-        except:
-            return False
+        with atomic():
+            self.object = self.get_object()
+            for p in Page.objects.filter(order__gt=self.object.order).filter(survey=self.object.survey):
+                p.order -= 1
+                p.save()
+            self.object.delete()
+            return True
 
 
 class PageUpdateView(AJAXMixin, PermissionRequiredMixin, UpdateView):
@@ -50,15 +47,12 @@ class PageUpdateView(AJAXMixin, PermissionRequiredMixin, UpdateView):
         if form.cleaned_data['order'] == 0:
             return False
         else:
-            try:
-                with atomic():
-                    page = Page.objects.get(survey=self.object.survey, order=form.cleaned_data['order'])
-                    page.order = self.object.order
-                    page.save()
-                    form.save()
-                    return True
-            except:
-                return False
+            with atomic():
+                page = Page.objects.get(survey=self.object.survey, order=form.cleaned_data['order'])
+                page.order = self.object.order
+                page.save()
+                form.save()
+                return True
 
 
 
