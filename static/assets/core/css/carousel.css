@@ -20,79 +20,88 @@
     height: 116px;
     left: 10px;
     top: 10px;
-    /*border: 2px solid black;*/
+    border: 1px solid #c1d6e7;
 }
 
-#carousel a:nth-child(1) img {
+#carousel img:nth-child(1){
     -ms-transform: translateX(0px) translateZ(500px);
     -webkit-transform: translateX(0px) translateZ(500px);
     transform: translateX(0px) translateZ(500px);
 }
 
-#carousel a:nth-child(2) img {
+#carousel img:nth-child(2){
     -ms-transform: translateX(200px) translateZ(288px) rotateY(-45deg);
     -webkit-transform: translateX(200px) translateZ(288px) rotateY(-45deg);
     transform: translateX(200px) translateZ(288px) rotateY(-45deg);
 }
 
-#carousel a:nth-child(3) img {
+#carousel img:nth-child(3){
     -ms-transform: translateX(220px) translateZ(288px) rotateY(-45deg);
     -webkit-transform: translateX(220px) translateZ(288px) rotateY(-45deg);
     transform: translateX(220px) translateZ(288px) rotateY(-45deg);
 }
 
-#carousel a:nth-child(4) img {
+#carousel img:nth-child(4){
     -ms-transform: translateX(240px) translateZ(288px) rotateY(-45deg);
     -webkit-transform: translateX(240px) translateZ(288px) rotateY(-45deg);
     transform: translateX(240px) translateZ(288px) rotateY(-45deg);
 }
 
-#carousel a:nth-child(5) img {
+#carousel img:nth-child(5){
     -ms-transform:translateX(260px) translateZ(288px) rotateY(-45deg);
     -webkit-transform: translateX(260px) translateZ(288px) rotateY(-45deg);
     transform: translateX(260px) translateZ(288px) rotateY(-45deg);
 }
 
-#carousel a:nth-child(6) img {
+#carousel img:nth-child(6){
     -ms-transform: translateX(280px) translateZ(288px) rotateY(-45deg);
     -webkit-transform: translateX(280px) translateZ(288px) rotateY(-45deg);
     transform: translateX(280px) translateZ(288px) rotateY(-45deg);
 }
 
-#carousel a:nth-child(7) img {
+#carousel img:nth-child(7){
     -ms-transform: translateX(300px) translateZ(288px) rotateY(-45deg);
     -webkit-transform: translateX(300px) translateZ(288px) rotateY(-45deg);
     transform: translateX(300px) translateZ(288px) rotateY(-45deg);
 }
 
-#carousel a:nth-child(8) img {
+#carousel img:nth-child(8){
     -ms-transform: translateX(320px) translateZ(288px) rotateY(-45deg);
     -webkit-transform: translateX(320px) translateZ(288px) rotateY(-45deg);
     transform: translateX(320px) translateZ(288px) rotateY(-45deg);
 }
 
-#carousel a:nth-child(9) img {
+#carousel img:nth-child(9){
     -ms-transform: translateX(340px) translateZ(288px) rotateY(-45deg);
     -webkit-transform: translateX(340px) translateZ(288px) rotateY(-45deg);
     transform: translateX(340px) translateZ(288px) rotateY(-45deg);
 }
+#carousel img:nth-child(10){
+    -ms-transform: translateX(360px) translateZ(288px) rotateY(-45deg);
+    -webkit-transform: translateX(360px) translateZ(288px) rotateY(-45deg);
+    transform: translateX(360px) translateZ(288px) rotateY(-45deg);
+}
 
-#carousel a:nth-child(5) img {
+#carousel img:nth-child(5){
     visibility: hidden;
 }
 
-#carousel a:nth-child(6) img {
+#carousel img:nth-child(6){
     visibility: hidden;
 }
 
-#carousel a:nth-child(7) img {
+#carousel img:nth-child(7){
     visibility: hidden;
 }
 
-#carousel a:nth-child(8) img {
+#carousel img:nth-child(8){
     visibility: hidden;
 }
 
-#carousel a:nth-child(9) img {
+#carousel img:nth-child(9){
+    visibility: hidden;
+}
+
+#carousel img:nth-child(10){
     visibility: hidden;
 }
