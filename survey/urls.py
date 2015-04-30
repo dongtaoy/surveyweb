@@ -1,3 +1,4 @@
+__author__ = 'dongtaoy'
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required
 from survey.views import SurveyCreateView, SurveryDetailView, SurveyDeleteView, SurveyUpdateView
@@ -17,4 +18,6 @@ urlpatterns = patterns('',
     url(r"^(?P<survey>\d+)/edit/$", login_required(SurveyUpdateView.as_view()), name="survey.builder"),
 
     url(r"^page/", include('survey.page.urls')),
+
+    url(r"^question/", include('survey.question.urls')),
 )
