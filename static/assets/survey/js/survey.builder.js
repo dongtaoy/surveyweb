@@ -153,6 +153,22 @@ var surveyBuilder = (function () {
             });
     };
 
+    var initPageNumDisplay = function () {
+        var currentTop = $(document).scrollTop();
+        var pageNumber = $("#surveyPages").children("div").length;
+        var toleranceHeight = 50;
+        $(document).scroll(function () {
+            currentTop = $(document).scrollTop();
+            for (var i = 1; i <= pageNumber; i++) {
+                var currentDiv = $("#surveyPages > div:nth-child(" + i + ")").offset().top;
+                if (currentDiv >= currentTop-toleranceHeight){
+                    $("#currentPage").html("Current page:"+i);
+                    return;
+                }
+            }
+        })
+    };
+
     return {
         init: function () {
 
@@ -164,6 +180,8 @@ var surveyBuilder = (function () {
             initPageCreateAjax();
             initPageDeleteAjax();
             initPageEditAjax();
+
+            initPageNumDisplay();
         }
     }
 }());
