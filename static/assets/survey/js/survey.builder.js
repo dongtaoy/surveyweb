@@ -30,6 +30,7 @@ var surveyBuilder = (function () {
                             pagePortlet.find('.pageBody').html(data);
                         }else {
                             pagePortlet.find('.pageBody').append(data);
+                            console.log('111');
                         }
                     });
                 return false;
