@@ -33,7 +33,7 @@
                     {% include "survey/page/survey.page.html" %}
                 {% endfor %}
 
-                <form class="pageCreateForm" action="{% url 'page.create' survey.id %}" method="POST"
+                <form class="pageCreateForm" action="{% url 'page.create' %}" method="POST"
                       style="margin-bottom: 25px;">
                     {% csrf_token %}
                     <input type="hidden" name="survey" value="{{ survey.id }}"/>
@@ -73,7 +73,7 @@
 {% block script %}
     <script>
         jQuery(document).ready(function () {
-            surveyBuilder.init({{ survey.id }});
+            surveyBuilder.init();
         })
     </script>
 {% endblock %}

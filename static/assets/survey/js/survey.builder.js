@@ -5,7 +5,6 @@
 
 var surveyBuilder = (function () {
 
-    var surveyId;
 
     var initTooltip = function () {
         $('[data-toggle="tooltip"]').tooltip();
@@ -63,7 +62,7 @@ var surveyBuilder = (function () {
                             className: "btn-danger",
                             callback: function () {
                                 // Post ajax request to delete a page
-                                $.post(Django.url('page.delete', surveyId, pageId), function (response) {
+                                $.post(Django.url('page.delete', pageId), function (response) {
                                     // if successfully deleted a page
                                     if (response['status'] == 200) {
                                         // loop all the portlet that is after current, change the title
@@ -98,7 +97,7 @@ var surveyBuilder = (function () {
                 else {
                     pageOrder++;
                 }
-                $.post(Django.url('page.edit', surveyId, pageId), {"page": pageId, "order": pageOrder})
+                $.post(Django.url('page.edit', pageId), {"page": pageId, "order": pageOrder})
                     .done(function (response) {
                         if (response['status'] == 200) {
                             if (isUp) {
@@ -122,9 +121,8 @@ var surveyBuilder = (function () {
     };
 
     return {
-        init: function (id) {
+        init: function () {
 
-            surveyId = id;
 
             initNavbarFixed();
             initTooltip();

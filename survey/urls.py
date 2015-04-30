@@ -16,5 +16,5 @@ urlpatterns = patterns('',
 
     url(r"^(?P<survey>\d+)/edit/$", login_required(SurveyUpdateView.as_view()), name="survey.builder"),
 
-    url(r"(?P<survey>\d+)/page/", include('survey.page.urls')),
+    url(r"^page/", include('survey.page.urls')),
 )
