@@ -22,6 +22,12 @@ var surveyBuilder = (function () {
             })
     };
 
+    var initNavbarFixed = function (){
+      $(window).scroll(function(e) {
+          console.log(e);
+      })
+    };
+
     var initPageCreateAjax = function () {
         $('.pageCreateForm')
             .off('submit')
@@ -120,6 +126,7 @@ var surveyBuilder = (function () {
 
             surveyId = id;
 
+            initNavbarFixed();
             initTooltip();
             initNavbarMouseover();
 

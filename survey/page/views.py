@@ -45,7 +45,7 @@ class PageUpdateView(AJAXMixin, PermissionRequiredMixin, UpdateView):
     def form_valid(self, form):
         self.object = self.get_object()
         if form.cleaned_data['order'] == 0:
-            return False
+            raise Exception
         else:
             with atomic():
                 page = Page.objects.get(survey=self.object.survey, order=form.cleaned_data['order'])
