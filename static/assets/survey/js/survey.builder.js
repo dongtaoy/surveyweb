@@ -21,10 +21,31 @@ var surveyBuilder = (function () {
             })
     };
 
-    var initNavbarFixed = function (){
-      $(window).scroll(function(e) {
-          console.log(e);
-      })
+    //$.fn.scrollBottom = function() {
+    //    return $(document).height() - this.scrollTop() - this.height();
+    //};
+
+    var initNavbarFixed = function () {
+        var headerHeight = $('.page-header').height() + $('.page-head').height();
+        var footerHeight = $('.page-footer').height() + $('.page-prefooter').height() + 0;
+
+        var scrollfunction = function(){
+            if ($(window).scrollTop() > headerHeight) {
+                if (($(window).scrollTop() + $('.todo-sidebar').height() + 150) < ($(document).height() - footerHeight)) {
+                    $('.todo-sidebar').css({
+                        'margin-top': $(window).scrollTop() - headerHeight + 'px'
+                    });
+                }
+            } else {
+                $('.todo-sidebar').css({
+                    'margin-top': 0 + 'px'
+                });
+
+            }
+        }
+        $(window)
+            .scroll(scrollfunction)
+            .on('scrollstop', scrollfunction);
     };
 
     var initPageCreateAjax = function () {
