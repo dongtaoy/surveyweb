@@ -42,7 +42,7 @@ var surveyBuilder = (function () {
         var headerHeight = $('.page-header').height() + $('.page-head').height();
         var footerHeight = $('.page-footer').height() + $('.page-prefooter').height() + 0;
 
-        var navbarAdjust = function(){
+        var navbarAdjust = function () {
             if ($(window).scrollTop() > headerHeight) {
                 if (($(window).scrollTop() + $('.todo-sidebar').height() + 150) < ($(document).height() - footerHeight)) {
                     $('.todo-sidebar').css({
@@ -161,12 +161,26 @@ var surveyBuilder = (function () {
             currentTop = $(document).scrollTop();
             for (var i = 1; i <= pageNumber; i++) {
                 var currentDiv = $("#surveyPages > div:nth-child(" + i + ")").offset().top;
-                if (currentDiv >= currentTop-toleranceHeight){
+                if (currentDiv >= currentTop - toleranceHeight) {
                     $("#pageSelect").val(i);
                     return;
                 }
             }
         })
+    };
+
+    var initPageDirect = function () {
+        var pageNumber = $("#surveyPages").children("div").length;
+
+        $("#pageSelect").click(function () {
+            for (var i = 1; i <= pageNumber; i++) {
+                if ($(this).val() == i) {
+                    var pageTop = $("#surveyPages > div:nth-child(" + i + ")").offset().top;
+                    $(document).scrollTop(pageTop);
+                    return;
+                }
+            }
+        });
     };
 
     return {
@@ -182,9 +196,10 @@ var surveyBuilder = (function () {
             initPageEditAjax();
 
             initPageNumDisplay();
+            initPageDirect();
         },
-        WYSIHTML5OPTIONS : {
-            toolbar:{
+        WYSIHTML5OPTIONS: {
+            toolbar: {
                 "html": true,
                 "link": false,
                 "image": false,
