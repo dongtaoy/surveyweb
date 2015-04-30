@@ -10,7 +10,7 @@ var surveyBuilder = (function () {
         $('[data-toggle="tooltip"]').tooltip();
     };
 
-    var initNavbarMouseover = function () {
+    var initNavbar = function () {
         $(".nav-pills li a")
             .mouseover(function () {
                 //alert($(this).html());
@@ -21,17 +21,18 @@ var surveyBuilder = (function () {
             })
             .off('click')
             .on('click', function () {
-
-                pagePortlet = $('[id^=page_]').first();//.attr('id').replace(/[^\d.]/g, '');
-                console.log($(this).attr('href'));
-                $.get($(this).attr('href'))
-                    .done(function (data) {
-                        if (pagePortlet.find('.emptyPage').length) {
-                            pagePortlet.find('.pageBody').html(data);
-                        } else {
-                            pagePortlet.find('.pageBody').append(data);
-                        }
-                    });
+                if ($('.question_edit').length == 0) {
+                    pagePortlet = $('[id^=page_]').first();
+                    $.get($(this).attr('href'))
+                        .done(function (data) {
+                            if (pagePortlet.find('.emptyPage').length) {
+                                console.log($(data));
+                                pagePortlet.find('.pageBody').html($(data));
+                            } else {
+                                pagePortlet.find('.pageBody').append(data);
+                            }
+                        });
+                }
                 return false;
             });
     };
@@ -121,7 +122,6 @@ var surveyBuilder = (function () {
                 pagePortlet = $(this).closest('.portlet');
                 pageId = pagePortlet.attr('id').replace(/[^\d.]/g, '');
                 pageOrder = pagePortlet.find('.caption-subject.bold.uppercase').text().replace(/[^\d.]/g, '');
-                console.log(pageId, pageOrder);
                 isUp = false;
                 if (/up/.test($(this).text().toLowerCase())) {
                     isUp = true;
@@ -134,12 +134,12 @@ var surveyBuilder = (function () {
                     .done(function (response) {
                         if (response['status'] == 200) {
                             if (isUp) {
-                                $(pagePortlet).find('.caption-subject.bold.uppercase').text('Page ' + pageOrder);
-                                $(pagePortlet).prev('.portlet').find('.caption-subject.bold.uppercase').text('Page ' + (pageOrder + 1));
+                                $(pagePortlet).find('.caption-subject.bold.uppercase.page').text('Page ' + pageOrder);
+                                $(pagePortlet).prev('.portlet').find('.caption-subject.bold.uppercase.page').text('Page ' + (pageOrder + 1));
                                 $(pagePortlet).insertBefore($(pagePortlet).prev('.portlet'));
                             } else {
-                                $(pagePortlet).find('.caption-subject.bold.uppercase').text('Page ' + pageOrder);
-                                $(pagePortlet).prev('.portlet').find('.caption-subject.bold.uppercase').text('Page ' + (pageOrder - 1));
+                                $(pagePortlet).find('.caption-subject.bold.uppercase.page').text('Page ' + pageOrder);
+                                $(pagePortlet).next('.portlet').find('.caption-subject.bold.uppercase.page').text('Page ' + (pageOrder - 1));
                                 $(pagePortlet).insertAfter($(pagePortlet).next('.portlet'));
 
                             }
@@ -175,7 +175,7 @@ var surveyBuilder = (function () {
 
             initNavbarFixed();
             initTooltip();
-            initNavbarMouseover();
+            initNavbar();
 
             initPageCreateAjax();
             initPageDeleteAjax();
