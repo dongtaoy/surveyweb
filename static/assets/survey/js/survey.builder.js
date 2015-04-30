@@ -20,15 +20,15 @@ var surveyBuilder = (function () {
                 $(this).find("span").attr("class", "");
             })
             .off('click')
-            .on('click', function(){
+            .on('click', function () {
 
                 pagePortlet = $('[id^=page_]').first();//.attr('id').replace(/[^\d.]/g, '');
                 console.log($(this).attr('href'));
                 $.get($(this).attr('href'))
-                    .done(function(data){
-                        if(pagePortlet.find('.emptyPage').length){
+                    .done(function (data) {
+                        if (pagePortlet.find('.emptyPage').length) {
                             pagePortlet.find('.pageBody').html(data);
-                        }else {
+                        } else {
                             pagePortlet.find('.pageBody').append(data);
                         }
                     });
@@ -182,6 +182,15 @@ var surveyBuilder = (function () {
             initPageEditAjax();
 
             initPageNumDisplay();
+        },
+        WYSIHTML5OPTIONS : {
+            toolbar:{
+                "html": true,
+                "link": false,
+                "image": false,
+                "blockquote": false,
+                "size": "md"
+            }
         }
     }
 }());

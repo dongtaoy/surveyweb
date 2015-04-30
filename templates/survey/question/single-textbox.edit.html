@@ -37,6 +37,7 @@
             <textarea class="wysihtml5 form-control" rows="5" placeholder="Please enter your question here"></textarea>
         </div>
         <br/>
+
         <div class="portlet-footer">
             <div class="row" style="margin: 0px;">
                 <div class="pull-right">
@@ -46,5 +47,9 @@
             </div>
         </div>
     </div>
-
 </div>
+<script>
+    (function () {
+        $('.wysihtml5').wysihtml5(surveyBuilder.WYSIHTML5OPTIONS);
+    }());
+</script>
