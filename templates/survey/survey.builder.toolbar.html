@@ -1,37 +1,44 @@
 <div class="col-md-3">
-<div class="todo-sidebar">
-    <div class="portlet light" >
-        <div class="portlet-title" >
-            <div class="caption" data-target=".todo-project-list-content-1">
-                <span class="caption-subject font-green-sharp bold uppercase">BUILDER</span>
+    <div class="todo-sidebar">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption" data-target=".todo-project-list-content-1">
+                    <span class="caption-subject font-green-sharp bold uppercase">BUILDER</span>
+                </div>
             </div>
-            <i class="pull-right" id="currentPage">Current Page: 1 </i>
-        </div>
-
-        <div class="portlet-body todo-project-list-content-1">
-            <div class="todo-project-list">
-                <ul class="nav nav-pills nav-stacked">
-                    {% for questiontype in questiontypes %}
-                        <li>
-                            <a data-placement="right" data-toggle="tooltip"
-                               href="{% url 'question.create' questiontype.id %}" title=""
-                               data-original-title="{{ questiontype.helper }} "><i
-                                    class="{{ questiontype.icon_css }} "></i> | {{ questiontype.name }} <span
-                                    style="padding-top: 1px"></span></a>
-                        </li>
-                    {% endfor %}
-                    <hr/>
-                    <div class="btn-group btn-group-justified">
-                        <a class="btn btn-default" href="{% url 'survey.detail' survey.id %}">
-                            <i class="fa fa-arrow-left"></i> back
-                        </a>
-                        <a class="btn btn-default">Next
-                            <i class="fa fa-arrow-right"></i></a>
-                        </a>
-                    </div>
-                </ul>
+            <div class="form-group">
+                <select class="form-control input-sm" id="pageSelect">
+                    <option value="1">Page 1</option>
+                    <option value="2">Page 2</option>
+                    <option value="3">Page 3</option>
+                    <option value="4">Page 4</option>
+                    <option value="5">Page 5</option>
+                </select>
+            </div>
+            <div class="portlet-body todo-project-list-content-1">
+                <div class="todo-project-list">
+                    <ul class="nav nav-pills nav-stacked">
+                        {% for questiontype in questiontypes %}
+                            <li>
+                                <a data-placement="right" data-toggle="tooltip"
+                                   href="{% url 'question.create' questiontype.id %}" title=""
+                                   data-original-title="{{ questiontype.helper }} "><i
+                                        class="{{ questiontype.icon_css }} "></i> | {{ questiontype.name }} <span
+                                        style="padding-top: 1px"></span></a>
+                            </li>
+                        {% endfor %}
+                        <hr/>
+                        <div class="btn-group btn-group-justified">
+                            <a class="btn btn-default" href="{% url 'survey.detail' survey.id %}">
+                                <i class="fa fa-arrow-left"></i> back
+                            </a>
+                            <a class="btn btn-default">Next
+                                <i class="fa fa-arrow-right"></i></a>
+                            </a>
+                        </div>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>

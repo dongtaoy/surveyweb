@@ -162,7 +162,7 @@ var surveyBuilder = (function () {
             for (var i = 1; i <= pageNumber; i++) {
                 var currentDiv = $("#surveyPages > div:nth-child(" + i + ")").offset().top;
                 if (currentDiv >= currentTop-toleranceHeight){
-                    $("#currentPage").html("Current page:"+i);
+                    $("#pageSelect").val(i);
                     return;
                 }
             }
