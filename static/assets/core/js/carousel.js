@@ -251,6 +251,10 @@ for (var i = 1; i <= total; i++) {
     $("#carousel > img:nth-child(" + i + ")").click(function () {
         var position = $(this).index() + 1;
         var diff = position - current;
+        if (diff == 0){
+            var url = $(this).attr("src");
+            window.open(url, '_blank');
+        }
         if (diff > 0) {
             moveNext();
             nextClick_loop(diff - 1);
