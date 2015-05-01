@@ -100,6 +100,9 @@ class QuestionType(models.Model):
     class Meta:
         ordering = ['order']
 
+    def get_edit_template_name(self):
+        return "survey/question/%s.edit.html" % self.name.lower().replace(' ', '-')
+
     def __unicode__(self):
         return self.name
 

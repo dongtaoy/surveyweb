@@ -9,6 +9,4 @@ class QuestionContainerCreateView(CreateView):
     # template_name = ''
 
     def get_template_names(self):
-        name = "survey/question/%s.edit.html" \
-               % QuestionType.objects.get(id=self.kwargs['questiontype']).name.lower().replace(' ', '-')
-        return name
+        return QuestionType.objects.get(id=self.kwargs['questiontype']).get_edit_template_name()
