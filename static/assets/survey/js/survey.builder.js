@@ -65,7 +65,8 @@ var surveyBuilder = (function () {
             .on('click', function () {
                 if ($('.question-edit').length == 0) {
                     var notify = $.notify("Add new question...");
-                    pagePortlet = $('[id^=page_]').first();
+                    var pageNumber = $('#pageSelect').val();
+                    pagePortlet = $('#surveyPages').children().eq(pageNumber-1);
                     $.get($(this).attr('href'))
                         .done(function (data) {
                             if (pagePortlet.find('.empty-page').length) {
