@@ -41,7 +41,7 @@ var surveyBuilder = (function () {
                     $('#builderNav').css({
                         'margin-top': $(window).scrollTop() - headerHeight + 'px'
                     });
-                }else{
+                } else {
                     $('#builderNav').css({
                         'margin-top': maximumTop - headerHeight + 'px'
                     });
@@ -110,6 +110,10 @@ var surveyBuilder = (function () {
                         $(response).insertBefore('.pageCreateForm');
                         initPageDeleteAjax();
                         initPageEditAjax();
+                        initNavbar();
+                        initPageSelect();
+                        initPageDirect();
+                        initPageNumDisplay();
                     }
                 });
                 return false
@@ -229,6 +233,15 @@ var surveyBuilder = (function () {
             }
         });
     };
+
+    var initPageSelect = function () {
+        var pageNumber = $("#surveyPages").children("div").length;
+        $("#pageSelect").find('option').remove();
+        for (var i = 1; i <= pageNumber; i++) {
+            $("#pageSelect").append("<option value="+i+">Page "+i+"</option>");
+        }
+        $("#pageSelect").val(pageNumber);
+    }
 
     return {
         init: function () {
