@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.db.transaction import atomic
 from guardian.mixins import PermissionRequiredMixin
 from survey.models import Survey, QuestionType, Page
-from survey.forms import SurveyFrom
+from survey.forms import SurveyForm
 
 
 
@@ -22,7 +22,7 @@ class SurveryDetailView(PermissionRequiredMixin, DetailView):
 class SurveyCreateView(CreateView):
     template_name = "survey/survey.create.html"
     success_url = reverse_lazy("view.detail")
-    form_class = SurveyFrom
+    form_class = SurveyForm
 
     def form_valid(self, form):
         with atomic():
@@ -35,7 +35,7 @@ class SurveyCreateView(CreateView):
 
 
 class SurveyUpdateView(PermissionRequiredMixin, UpdateView):
-    form_class = SurveyFrom
+    form_class = SurveyForm
     model = Survey
     pk_url_kwarg = 'survey'
     permission_required = 'survey.change_survey'
