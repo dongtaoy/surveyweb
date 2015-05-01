@@ -5,6 +5,15 @@
 
 var surveyBuilder = (function () {
 
+    var WYSIHTML5OPTIONS = {
+        toolbar: {
+            "html": true,
+            "link": false,
+            "image": false,
+            "blockquote": false,
+            "size": "md"
+        }
+    };
 
     var initTooltip = function () {
         $('[data-toggle="tooltip"]').tooltip();
@@ -21,22 +30,27 @@ var surveyBuilder = (function () {
             })
             .off('click')
             .on('click', function () {
-                if ($('.question_edit').length == 0) {
+                if ($('.question-edit').length == 0) {
                     pagePortlet = $('[id^=page_]').first();
                     $.get($(this).attr('href'))
                         .done(function (data) {
-                            if (pagePortlet.find('.emptyPage').length) {
-                                console.log($(data));
-                                pagePortlet.find('.pageBody').html($(data));
+                            if (pagePortlet.find('.empty-page').length) {
+                                pagePortlet.find('.page-body').html($(data));
+                                initQuestionPlugin($(data));
                             } else {
-                                pagePortlet.find('.pageBody').append(data);
+                                pagePortlet.find('.page-body').append(data);
                             }
                         });
+                } else{
+                    $.notify("12211321");
                 }
                 return false;
             });
     };
 
+    var initQuestionPlugin = function () {
+        $('.question-edit').find('textarea').wysihtml5(WYSIHTML5OPTIONS);
+    };
 
     var initNavbarFixed = function () {
         var headerHeight = $('.page-header').height() + $('.page-head').height();
@@ -114,7 +128,6 @@ var surveyBuilder = (function () {
             });
     };
 
-
     var initPageEditAjax = function () {
         $('.pageEdit')
             .off('click')
@@ -176,7 +189,7 @@ var surveyBuilder = (function () {
             for (var i = 1; i <= pageNumber; i++) {
                 if ($(this).val() == i) {
                     var pageTop = $("#surveyPages > div:nth-child(" + i + ")").offset().top;
-                    $(document).scrollTop(pageTop);
+                    $(document).scrollTop(pageTop)
                     return;
                 }
             }
@@ -197,15 +210,6 @@ var surveyBuilder = (function () {
 
             initPageNumDisplay();
             initPageDirect();
-        },
-        WYSIHTML5OPTIONS: {
-            toolbar: {
-                "html": true,
-                "link": false,
-                "image": false,
-                "blockquote": false,
-                "size": "md"
-            }
         }
     }
 }());
