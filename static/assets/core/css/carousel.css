@@ -1,9 +1,9 @@
 .carouselContainer {
-    width: 210px;
-    height: 140px;
+    width: 260px;
+    height: 180px;
     position: relative;
     perspective: 1000px;
-    margin: 100px auto;
+    margin: 150px 400px;
 }
 
 #carousel {
@@ -16,8 +16,8 @@
 #carousel img {
     display: block;
     position: absolute;
-    width: 186px;
-    height: 116px;
+    width: 260px;
+    height: 180px;
     left: 10px;
     top: 10px;
     border: 1px solid #c1d6e7;

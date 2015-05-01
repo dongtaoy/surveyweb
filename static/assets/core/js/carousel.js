@@ -102,7 +102,7 @@ moveNext = function () {
         var right_x = getTranslateX(right_obj);
         var right_angle = getRotationDegrees(right_obj);
         right_x -= 20;
-        if (right_x > 260) {
+        if (right_x > 240) {
             right_obj.css("visibility", "hidden");
         } else {
             right_obj.css("visibility", "visible");

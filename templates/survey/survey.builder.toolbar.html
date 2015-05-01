@@ -1,5 +1,5 @@
 <div class="col-md-3">
-    <div class="portlet light">
+    <div class="portlet light" id="builderNav">
         <div class="portlet-title">
             <div class="caption" data-target=".todo-project-list-content-1">
                 <span class="caption-subject font-green-sharp bold uppercase">BUILDER</span>
@@ -7,13 +7,12 @@
         </div>
         <div class="form-group">
             <select class="form-control input-sm" id="pageSelect">
-                <option value="1">Page 1</option>
-                <option value="2">Page 2</option>
-                <option value="3">Page 3</option>
-                <option value="4">Page 4</option>
-                <option value="5">Page 5</option>
+                {% for page in pages %}
+                    <option value="{{ forloop.counter }}">Page {{ forloop.counter }}</option>
+                {% endfor %}
             </select>
         </div>
+
         <div class="portlet-body todo-project-list-content-1">
             <div class="todo-project-list">
                 <ul class="nav nav-pills nav-stacked">

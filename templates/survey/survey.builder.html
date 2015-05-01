@@ -22,7 +22,7 @@
 
 {% block content %}
     <div class="portlet gren">
-        <div class="portlet-title">
+        <div class="portlet-title survey-head">
             <div class="caption font-blue-hoki">
                 <a a href="#surveyEdit" data-toggle="modal" role="button" style="font-size: 25px;">{{ survey.name }}</a><br/>
                 <span style="font-size: 12px;margin-top: 2px;color: grey;"><i
@@ -47,7 +47,6 @@
         <div class="portlet-body">
             {% include "survey/survey.builder.toolbar.html" %}
             <div class="col-md-9" id="surveyPages">
-
                 {% for page in pages %}
                     {% include "survey/page/survey.page.html" %}
                 {% endfor %}

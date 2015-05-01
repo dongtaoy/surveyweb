@@ -29,18 +29,26 @@ var surveyBuilder = (function () {
 
         $('[data-toggle="tooltip"]').tooltip();
 
-        var headerHeight = $('.page-header').height() + $('.page-head').height();
-        var footerHeight = $('.page-footer').height() + $('.page-prefooter').height() + 0;
-
+        var headerHeight = $('.page-header').height() + $('.survey-head').height();
+        //var footerHeight = $('.page-footer').height() + $('.page-prefooter').height() + 0;
+        var maximumTop = $(".pageCreateForm > button").offset().top - $('#builderNav').height() - 25;
+        console.log(maximumTop);
+        console.log($(window).scrollTop());
+        console.log(headerHeight);
         var navbarAdjust = function () {
             if ($(window).scrollTop() > headerHeight) {
-                if (($(window).scrollTop() + $('.todo-sidebar').height() + 150) < ($(document).height() - footerHeight)) {
-                    $('.todo-sidebar').css({
+                if ($(window).scrollTop() < maximumTop) {
+                    $('#builderNav').css({
                         'margin-top': $(window).scrollTop() - headerHeight + 'px'
                     });
+                }else{
+                    $('#builderNav').css({
+                        'margin-top': maximumTop - headerHeight + 'px'
+                    });
                 }
+
             } else {
-                $('.todo-sidebar').css({
+                $('#builderNav').css({
                     'margin-top': 0 + 'px'
                 });
 
@@ -210,12 +218,12 @@ var surveyBuilder = (function () {
 
     var initPageDirect = function () {
         var pageNumber = $("#surveyPages").children("div").length;
-
+        var toleranceHeight = 25;
         $("#pageSelect").click(function () {
             for (var i = 1; i <= pageNumber; i++) {
                 if ($(this).val() == i) {
                     var pageTop = $("#surveyPages > div:nth-child(" + i + ")").offset().top;
-                    $(document).scrollTop(pageTop)
+                    $(document).scrollTop(pageTop - toleranceHeight);
                     return;
                 }
             }
