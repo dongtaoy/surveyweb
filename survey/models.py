@@ -100,6 +100,14 @@ class QuestionType(models.Model):
     class Meta:
         ordering = ['order']
 
+
+
+    def get_name(self):
+        return self.name.lower().replace(' ','-')
+
+    def get_edit_template_name(self):
+        return "survey/question/%s.edit.html" % self.get_name()
+
     def __unicode__(self):
         return self.name
 
@@ -112,6 +120,14 @@ class QuestionContainer(Container):
 class Choice(models.Model):
     text = models.TextField(null=False, blank=False)
     sortid = models.IntegerField(null=False, blank=False)
+    question = models.ForeignKey(QuestionContainer, null=False, blank=False)
+
+
+class EloItem(models.Model):
+    name = models.CharField(max_length=50, null=False, blank=False)
+    description = models.TextField(null=False, blank=False)
+    image = models.ImageField(null=False, blank=False)
+    rating = models.FloatField(null=False, blank=False)
     question = models.ForeignKey(QuestionContainer, null=False, blank=False)
 
 
@@ -144,7 +160,14 @@ class AnswerSelect(AnswerBase):
 class AnswerCheck(AnswerBase):
     choice = models.ManyToManyField(Choice)
 
+
+class AnswerElo(AnswerBase):
+    item = models.ForeignKey(EloItem, null=False, blank=False)
+    current_rating = models.FloatField(null=False, blank=False)
+
+
 #
+
 # class AnswerDateTime(AnswerBase):
 #     choice = models.DateTimeField(null=False, blank=False)
 #

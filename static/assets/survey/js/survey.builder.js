@@ -15,11 +15,9 @@ var surveyBuilder = (function () {
         }
     };
 
-    var initTooltip = function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    };
 
     var initNavbar = function () {
+
         $(".nav-pills li a")
             .mouseover(function () {
                 //alert($(this).html());
@@ -27,32 +25,10 @@ var surveyBuilder = (function () {
             })
             .mouseout(function () {
                 $(this).find("span").attr("class", "");
-            })
-            .off('click')
-            .on('click', function () {
-                if ($('.question-edit').length == 0) {
-                    pagePortlet = $('[id^=page_]').first();
-                    $.get($(this).attr('href'))
-                        .done(function (data) {
-                            if (pagePortlet.find('.empty-page').length) {
-                                pagePortlet.find('.page-body').html($(data));
-                                initQuestionPlugin($(data));
-                            } else {
-                                pagePortlet.find('.page-body').append(data);
-                            }
-                        });
-                } else{
-                    $.notify("12211321");
-                }
-                return false;
             });
-    };
 
-    var initQuestionPlugin = function () {
-        $('.question-edit').find('textarea').wysihtml5(WYSIHTML5OPTIONS);
-    };
+        $('[data-toggle="tooltip"]').tooltip();
 
-    var initNavbarFixed = function () {
         var headerHeight = $('.page-header').height() + $('.page-head').height();
         var footerHeight = $('.page-footer').height() + $('.page-prefooter').height() + 0;
 
@@ -75,12 +51,54 @@ var surveyBuilder = (function () {
             .on('scrollstop', navbarAdjust);
     };
 
+    var initQuestionCreateAjax = function () {
+        $(".nav-pills li a")
+            .off('click')
+            .on('click', function () {
+                if ($('.question-edit').length == 0) {
+                    var notify = $.notify("Add new question...");
+                    pagePortlet = $('[id^=page_]').first();
+                    $.get($(this).attr('href'))
+                        .done(function (data) {
+                            if (pagePortlet.find('.empty-page').length) {
+                                pagePortlet.find('.page-body').html($(data));
+                                initQuestionPlugin($(data));
+                            } else {
+                                pagePortlet.find('.page-body').append(data);
+                            }
+                            notify.close();
+                        });
+                } else {
+                    $.notify({
+                        message: "You haven't saved your last question"
+                    }, {
+                        type: "warning",
+                        onShow: function () {
+                            $('.question-edit').attr('tabindex', -1).focus();
+                        }
+                    });
+                }
+                return false;
+            });
+    };
+
+
+    var initQuestionPlugin = function () {
+        $('.question-edit').find('textarea').wysihtml5(WYSIHTML5OPTIONS);
+    };
+
     var initPageCreateAjax = function () {
+
+        var notify;
         $('.pageCreateForm')
             .off('submit')
             .on('submit', function () {
                 $(this).ajaxSubmit({
+                    beforeSubmit: function () {
+                        notify = $.notify("Creating new page...")
+                    },
                     success: function (response) {
+                        notify.close();
                         $(response).insertBefore('.pageCreateForm');
                         initPageDeleteAjax();
                         initPageEditAjax();
@@ -110,6 +128,7 @@ var surveyBuilder = (function () {
                             className: "btn-danger",
                             callback: function () {
                                 // Post ajax request to delete a page
+                                var notify = $.notify("Deleting page...")
                                 $.post(Django.url('page.delete', pageId), function (response) {
                                     // if successfully deleted a page
                                     if (response['status'] == 200) {
@@ -119,7 +138,11 @@ var surveyBuilder = (function () {
                                         });
                                         // remove the current portlet
                                         pagePortlet.remove();
+                                        notify.close();
+                                    } else {
+                                        notify.update('message', 'Something went wrong... :(');
                                     }
+
                                 });
                             }
                         }
@@ -132,6 +155,7 @@ var surveyBuilder = (function () {
         $('.pageEdit')
             .off('click')
             .on('click', function () {
+                var notify = $.notify("Moving pages...");
                 pagePortlet = $(this).closest('.portlet');
                 pageId = pagePortlet.attr('id').replace(/[^\d.]/g, '');
                 pageOrder = pagePortlet.find('.caption-subject.bold.uppercase').text().replace(/[^\d.]/g, '');
@@ -156,11 +180,13 @@ var surveyBuilder = (function () {
                                 $(pagePortlet).insertAfter($(pagePortlet).next('.portlet'));
 
                             }
+                            notify.close();
                         } else {
-                            bootbox.alert({
-                                size: "medium",
-                                message: "<br/><div class='note note-danger'><h4>Error!</h4><p>Cannot move up the first page or move down the last page</p></div>"
-                            });
+                            notify.update('message', 'Something went wrong....');
+                            //bootbox.alert({
+                            //    size: "medium",
+                            //    message: "<br/><div class='note note-danger'><h4>Error!</h4><p>Cannot move up the first page or move down the last page</p></div>"
+                            //});
                         }
                     });
             });
@@ -200,13 +226,13 @@ var surveyBuilder = (function () {
         init: function () {
 
 
-            initNavbarFixed();
-            initTooltip();
             initNavbar();
 
             initPageCreateAjax();
             initPageDeleteAjax();
             initPageEditAjax();
+
+            initQuestionCreateAjax();
 
             initPageNumDisplay();
             initPageDirect();
