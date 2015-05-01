@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<div class="page-head">
+    <div class="container">
+        <!-- BEGIN PAGE TITLE -->
+        <div class="page-title">
+            <h1>{% block header %}{% endblock %}
+                <small>{% block subheader %}{% endblock %}</small>
+            </h1>
+        </div>
+        <!-- END PAGE TITLE -->
+        <!-- END PAGE HEAD -->
+    </div>
+</div>
+{% endblock %}
+

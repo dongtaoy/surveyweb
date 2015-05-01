@@ -8,126 +8,142 @@
 {% block plugincss %}
 {% endblock %}
 
-{% block header %}
-    Survey
-{% endblock %}
-
-{% block subheader %}
-    Summary
-{% endblock %}
-
-{% block breadcrumb %}
-
-    <ul class="page-breadcrumb breadcrumb">
-        <li>
-            <a href="{% url 'home' %}">Home</a>
-            <i class="fa fa-circle"></i>
-        </li>
-        <li class="active">
-            Survey Summary
-        </li>
-    </ul>
-{% endblock %}
-
 {% block content %}
-    <div class="row">
-        <div class="col-md-4">
-            <div class="portlet box blue">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="fa fa-gift"></i> DESIGN SUMMARY
-                    </div>
-                </div>
-                <div class="portlet-body util-btn-group-margin-bottom-5 blog-sidebar">
-                    <div class="top-news">
-                        <a href="{% url 'survey.builder' survey.id %}" class="btn blue">
-                            <h2>{{ survey.name }}</h2>
-                            <em>{{ survey.created }}</em>
-                            <i class="fa fa-file-text top-news-icon fa-2x"></i>
-                        </a>
-                    </div>
-                    <hr/>
-                    <div style="margin-left: 10px;">
-                        <p><i class="fa fa-question-circle fa-2x"></i><span style="font-size: 1.5em;margin-left: 20px;">Questions: {{ survey.get_questions|length }}</span>
-                        </p>
-                        <hr/>
-                        <p><i class="fa fa-file-text fa-2x"></i><span
-                                style="font-size: 1.5em;margin-left: 20px;">Pages: {{ survey.pages.count }}</span>
-                        </p>
-                    </div>
-                    <hr/>
-                    <div class="btn-group btn-group btn-group-justified">
-                        <a class="btn btn-default" id="backCarousel" href="{% url 'survey.builder' survey.id %}"><i
-                                class="fa fa-edit"> </i> Edit Design
-                        </a>
-                        <a class="btn btn-default">Preview Survey <i
-                                class="fa fa-file-powerpoint-o"> </i>
-                        </a>
-                    </div>
-                    <form id="surveyDeleteForm" action="{% url 'survey.delete' survey.id %}" method="POST">
-                        {% csrf_token %}
-                        <div class="btn-group btn-group btn-group-justified">
-                            <a class="btn btn-danger deleteSurvey">Delete Survey <i
-                                    class="fa fa-trash-o"> </i>
-                            </a>
-                        </div>
-                    </form>
-                </div>
-
+    <div class="portlet gren">
+        <div class="portlet-title">
+            <div class="caption font-blue-hoki">
+                <a a href="#surveyEdit" data-toggle="modal" role="button"
+                   style="font-size: 25px;">{{ survey.name }}</a><br/>
+            <span style="font-size: 12px;margin-top: 2px;color: grey;"><i
+                    class="fa fa-tags fa-fw"></i>Category: {{ survey.category }}</span>
             </div>
-            <!-- END DROPDOWNS PORTLET-->
+            <div class="tabbable-line ">
+                <ul class="nav nav-tabs pull-right">
+                    <li class="active">
+                        <a>Summary </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'survey.builder' survey.id %}">
+                            Builder </a>
+                    </li>
+                    <li>
+                        <a>
+                            Collector </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="col-md-8">
-            <div class="portlet box green">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="fa fa-gift"></i> RESPONSE SUMMARY
-                    </div>
-                </div>
-                <div class="portlet-body util-btn-group-margin-bottom-5">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 margin-bottom-10">
-                            <a class="dashboard-stat dashboard-stat-light grey" href="javascript:;">
-                                <div class="visual">
-                                    <i class="fa fa-archive fa-icon-medium"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">
-                                        {{ survey.responses.count }}
-                                    </div>
-                                    <div class="desc">
-                                        Total Responses
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            {% if survey.get_status_display == 'DRAFT' %}
-                            <a class="dashboard-stat dashboard-stat-light grey" href="{% url 'survey.builder' survey.id %}">
-                                <div class="visual">
-                                    <i class="fa fa-bell"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">
-                                        {{ survey.get_status_display }}
-                                    </div>
-                                    <div class="desc">
-                                        Overall Survey Status
-                                    </div>
-                                </div>
-                            </a>
-                            {% endif %}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-gift"></i> DESIGN SUMMARY
                         </div>
                     </div>
-                    <hr/>
-                    {#                    <div id="chart_1_1_legendPlaceholder"></div>#}
-                    <h2>DATA TRENDS CHART</h2>
+                    <div class="portlet-body util-btn-group-margin-bottom-5 blog-sidebar">
+                        <div class="dashboard-stat grey-cararra">
+                            <div class="visual">
+                                <i class="fa fa-paste "></i>
+                            </div>
+                            <div class="details" style="margin-right: 10px;">
+                                <div class="number">
+                                    {{ survey.name }}
+                                </div>
+                                <div class="desc">
+                                    {{ survey.created }}
+                                </div>
+                            </div>
+                            <a class="more" href="{% url 'survey.builder' survey.id %}">
+                                Edit Survey <i class="m-icon-swapright m-icon-white"></i>
+                            </a>
+                        </div>
 
-                    <p>The data trends chart shows you when you received responses to your survey.</p>
 
-                    <div id="chart_1_1" class="chart"></div>
+                        <div style="margin-left: 10px;">
+                            <p><i class="fa fa-question-circle fa-2x"></i><span
+                                    style="font-size: 1.5em;margin-left: 20px;">Questions: {{ survey.get_questions|length }}</span>
+                            </p>
+                            <hr/>
+                            <p><i class="fa fa-file-text fa-2x"></i><span
+                                    style="font-size: 1.5em;margin-left: 20px;">Pages: {{ survey.pages.count }}</span>
+                            </p>
+                        </div>
+                        <hr/>
+                        <div class="btn-group btn-group btn-group-justified">
+                            <a class="btn btn-default" id="backCarousel" href="{% url 'survey.builder' survey.id %}"><i
+                                    class="fa fa-edit"> </i> Edit Design
+                            </a>
+                            <a class="btn btn-default">Preview Survey <i
+                                    class="fa fa-file-powerpoint-o"> </i>
+                            </a>
+                        </div>
+                        <form id="surveyDeleteForm" action="{% url 'survey.delete' survey.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="btn-group btn-group btn-group-justified">
+                                <a class="btn btn-danger deleteSurvey">Delete Survey <i
+                                        class="fa fa-trash-o"> </i>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
                 <!-- END DROPDOWNS PORTLET-->
+            </div>
+            <div class="col-md-8">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-gift"></i> RESPONSE SUMMARY
+                        </div>
+                    </div>
+                    <div class="portlet-body util-btn-group-margin-bottom-5">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 margin-bottom-10">
+                                <a class="dashboard-stat dashboard-stat-light grey" href="javascript:;">
+                                    <div class="visual">
+                                        <i class="fa fa-archive fa-icon-medium"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            {{ survey.responses.count }}
+                                        </div>
+                                        <div class="desc">
+                                            Total Responses
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                {% if survey.get_status_display == 'DRAFT' %}
+                                    <a class="dashboard-stat dashboard-stat-light grey"
+                                       href="{% url 'survey.builder' survey.id %}">
+                                        <div class="visual">
+                                            <i class="fa fa-bell"></i>
+                                        </div>
+                                        <div class="details">
+                                            <div class="number">
+                                                {{ survey.get_status_display }}
+                                            </div>
+                                            <div class="desc">
+                                                Overall Survey Status
+                                            </div>
+                                        </div>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <hr/>
+                        {#                    <div id="chart_1_1_legendPlaceholder"></div>#}
+                        <h2>DATA TRENDS CHART</h2>
+
+                        <p>The data trends chart shows you when you received responses to your survey.</p>
+
+                        <div id="chart_1_1" class="chart"></div>
+                    </div>
+                    <!-- END DROPDOWNS PORTLET-->
+                </div>
             </div>
         </div>
     </div>

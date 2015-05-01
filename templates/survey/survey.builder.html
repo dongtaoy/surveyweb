@@ -15,20 +15,36 @@
 {% endblock %}
 
 
-{% block header %}
-    <a href="#surveyEdit" data-toggle="modal" role="button">{{ survey.name }}</a>
-{% endblock %}
+{#    <a href="#surveyEdit" data-toggle="modal" role="button">{{ survey.name }}</a>#}
 
-{% block subheader %}
-    <div style="margin-top: 2px;"><i class="fa fa-tags fa-fw"></i>Category: {{ survey.category }}</div>
-{% endblock %}
+{#    <div style="margin-top: 2px;"><i class="fa fa-tags fa-fw"></i>Category: {{ survey.category }}</div>#}
 
-{% block breadcrumb %}
-{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-12">
+    <div class="portlet gren">
+        <div class="portlet-title">
+            <div class="caption font-blue-hoki">
+                <a a href="#surveyEdit" data-toggle="modal" role="button" style="font-size: 25px;">{{ survey.name }}</a><br/>
+                <span style="font-size: 12px;margin-top: 2px;color: grey;"><i
+                        class="fa fa-tags fa-fw"></i>Category: {{ survey.category }}</span>
+            </div>
+            <div class="tabbable-line ">
+                <ul class="nav nav-tabs pull-right">
+                    <li>
+                        <a href="{% url 'survey.detail' survey.id %}">
+                            Summary </a>
+                    </li>
+                    <li class="active">
+                        <a>Builder </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'survey.builder' survey.id %}">
+                            Collector </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="portlet-body">
             {% include "survey/survey.builder.toolbar.html" %}
             <div class="col-md-9" id="surveyPages">
 
@@ -40,25 +56,26 @@
                       style="margin-bottom: 25px;">
                     {% csrf_token %}
                     <input type="hidden" name="survey" value="{{ survey.id }}"/>
-                    <button class="btn btn-success btn-block" type="submit"><i class="fa fa-plus fa-fw"></i>Add Page
+                    <button class="btn btn-success btn-block" type="submit"><i class="fa fa-plus fa-fw"></i>Add
+                        Page
                     </button>
                 </form>
             </div>
-        </div>
-        <div id="surveyEdit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title">First Thumbnail label</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form action="">
-                            {% bootstrap_form form %}
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button data-dismiss="modal" class="btn green">OK</button>
+            <div id="surveyEdit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">First Thumbnail label</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="">
+                                {% bootstrap_form form %}
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn green">OK</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -72,7 +89,7 @@
     <script src="{% static 'assets/global/plugins/bootstrap3-wysiwyg/bootstrap3-wysihtml5.all.min.js' %}"></script>
     <script src="{% static 'assets/global/plugins/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
     <script src="{% static 'assets/survey/js/survey.builder.js' %}"></script>
-    {% django_js jquery=false i18n=false  %}
+    {% django_js jquery=false i18n=false %}
 {% endblock %}
 
 {% block script %}
