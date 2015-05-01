@@ -42,7 +42,7 @@ class Survey(models.Model):
         assign_perm('survey.delete_survey', self.creator, self)
 
     def __unicode__(self):
-        return "%s - %s" % (self.creator, self.name)
+        return self.name
 
     def get_questions(self):
         import itertools
@@ -67,7 +67,7 @@ class Page(models.Model):
         assign_perm('survey.change_page', self.survey.creator, self)
 
     def __unicode__(self):
-        return "%s - %s - %d" % (self.survey, self.title, self.order)
+        return self.title
 
 
 class ContainerType(models.Model):
@@ -75,12 +75,21 @@ class ContainerType(models.Model):
 
 
 class Container(models.Model):
-    page = models.ForeignKey(Page, null=False, blank=False, related_name="containers")
+    page = models.ForeignKey('Page', null=False, blank=False, related_name="containers")
     order = models.IntegerField(null=False, blank=False)
     containtertype = models.ForeignKey(ContainerType, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         ordering = ['order']
+
+    def save(self, *args, **kwargs):
+        if self.order is None:
+            self.order = self.page.containers.count() + 1
+        super(Container, self).save(*args, **kwargs)
+        assign_perm('survey.delete_questioncontainer', self.page.survey.creator, self)
+        assign_perm('survey.change_questioncontainer', self.page.survey.creator, self)
+
+
 
 
 class ImageContainer(Container):
@@ -113,6 +122,7 @@ class QuestionType(models.Model):
 
 
 class QuestionContainer(Container):
+
     question = models.TextField(null=False, blank=False)
     questiontype = models.ForeignKey(QuestionType)
 

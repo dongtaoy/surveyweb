@@ -1,14 +1,33 @@
 __author__ = 'dongtao'
-from django.forms import ModelForm
-from survey.models import Survey, QuestionContainer
+from django import forms
+from survey.models import Survey, QuestionContainer, QuestionType, Container
 
 
-class SurveyForm(ModelForm):
+class SurveyForm(forms.ModelForm):
     class Meta:
         model = Survey
         fields = '__all__'
         exclude = ['creator', 'status']
 
 
-class QuestionForm(ModelForm):
-    pass
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = QuestionContainer
+        exclude = ['containtertype', 'order']
+
+        labels = {
+            'question': 'Please enter your question here...'
+        }
+
+        widgets = {
+            'questiontype': forms.HiddenInput,
+            'page': forms.HiddenInput,
+        }
+
+
+
+
+
+
+
+

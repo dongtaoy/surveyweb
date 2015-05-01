@@ -32,9 +32,6 @@ var surveyBuilder = (function () {
         var headerHeight = $('.page-header').height() + $('.survey-head').height();
         //var footerHeight = $('.page-footer').height() + $('.page-prefooter').height() + 0;
         var maximumTop = $(".pageCreateForm > button").offset().top - $('#builderNav').height() - 25;
-        console.log(maximumTop);
-        console.log($(window).scrollTop());
-        console.log(headerHeight);
         var navbarAdjust = function () {
             if ($(window).scrollTop() > headerHeight) {
                 if ($(window).scrollTop() < maximumTop) {
@@ -65,9 +62,14 @@ var surveyBuilder = (function () {
             .on('click', function () {
                 if ($('.question-edit').length == 0) {
                     var notify = $.notify("Add new question...");
-                    var pageNumber = $('#pageSelect').val();
-                    pagePortlet = $('#surveyPages').children().eq(pageNumber-1);
-                    $.get($(this).attr('href'))
+
+
+                    var pageNumber = $('#page-select').val();
+                    pagePortlet = $('#survey-pages').children().eq(pageNumber-1);
+                    questionTypeId = $(this).attr('id').replace(/[^\d.]/g, '');
+                    pageId = pagePortlet.attr('id').replace(/[^\d.]/g, '');
+                    console.log(questionTypeId, pageId);
+                    $.get(Django.url('question.create'), {questionType: questionTypeId, page: pageId})
                         .done(function (data) {
                             if (pagePortlet.find('.empty-page').length) {
                                 pagePortlet.find('.page-body').html($(data));
@@ -75,11 +77,24 @@ var surveyBuilder = (function () {
                             } else {
                                 pagePortlet.find('.page-body').append(data);
                             }
+
+                            $('.question-edit form').submit(function (){
+                                var notify = $.notify('Saving questions...');
+                                console.log($(this));
+                                $(this).ajaxSubmit({
+                                    success: function(response){
+                                        console.log(response);
+                                        notify.close();
+                                    }
+                                });
+
+                                return false;
+                            });
                             notify.close();
                         });
                 } else {
                     $.notify({
-                        message: "You haven't saved your last question"
+                        message: "Please save your last question first!"
                     }, {
                         type: "warning",
                         onShow: function () {
@@ -94,7 +109,10 @@ var surveyBuilder = (function () {
 
     var initQuestionPlugin = function () {
         $('.question-edit').find('textarea').wysihtml5(WYSIHTML5OPTIONS);
+
     };
+
+
 
     var initPageCreateAjax = function () {
 
@@ -207,14 +225,14 @@ var surveyBuilder = (function () {
 
     var initPageNumDisplay = function () {
         var currentTop = $(document).scrollTop();
-        var pageNumber = $("#surveyPages").children("div").length;
+        var pageNumber = $("#survey-pages").children("div").length;
         var toleranceHeight = 50;
         $(document).scroll(function () {
             currentTop = $(document).scrollTop();
             for (var i = 1; i <= pageNumber; i++) {
-                var currentDiv = $("#surveyPages > div:nth-child(" + i + ")").offset().top;
+                var currentDiv = $("#survey-pages > div:nth-child(" + i + ")").offset().top;
                 if (currentDiv >= currentTop - toleranceHeight) {
-                    $("#pageSelect").val(i);
+                    $("#page-select").val(i);
                     return;
                 }
             }
@@ -222,12 +240,12 @@ var surveyBuilder = (function () {
     };
 
     var initPageDirect = function () {
-        var pageNumber = $("#surveyPages").children("div").length;
+        var pageNumber = $("#survey-pages").children("div").length;
         var toleranceHeight = 25;
-        $("#pageSelect").click(function () {
+        $("#page-select").click(function () {
             for (var i = 1; i <= pageNumber; i++) {
                 if ($(this).val() == i) {
-                    var pageTop = $("#surveyPages > div:nth-child(" + i + ")").offset().top;
+                    var pageTop = $("#survey-pages > div:nth-child(" + i + ")").offset().top;
                     $(document).scrollTop(pageTop - toleranceHeight);
                     return;
                 }
@@ -236,12 +254,12 @@ var surveyBuilder = (function () {
     };
 
     var initPageSelect = function () {
-        var pageNumber = $("#surveyPages").children("div").length;
-        $("#pageSelect").find('option').remove();
+        var pageNumber = $("#survey-pages").children("div").length;
+        $("#page-select").find('option').remove();
         for (var i = 1; i <= pageNumber; i++) {
-            $("#pageSelect").append("<option value="+i+">Page "+i+"</option>");
+            $("#page-select").append("<option value="+i+">Page "+i+"</option>");
         }
-        $("#pageSelect").val(pageNumber);
+        $("#page-select").val(pageNumber);
     }
 
     return {

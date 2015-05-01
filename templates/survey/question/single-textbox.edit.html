@@ -1,4 +1,6 @@
+{% load bootstrap3 %}
 <div class="portlet light bordered question-edit">
+
     <div class="portlet-title">
         <div class="caption font-green-sharp">
             <i class="icon-speech font-green-sharp"></i>
@@ -32,19 +34,20 @@
             </div>
         </div>
     </div>
-    <div class="portlet-body">
-        <div>
-            <textarea class="form-control" rows="5" placeholder="Please enter your question here"></textarea>
+    <form action="{{ request.path }}" method="POST">
+        <div class="portlet-body">
+            {% bootstrap_form form layout='inline' %}
+            <br/>
         </div>
-        <br/>
-
         <div class="portlet-footer">
             <div class="row" style="margin: 0px;">
                 <div class="pull-right">
-                    <button class="btn btn-success btn-sm">Save</button>
-                    <button class="btn btn-warning btn-sm">Cancel</button>
+                    {% buttons submit='OK' reset='Reset' cancel='Cancel' layout='inline' %}
+                        <button class="btn btn-warning">Cancel</button>
+                    {% endbuttons %}
                 </div>
             </div>
         </div>
-    </div>
+    </form>
+
 </div>
