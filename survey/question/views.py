@@ -1,6 +1,7 @@
 __author__ = 'dongtaoy'
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.http import HttpResponse
+from django.shortcuts import render
 from survey.models import QuestionContainer, QuestionType
 from survey.forms import QuestionForm
 
@@ -18,18 +19,17 @@ class QuestionCreateView(CreateView):
     #     return context
 
     def form_valid(self, form):
-        super(QuestionCreateView, self).form_valid(form)
-        return HttpResponse(1)
+        question = form.save(commit=True)
+        return render(self.request, question.questiontype.get_display_template_name(), {'question': question})
 
     def get_initial(self):
         if self.request.GET:
             return {
                 'questiontype': self.request.GET['questionType'],
-                'page': self.request.GET['page']
+                'page': self.request.GET['page'],
+                'type': self.request.GET['containerType']
             }
         else:
             return super(QuestionCreateView, self).get_initial()
-    # def form_valid(self, form):
-    #     with atomic():
 
 

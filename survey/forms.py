@@ -13,7 +13,7 @@ class SurveyForm(forms.ModelForm):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = QuestionContainer
-        exclude = ['containtertype', 'order']
+        exclude = ['order']
 
         labels = {
             'question': 'Please enter your question here...'
@@ -22,6 +22,7 @@ class QuestionForm(forms.ModelForm):
         widgets = {
             'questiontype': forms.HiddenInput,
             'page': forms.HiddenInput,
+            'type': forms.HiddenInput
         }
 
 

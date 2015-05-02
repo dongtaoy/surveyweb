@@ -24,6 +24,18 @@
                         <h4>Add a question here by clicking the button from the left navigation bar.</h4>
                     </div>
                     <br/>
+                {% else %}
+                    {% for container in page.containers.all %}
+                        {% if container.type == 'QU' %}
+                            {% if container.questioncontainer.questiontype.get_name == 'single-textbox' %}
+                                {% with container.questioncontainer as question %}
+                                {% include 'survey/question/single-textbox.display.html' %}
+                                {% endwith %}
+                            {% endif %}
+
+                        {% endif %}
+
+                    {% endfor %}
                 {% endif %}
             </div>
         </div>

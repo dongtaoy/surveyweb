@@ -69,22 +69,23 @@ var surveyBuilder = (function () {
                     questionTypeId = $(this).attr('id').replace(/[^\d.]/g, '');
                     pageId = pagePortlet.attr('id').replace(/[^\d.]/g, '');
                     console.log(questionTypeId, pageId);
-                    $.get(Django.url('question.create'), {questionType: questionTypeId, page: pageId})
+                    $.get(Django.url('question.create'), {questionType: questionTypeId, page: pageId, containerType: 'QU'})
                         .done(function (data) {
                             if (pagePortlet.find('.empty-page').length) {
                                 pagePortlet.find('.page-body').html($(data));
-                                initQuestionPlugin($(data));
+
                             } else {
                                 pagePortlet.find('.page-body').append(data);
                             }
+                            initQuestionPlugin();
 
                             $('.question-edit form').submit(function (){
                                 var notify = $.notify('Saving questions...');
                                 console.log($(this));
                                 $(this).ajaxSubmit({
                                     success: function(response){
-                                        console.log(response);
-                                        notify.close();
+                                        $('.question-edit').remove();
+                                        $('.page-body').append(response);
                                     }
                                 });
 

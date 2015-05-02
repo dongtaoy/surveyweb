@@ -70,17 +70,28 @@ class Page(models.Model):
         return self.title
 
 
-class ContainerType(models.Model):
-    text = models.CharField(max_length=50, null=False, blank=False)
+# class ContainerType(models.Model):
+#     text = models.CharField(max_length=50, null=False, blank=False)
 
 
 class Container(models.Model):
     page = models.ForeignKey('Page', null=False, blank=False, related_name="containers")
     order = models.IntegerField(null=False, blank=False)
-    containtertype = models.ForeignKey(ContainerType, null=True, on_delete=models.SET_NULL)
+    QUESTION = 'QU'
+    TEXT = 'TE'
+    IMAGE = 'IM'
+    STATUS_CHOICES = (
+        (QUESTION, 'QUESTION'),
+        (TEXT, 'TEXT'),
+        (IMAGE, 'IMAGE'),
+    )
+    type = models.CharField(choices=STATUS_CHOICES, max_length=2, null=False, blank=False)
 
     class Meta:
         ordering = ['order']
+
+    # def get_name(self):
+    #     pass
 
     def save(self, *args, **kwargs):
         if self.order is None:
@@ -116,6 +127,9 @@ class QuestionType(models.Model):
 
     def get_edit_template_name(self):
         return "survey/question/%s.edit.html" % self.get_name()
+
+    def get_display_template_name(self):
+        return "survey/question/%s.display.html" % self.get_name()
 
     def __unicode__(self):
         return self.name
