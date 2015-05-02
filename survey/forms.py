@@ -1,6 +1,7 @@
 __author__ = 'dongtao'
 from django import forms
-from survey.models import Survey, QuestionContainer, QuestionType, Container
+from survey.models import Survey, QuestionContainer, Choice
+from django.forms.models import inlineformset_factory
 
 
 class SurveyForm(forms.ModelForm):
@@ -8,6 +9,15 @@ class SurveyForm(forms.ModelForm):
         model = Survey
         fields = '__all__'
         exclude = ['creator', 'status']
+
+
+ChoiceFormSet = inlineformset_factory(QuestionContainer,
+                                      Choice,
+                                      fields=('text', ),
+                                      can_delete=False,
+                                      labels= {
+                                          'text': 'choice'
+                                      })
 
 
 class QuestionForm(forms.ModelForm):

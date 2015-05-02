@@ -142,7 +142,7 @@ class QuestionContainer(Container):
 
 
 class Choice(models.Model):
-    text = models.TextField(null=False, blank=False)
+    text = models.CharField(max_length=100, null=False, blank=False)
     sortid = models.IntegerField(null=False, blank=False)
     question = models.ForeignKey(QuestionContainer, null=False, blank=False)
 

@@ -3,20 +3,27 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.http import HttpResponse
 from django.shortcuts import render
 from survey.models import QuestionContainer, QuestionType
-from survey.forms import QuestionForm
+from survey.forms import QuestionForm, ChoiceFormSet
 
 
 class QuestionCreateView(CreateView):
     form_class = QuestionForm
     success_url = '/'
+    question_type = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.question_type = QuestionType.objects.get(id=self.request.GET['questionType'])
+        return super(QuestionCreateView, self).dispatch(request, *args, **kwargs)
 
     def get_template_names(self):
         return QuestionType.objects.get(id=self.request.GET['questionType']).get_edit_template_name()
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(QuestionCreateView, self).get_context_data(**kwargs)
-    #     context['type'] = self.kwargs['questiontype']
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super(QuestionCreateView, self).get_context_data(**kwargs)
+        if self.request.GET:
+            if self.question_type.get_name() == 'checkbox':
+                context['formset'] = ChoiceFormSet(instance=QuestionContainer())
+        return context
 
     def form_valid(self, form):
         question = form.save(commit=True)

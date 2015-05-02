@@ -69,6 +69,7 @@ var surveyBuilder = (function () {
                     questionTypeId = $(this).attr('id').replace(/[^\d.]/g, '');
                     pageId = pagePortlet.attr('id').replace(/[^\d.]/g, '');
                     console.log(questionTypeId, pageId);
+                    // get question edit form
                     $.get(Django.url('question.create'), {questionType: questionTypeId, page: pageId, containerType: 'QU'})
                         .done(function (data) {
                             if (pagePortlet.find('.empty-page').length) {
@@ -79,6 +80,8 @@ var surveyBuilder = (function () {
                             }
                             initQuestionPlugin();
 
+
+                            // bind question save button
                             $('.question-edit form').submit(function (){
                                 var notify = $.notify('Saving questions...');
                                 console.log($(this));
@@ -88,9 +91,11 @@ var surveyBuilder = (function () {
                                         $('.page-body').append(response);
                                     }
                                 });
-
+                                notify.close();
                                 return false;
                             });
+
+
                             notify.close();
                         });
                 } else {
