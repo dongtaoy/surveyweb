@@ -1,0 +1,19 @@
+<div id="question_{{ question.id }}" class="well">
+        <h4><b>Question {{ question.order }}:</b>{{ question.question|safe }}</h4>
+
+        <div class="form-group form-md-radios">
+
+            <div class="md-radio-list" style="margin:30px">
+                {% for choice in question.choices.all %}
+                    <div class="md-radio">
+                    <input type="radio" id="radio{{ forloop.counter }}" name="radio" class="md-radiobtn">
+                    <label for="radio{{ forloop.counter }}">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        {{ choice.text }}</label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+</div>

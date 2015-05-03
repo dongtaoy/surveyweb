@@ -1,0 +1,16 @@
+<div id="question_{{ question.id }}" class="well">
+    <h4><b>Question {{ question.order }}:</b>{{ question.question|safe }}</h4>
+    <hr>
+    <div class="md-checkbox-list" style="margin-left: 30px;">
+        {% for choice in question.choices.all %}
+            <div class="md-checkbox">
+                <input type="checkbox" id="checkbox1" class="md-check">
+                <label for="checkbox1">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span>
+                    {{ choice.text }}</label>
+            </div>
+        {% endfor %}
+    </div>
+</div>

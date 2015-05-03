@@ -65,12 +65,16 @@ var surveyBuilder = (function () {
 
 
                     var pageNumber = $('#page-select').val();
-                    pagePortlet = $('#survey-pages').children().eq(pageNumber-1);
+                    pagePortlet = $('#survey-pages').children().eq(pageNumber - 1);
                     questionTypeId = $(this).attr('id').replace(/[^\d.]/g, '');
                     pageId = pagePortlet.attr('id').replace(/[^\d.]/g, '');
                     console.log(questionTypeId, pageId);
                     // get question edit form
-                    $.get(Django.url('question.create'), {questionType: questionTypeId, page: pageId, containerType: 'QU'})
+                    $.get(Django.url('question.create'), {
+                        questionType: questionTypeId,
+                        page: pageId,
+                        containerType: 'QU'
+                    })
                         .done(function (data) {
                             if (pagePortlet.find('.empty-page').length) {
                                 pagePortlet.find('.page-body').html($(data));
@@ -79,14 +83,12 @@ var surveyBuilder = (function () {
                                 pagePortlet.find('.page-body').append(data);
                             }
                             initQuestionPlugin();
-
-
                             // bind question save button
-                            $('.question-edit form').submit(function (){
+                            $('.question-edit form').submit(function () {
                                 var notify = $.notify('Saving questions...');
                                 console.log($(this));
                                 $(this).ajaxSubmit({
-                                    success: function(response){
+                                    success: function (response) {
                                         $('.question-edit').remove();
                                         $('.page-body').append(response);
                                     }
@@ -115,9 +117,7 @@ var surveyBuilder = (function () {
 
     var initQuestionPlugin = function () {
         $('.question-edit').find('textarea').wysihtml5(WYSIHTML5OPTIONS);
-
     };
-
 
 
     var initPageCreateAjax = function () {
@@ -263,7 +263,7 @@ var surveyBuilder = (function () {
         var pageNumber = $("#survey-pages").children("div").length;
         $("#page-select").find('option').remove();
         for (var i = 1; i <= pageNumber; i++) {
-            $("#page-select").append("<option value="+i+">Page "+i+"</option>");
+            $("#page-select").append("<option value=" + i + ">Page " + i + "</option>");
         }
         $("#page-select").val(pageNumber);
     }

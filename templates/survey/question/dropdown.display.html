@@ -1,0 +1,17 @@
+<div id="question_{{ question.id }}" class="well">
+
+    <h4><b>Question {{ question.order }}:</b>{{ question.question|safe }}</h4>
+
+    <div class="form-group form-md-line-input">
+        Please Choose one of the options
+        <select class="form-control" id="form_control_1">
+            {% for choice in question.choices.all %}
+                <option value="">{{ choice.text }}</option>
+            {% endfor %}
+        </select>
+
+        <div class="form-control-focus">
+        </div>
+    </div>
+
+</div>

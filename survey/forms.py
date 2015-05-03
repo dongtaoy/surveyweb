@@ -17,7 +17,7 @@ ChoiceFormSet = inlineformset_factory(QuestionContainer,
                                       can_delete=False,
                                       labels= {
                                           'text': 'choice'
-                                      })
+                                      }, extra=1)
 
 
 class QuestionForm(forms.ModelForm):

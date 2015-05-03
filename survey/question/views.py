@@ -12,7 +12,8 @@ class QuestionCreateView(CreateView):
     question_type = None
 
     def dispatch(self, request, *args, **kwargs):
-        self.question_type = QuestionType.objects.get(id=self.request.GET['questionType'])
+        if request.GET:
+            self.question_type = QuestionType.objects.get(id=request.GET['questionType'])
         return super(QuestionCreateView, self).dispatch(request, *args, **kwargs)
 
     def get_template_names(self):
@@ -21,12 +22,19 @@ class QuestionCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(QuestionCreateView, self).get_context_data(**kwargs)
         if self.request.GET:
-            if self.question_type.get_name() == 'checkbox':
+            if self.question_type.get_name() != 'single-textbox':
                 context['formset'] = ChoiceFormSet(instance=QuestionContainer())
         return context
 
     def form_valid(self, form):
-        question = form.save(commit=True)
+        question = form.save(commit=False)
+        if question.questiontype.get_name() != 'single-textbox':
+            choiceformset = ChoiceFormSet(self.request.POST, instance=question)
+            if choiceformset.is_valid():
+                question.save()
+                choiceformset.save()
+        else:
+            question.save()
         return render(self.request, question.questiontype.get_display_template_name(), {'question': question})
 
     def get_initial(self):

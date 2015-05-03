@@ -140,12 +140,22 @@ class QuestionContainer(Container):
     question = models.TextField(null=False, blank=False)
     questiontype = models.ForeignKey(QuestionType)
 
+    def __unicode__(self):
+        return self.question
 
 class Choice(models.Model):
     text = models.CharField(max_length=100, null=False, blank=False)
-    sortid = models.IntegerField(null=False, blank=False)
-    question = models.ForeignKey(QuestionContainer, null=False, blank=False)
+    order = models.IntegerField(null=False, blank=False)
+    question = models.ForeignKey(QuestionContainer, null=False, blank=False, related_name='choices')
 
+    def __unicode__(self):
+        return self.text
+
+    def save(self, *args, **kwargs):
+        if self.order is None:
+            self.order = self.question.choices.count() + 1
+        super(Choice, self).save(*args, **kwargs)
+#
 
 class EloItem(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)

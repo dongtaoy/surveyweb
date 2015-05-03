@@ -27,11 +27,11 @@
                 {% else %}
                     {% for container in page.containers.all %}
                         {% if container.type == 'QU' %}
-                            {% if container.questioncontainer.questiontype.get_name == 'single-textbox' %}
-                                {% with container.questioncontainer as question %}
-                                {% include 'survey/question/single-textbox.display.html' %}
+                            {% with container.questioncontainer as question %}
+                                {% with 'survey/question/'|add:question.questiontype.get_name|add:".display.html" as template %}
+                                    {% include template %}
                                 {% endwith %}
-                            {% endif %}
+                            {% endwith %}
 
                         {% endif %}
 
