@@ -63,7 +63,6 @@ var surveyBuilder = (function () {
                 if ($('.question-edit').length == 0) {
                     var notify = $.notify("Add new question...");
 
-
                     var pageNumber = $('#page-select').val();
                     pagePortlet = $('#survey-pages').children().eq(pageNumber - 1);
                     questionTypeId = $(this).attr('id').replace(/[^\d.]/g, '');
@@ -83,6 +82,7 @@ var surveyBuilder = (function () {
                                 pagePortlet.find('.page-body').append(data);
                             }
                             initQuestionPlugin();
+
                             // bind question save button
                             $('.question-edit form').submit(function () {
                                 var notify = $.notify('Saving questions...');
@@ -91,12 +91,13 @@ var surveyBuilder = (function () {
                                     success: function (response) {
                                         $('.question-edit').remove();
                                         $('.page-body').append(response);
+                                        initQuestionTool();
+                                        initNavbar();
                                     }
                                 });
                                 notify.close();
                                 return false;
                             });
-
 
                             notify.close();
                         });
@@ -139,6 +140,7 @@ var surveyBuilder = (function () {
                         initPageSelect();
                         initPageDirect();
                         initPageNumDisplay();
+                        initQuestionTool();
                     }
                 });
                 return false
@@ -236,7 +238,8 @@ var surveyBuilder = (function () {
         $(document).scroll(function () {
             currentTop = $(document).scrollTop();
             for (var i = 1; i <= pageNumber; i++) {
-                var currentDiv = $("#survey-pages > div:nth-child(" + i + ")").offset().top;
+                var offset = $("#survey-pages > div:nth-child(" + i + ")").offset();
+                var currentDiv = offset.top;
                 if (currentDiv >= currentTop - toleranceHeight) {
                     $("#page-select").val(i);
                     return;
@@ -251,7 +254,8 @@ var surveyBuilder = (function () {
         $("#page-select").click(function () {
             for (var i = 1; i <= pageNumber; i++) {
                 if ($(this).val() == i) {
-                    var pageTop = $("#survey-pages > div:nth-child(" + i + ")").offset().top;
+                    var offset = $("#survey-pages > div:nth-child(" + i + ")").offset();
+                    var pageTop = offset.top;
                     $(document).scrollTop(pageTop - toleranceHeight);
                     return;
                 }
@@ -266,7 +270,25 @@ var surveyBuilder = (function () {
             $("#page-select").append("<option value=" + i + ">Page " + i + "</option>");
         }
         $("#page-select").val(pageNumber);
-    }
+    };
+
+    var initQuestionTool = function () {
+        $("[id^='question_']").hover(
+            function () {
+                var questionId = $(this).attr('id').replace(/[^\d.]/g, '');
+                //alert($("#editBtnGroup_" + questionId).attr("id"));
+                $("#editBtnGroup_" + questionId).html('' +
+                '<a href="javascript:;" class="btn default"><i class="fa fa-arrow-up"></i> Move Up </a> ' +
+                '<a href="javascript:;" class="btn default"><i class="fa fa-edit"></i> Edit </a> ' +
+                '<a href="javascript:;" class="btn default"><i class="fa fa-arrow-down"></i> Move Down </a> ');
+                $(this).addClass("highlight-frame");
+            },
+            function () {
+                var questionId = $(this).attr('id').replace(/[^\d.]/g, '');
+                $("#editBtnGroup_" + questionId).html('');
+                $(this).removeClass("highlight-frame");
+            });
+    };
 
     return {
         init: function () {
@@ -279,9 +301,11 @@ var surveyBuilder = (function () {
             initPageEditAjax();
 
             initQuestionCreateAjax();
+            initQuestionTool();
 
             initPageNumDisplay();
             initPageDirect();
+
         }
     }
 }());

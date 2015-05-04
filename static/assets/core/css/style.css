@@ -1,23 +1,39 @@
-#summary_table{
+#summary_table {
     border: 1px solid black;
     margin: 0 auto;
     width: 100%;
 }
 
-#summary_table td{
+#summary_table td {
     border: 1px solid black;
     padding: 2px;
     margin: 0 auto;
 }
 
 .vertical-align {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
 }
 
-.logo-verders{
+.logo-verders {
     width: 200px;
     height: 88px;
+}
+
+.highlight-frame {
+    /*background-color: #FFD700;*/
+    border: 2px dotted #87cefa;
+    /*-moz-border-radius: 5px;*/
+    /*-webkit-border-radius: 5px;*/
+}
+.questionSet{
+    position: relative;
+}
+.editBtnGroup{
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    z-index: 1;
 }

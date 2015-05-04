@@ -1,6 +1,7 @@
-<div id="question_{{ question.id }}" class="well">
+<div id="question_{{ question.id }}" class="well questionSet">
     <h4><b>Question {{ question.order }}:</b>{{ question.question|safe }}</h4>
     <br/>
+
     <form>
         <div class="form-group form-md-line-input">
             <input type="text" class="form-control" placeholder="Answer Here"/>
@@ -8,4 +9,8 @@
         </div>
     </form>
     <br/>
+
+    <div class="editBtnGroup" id="editBtnGroup_{{ question.id }}">
+    </div>
+
 </div>

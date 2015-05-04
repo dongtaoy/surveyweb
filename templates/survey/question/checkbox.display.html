@@ -1,4 +1,4 @@
-<div id="question_{{ question.id }}" class="well">
+<div id="question_{{ question.id }}" class="well questionSet">
     <h4><b>Question {{ question.order }}:</b>{{ question.question|safe }}</h4>
     <hr>
     <div class="md-checkbox-list" style="margin-left: 30px;">
@@ -13,4 +13,5 @@
             </div>
         {% endfor %}
     </div>
+    <div id="editBtnGroup_{{ question.id }}" class="editBtnGroup"></div>
 </div>
