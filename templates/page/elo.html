@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}
-
+    Do Elo
 {% endblock %}
 
 {% block plugincss %}
@@ -34,11 +34,12 @@
 <div class="row">
     <div class="col-md-12">
         <div class="row mix-grid thumbnails">
+            <h1> {{ asd }} </h1>
             <div class="col-md-6 col-sm-6">
                 <div class="mix-inner">
-                    <img class="img-responsive" src="{% static 'assets/admin/pages/media/works/img1.jpg' %}" alt="">
+                    <img id="player1" class="img-responsive" src="{% static "" %}assets/admin/pages/media/elo/{{player1.image }}" alt="">
                     <div class="mix-details">
-                        <h4>Cascusamus et iusto odio</h4>
+                        <h4>{{ player1.name }}</h4>
                         <p>
                              At vero eos et accusamus et iusto odio digniss imos duc sasdimus qui sint blanditiis prae sentium.
                         </p>
@@ -53,9 +54,9 @@
             </div>
             <div class="col-md-6 col-sm-6">
                 <div>
-                    <img class="img-responsive" src="{% static 'assets/admin/pages/media/works/img2.jpg' %}" alt="">
+                    <img id="player2" class="img-responsive" src="{% static "" %}assets/admin/pages/media/elo/{{player2.image }}" alt="">
                     <div>
-                        <h4>Cascusamus et iusto odio</h4>
+                        <h4>{{ player2.name }}</h4>
                         <p>
                              At vero eos et accusamus et iusto odio digniss imos duc sasdimus qui sint blanditiis prae sentium voluptatum.
                         </p>
@@ -68,7 +69,7 @@
                     </div>
                 </div>
             </div>
-            <div><a href="" class="btn btn-warning col-md-12">I don't know</a></div>
+            <div><a id="draw" class="btn btn-warning col-md-12">I don't know</a></div>
         </div>
     </div>
 </div>
@@ -91,6 +92,24 @@ jQuery(document).ready(function() {
             }
         };
     }();
+});
+
+$('#player1').click(function(){
+    var url = window.location.href;
+    url = url+'0/';
+    location.href=url;
+});
+
+$('#player2').click(function(){
+    var url = window.location.href;
+    url = url+'1/';
+    location.href=url;
+});
+
+$('#draw').click(function(){
+    var url = window.location.href;
+    url = url+'2/';
+    location.href=url;
 });
 </script>
 {% endblock %}

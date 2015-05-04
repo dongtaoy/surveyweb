@@ -20,10 +20,10 @@ urlpatterns = patterns('',
                        url(r'^', include("core.urls")),
 
                        url(r'^survey/', include("survey.urls")),
-
+                       url(r'^elo/', include("elotemp.urls")),
 
                        url(r'^aboutus/', TemplateView.as_view(template_name='page/aboutus.html'), name="aboutus"),
-                       url(r'^elo/', login_required(TemplateView.as_view(template_name='page/elo.html'))),
+
                        url(r'^editor/', login_required(TemplateView.as_view(template_name='builder/builder.html')),
                            name="builder"),
                        url(r'^summary/', login_required(TemplateView.as_view(template_name='page/summary.html')),

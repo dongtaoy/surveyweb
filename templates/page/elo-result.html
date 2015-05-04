@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+    Do Elo
+{% endblock %}
+
+{% block plugincss %}
+    <link href="{% static 'assets/global/plugins/fancybox/source/jquery.fancybox.css' %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static 'assets/admin/pages/css/portfolio.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block subheader %}
+
+{% endblock %}
+
+{% block breadcrumb %}
+
+    <ul class="page-breadcrumb breadcrumb">
+        <li>
+            <a href="#">Home</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li class="active">
+            Amchart
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+            <thead>
+            Ranked Result
+            </thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>rating</th>
+                </tr>
+                <tbody>
+
+                {% for player in player_list %}
+                    <tr>
+                        <td>{{ player.name }}</td>
+                        <td><img id="{{ player.name }}" src="{% static "" %}assets/admin/pages/media/elo/{{player.image }}" alt="{{ player.name }}" width="304" height="236"></td>
+                        <td>{{ player.rating }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
