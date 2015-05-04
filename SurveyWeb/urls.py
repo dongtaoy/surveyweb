@@ -20,7 +20,7 @@ urlpatterns = patterns('',
                        url(r'^', include("core.urls")),
 
                        url(r'^survey/', include("survey.urls")),
-                       url(r'^elo/', include("elotemp.urls")),
+                       #url(r'^elo/', include("elotemp.urls")),
 
                        url(r'^aboutus/', TemplateView.as_view(template_name='page/aboutus.html'), name="aboutus"),
 

@@ -140,7 +140,6 @@ var surveyBuilder = (function () {
                         initPageSelect();
                         initPageDirect();
                         initPageNumDisplay();
-                        initQuestionTool();
                     }
                 });
                 return false
