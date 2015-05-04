@@ -81,7 +81,6 @@ var surveyBuilder = (function () {
                                 pagePortlet.find('.page-body').append(data);
                             }
                             initQuestionPlugin();
-
                             // bind question save button
                             $('.question-edit form').submit(function () {
                                 var notify = $.notify('Saving questions...');
@@ -89,7 +88,8 @@ var surveyBuilder = (function () {
                                 $(this).ajaxSubmit({
                                     success: function (response) {
                                         $('.question-edit').remove();
-                                        $('#page_'+pageId).append(response);
+
+                                        $('#page_' + pageId + '> .portlet-body').append(response);
                                         initQuestionTool();
                                         initNavbar();
                                     }
@@ -231,15 +231,22 @@ var surveyBuilder = (function () {
 
     var initPageNumDisplay = function () {
         var currentTop = $(document).scrollTop();
+
         var pageNumber = $("#survey-pages").children("div").length;
         var toleranceHeight = 50;
         $(document).scroll(function () {
             currentTop = $(document).scrollTop();
+            var currentBottom = currentTop + $(window).height();
             for (var i = 1; i <= pageNumber; i++) {
-                var offset = $("#survey-pages > div:nth-child(" + i + ")").offset();
-                var currentDiv = offset.top;
-                if (currentDiv >= currentTop - toleranceHeight) {
-                    $("#page-select").val(i);
+                var currentOffset = $("#survey-pages > div:nth-child(" + i + ")").offset();
+                var currentDivTop = currentOffset.top;
+                if (currentDivTop >= currentTop - toleranceHeight) {
+                    if (currentDivTop >= currentBottom - ($(window).height())/2) {
+                        var prev = i-1;
+                        $("#page-select").val(prev);
+                    }else{
+                        $("#page-select").val(i);
+                    }
                     return;
                 }
             }
@@ -274,9 +281,7 @@ var surveyBuilder = (function () {
         $("[id^='question-']").hover(
             function () {
                 var questionId = $(this).attr('id').replace(/[^\d.]/g, '');
-                //alert($("#edit-btn-group_" + questionId).attr("id"));
                 $("#edit-btn-group-" + questionId).css("visibility", "visible");
-
                 $(this).parent().addClass("highlight-frame");
                 $(this).parent().removeClass("question-frame");
             },
