@@ -1,16 +1,19 @@
-<div id="question_{{ question.id }}" class="well questionSet">
-    <h4><b>Question {{ question.order }}:</b>{{ question.question|safe }}</h4>
-    <br/>
+<div class="question-frame well question-set">
+    <div id="question-{{ question.id }}">
+        <h4><b>Question {{ question.order }}:</b>{{ question.question|safe }}</h4>
+        <br/>
 
-    <form>
-        <div class="form-group form-md-line-input">
-            <input type="text" class="form-control" placeholder="Answer Here"/>
-            <label for="form_control_1">Please answers the question</label>
+        <form>
+            <div class="form-group form-md-line-input">
+                <input type="text" class="form-control" placeholder="Answer Here"/>
+                <label for="form_control_1">Please answers the question</label>
+            </div>
+        </form>
+
+        <div class="edit-btn-group" id="edit-btn-group-{{ question.id }}" style="visibility: hidden">
+            <a href="javascript:;" class="btn default"><i class="fa fa-arrow-up"></i> Move Up </a>
+            <a href="javascript:;" class="btn default"><i class="fa fa-edit"></i> Edit </a>
+            <a href="javascript:;" class="btn default"><i class="fa fa-arrow-down"></i> Move Down </a>
         </div>
-    </form>
-    <br/>
-
-    <div class="editBtnGroup" id="editBtnGroup_{{ question.id }}">
     </div>
-
 </div>

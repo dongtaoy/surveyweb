@@ -62,12 +62,11 @@ var surveyBuilder = (function () {
             .on('click', function () {
                 if ($('.question-edit').length == 0) {
                     var notify = $.notify("Add new question...");
-
                     var pageNumber = $('#page-select').val();
                     pagePortlet = $('#survey-pages').children().eq(pageNumber - 1);
                     questionTypeId = $(this).attr('id').replace(/[^\d.]/g, '');
                     pageId = pagePortlet.attr('id').replace(/[^\d.]/g, '');
-                    console.log(questionTypeId, pageId);
+                    //console.log(questionTypeId, pageId);
                     // get question edit form
                     $.get(Django.url('question.create'), {
                         questionType: questionTypeId,
@@ -90,7 +89,7 @@ var surveyBuilder = (function () {
                                 $(this).ajaxSubmit({
                                     success: function (response) {
                                         $('.question-edit').remove();
-                                        $('.page-body').append(response);
+                                        $('#page_'+pageId).append(response);
                                         initQuestionTool();
                                         initNavbar();
                                     }
@@ -272,20 +271,20 @@ var surveyBuilder = (function () {
     };
 
     var initQuestionTool = function () {
-        $("[id^='question_']").hover(
+        $("[id^='question-']").hover(
             function () {
                 var questionId = $(this).attr('id').replace(/[^\d.]/g, '');
-                //alert($("#editBtnGroup_" + questionId).attr("id"));
-                $("#editBtnGroup_" + questionId).html('' +
-                '<a href="javascript:;" class="btn default"><i class="fa fa-arrow-up"></i> Move Up </a> ' +
-                '<a href="javascript:;" class="btn default"><i class="fa fa-edit"></i> Edit </a> ' +
-                '<a href="javascript:;" class="btn default"><i class="fa fa-arrow-down"></i> Move Down </a> ');
-                $(this).addClass("highlight-frame");
+                //alert($("#edit-btn-group_" + questionId).attr("id"));
+                $("#edit-btn-group-" + questionId).css("visibility", "visible");
+
+                $(this).parent().addClass("highlight-frame");
+                $(this).parent().removeClass("question-frame");
             },
             function () {
                 var questionId = $(this).attr('id').replace(/[^\d.]/g, '');
-                $("#editBtnGroup_" + questionId).html('');
-                $(this).removeClass("highlight-frame");
+                $("#edit-btn-group-" + questionId).css("visibility", "hidden");
+                $(this).parent().addClass("question-frame");
+                $(this).parent().removeClass("highlight-frame");
             });
     };
 

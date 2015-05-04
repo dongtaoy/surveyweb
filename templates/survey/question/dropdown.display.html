@@ -1,17 +1,23 @@
-<div id="question_{{ question.id }}" class="well questionSet">
+<div class="question-frame well question-set">
+    <div id="question-{{ question.id }}">
 
-    <h4><b>Question {{ question.order }}:</b>{{ question.question|safe }}</h4>
+        <h4><b>Question {{ question.order }}:</b>{{ question.question|safe }}</h4>
 
-    <div class="form-group form-md-line-input">
-        Please Choose one of the options
-        <select class="form-control" id="form_control_1">
-            {% for choice in question.choices.all %}
-                <option value="">{{ choice.text }}</option>
-            {% endfor %}
-        </select>
+        <div class="form-group form-md-line-input">
+            Please Choose one of the options
+            <select class="form-control" id="form_control_1">
+                {% for choice in question.choices.all %}
+                    <option value="">{{ choice.text }}</option>
+                {% endfor %}
+            </select>
 
-        <div class="form-control-focus">
+            <div class="form-control-focus">
+            </div>
+        </div>
+        <div class="edit-btn-group" id="edit-btn-group-{{ question.id }}" style="visibility: hidden">
+            <a href="javascript:;" class="btn default"><i class="fa fa-arrow-up"></i> Move Up </a>
+            <a href="javascript:;" class="btn default"><i class="fa fa-edit"></i> Edit </a>
+            <a href="javascript:;" class="btn default"><i class="fa fa-arrow-down"></i> Move Down </a>
         </div>
     </div>
-    <div id="editBtnGroup_{{ question.id }}" class="editBtnGroup"></div>
 </div>

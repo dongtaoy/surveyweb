@@ -28,12 +28,15 @@
     /*-moz-border-radius: 5px;*/
     /*-webkit-border-radius: 5px;*/
 }
-.questionSet{
+.question-frame{
+    border: 2px dotted #EEEEEE;
+}
+.question-set{
     position: relative;
 }
-.editBtnGroup{
+.edit-btn-group{
     position: absolute;
-    top: 30px;
+    top: 20px;
     right: 20px;
     z-index: 1;
 }

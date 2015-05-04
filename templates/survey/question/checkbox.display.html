@@ -1,17 +1,23 @@
-<div id="question_{{ question.id }}" class="well questionSet">
-    <h4><b>Question {{ question.order }}:</b>{{ question.question|safe }}</h4>
-    <hr>
-    <div class="md-checkbox-list" style="margin-left: 30px;">
-        {% for choice in question.choices.all %}
-            <div class="md-checkbox">
-                <input type="checkbox" id="checkbox{{ forloop.counter }}" class="md-check">
-                <label for="checkbox{{ forloop.counter }}">
-                    <span></span>
-                    <span class="check"></span>
-                    <span class="box"></span>
-                    {{ choice.text }}</label>
-            </div>
-        {% endfor %}
+<div class="question-frame well question-set">
+    <div id="question-{{ question.id }}">
+        <h4><b>Question {{ question.order }}:</b>{{ question.question|safe }}</h4>
+        <hr>
+        <div class="md-checkbox-list" style="margin-left: 30px;">
+            {% for choice in question.choices.all %}
+                <div class="md-checkbox">
+                    <input type="checkbox" id="checkbox{{ forloop.counter }}" class="md-check">
+                    <label for="checkbox{{ forloop.counter }}">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>
+                        {{ choice.text }}</label>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="edit-btn-group" id="edit-btn-group-{{ question.id }}" style="visibility: hidden">
+            <a href="javascript:;" class="btn default"><i class="fa fa-arrow-up"></i> Move Up </a>
+            <a href="javascript:;" class="btn default"><i class="fa fa-edit"></i> Edit </a>
+            <a href="javascript:;" class="btn default"><i class="fa fa-arrow-down"></i> Move Down </a>
+        </div>
     </div>
-    <div id="editBtnGroup_{{ question.id }}" class="editBtnGroup"></div>
 </div>
