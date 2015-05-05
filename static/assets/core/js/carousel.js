@@ -1,4 +1,4 @@
-var total = 10;
+var total = 13;
 var current = 1;
 var DURATION = 1000;
 var nextClick = 0;

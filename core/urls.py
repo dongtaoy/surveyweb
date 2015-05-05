@@ -12,7 +12,7 @@ urlpatterns = patterns(
     url(r'^dashboard/$', login_required(DashboardView.as_view()), name='dashboard'),
 
     url(r'^403$', login_required(TemplateView.as_view(template_name='common/403.html'))),
-    url(r'^collector', TemplateView.as_view(template_name='page/collector.html')),
+    url(r'^collector', TemplateView.as_view(template_name='page/collector.html'), name='survey.collector'),
 
     # common page testing
     # url(r'^403$', login_required(TemplateView.as_view(template_name='common/403.html'))),
