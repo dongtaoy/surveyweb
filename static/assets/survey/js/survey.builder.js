@@ -88,8 +88,7 @@ var surveyBuilder = (function () {
                                 $(this).ajaxSubmit({
                                     success: function (response) {
                                         $('.question-edit').remove();
-
-                                        $('#page_' + pageId + '> .portlet-body').append(response);
+                                        $('#page_' + pageId + '> .portlet-body > .row > .page-body').append(response);
                                         initQuestionTool();
                                         initNavbar();
                                     }
@@ -175,6 +174,7 @@ var surveyBuilder = (function () {
                                         });
                                         // remove the current portlet
                                         pagePortlet.remove();
+                                        initPageSelect();
                                         notify.close();
                                     } else {
                                         notify.update('message', 'Something went wrong... :(');
