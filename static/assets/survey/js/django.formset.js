@@ -29,7 +29,6 @@
             updateElementIndex = function (elem, prefix, ndx) {
                 var idRegex = new RegExp(prefix + '-(\\d+|__prefix__)-'),
                     replacement = prefix + '-' + ndx + '-';
-
                 if (elem.attr("for")) elem.attr("for", elem.attr("for").replace(idRegex, replacement));
                 if (elem.attr('id')) elem.attr('id', elem.attr('id').replace(idRegex, replacement));
                 if (elem.attr('name')) elem.attr('name', elem.attr('name').replace(idRegex, replacement));
@@ -76,22 +75,29 @@
                         row.hide();
                         forms = $('.' + options.formCssClass).not(':hidden');
                     } else {
-                        row.remove();
-                        // Update the TOTAL_FORMS count:
-                        forms = $('.' + options.formCssClass).not('.formset-custom-template');
-                        totalForms.val(forms.length);
+                        console.log(totalForms.val());
+                        if (totalForms.val() != 1) {
+                            row.remove();
+                            // Update the TOTAL_FORMS count:
+                            forms = $('.' + options.formCssClass).not('.formset-custom-template');
+                            totalForms.val(forms.length);
+                        }
                     }
-                    for (var i = 0, formCount = forms.length; i < formCount; i++) {
-                        // Apply `extraClasses` to form rows so they're nicely alternating:
-                        applyExtraClasses(forms.eq(i), i);
-                        if (!del.length) {
-                            // Also update names and IDs for all child controls (if this isn't
-                            // a delete-aeq(ible inline formset) so they remain in sequence:
-
-                            forms.eq(i).find('.input-group-addon').text((i+1) + '.');
-                            forms.eq(i).find(childElementSelector).each(function () {
-                                updateElementIndex($(this), options.prefix, i);
-                            });
+                    if (forms) {
+                        for (var i = 0, formCount = forms.length; i < formCount; i++) {
+                            // Apply `extraClasses` to form rows so they're nicely alternating:
+                            applyExtraClasses(forms.eq(i), i);
+                            if (!del.length) {
+                                // Also update names and IDs for all child controls (if this isn't
+                                // a delete-aeq(ible inline formset) so they remain in sequence:
+                                if(i == 0 ){
+                                    forms.eq(i).find('[type=text]').attr('required', true);
+                                }
+                                forms.eq(i).find('.input-group-addon').text((i + 1) + '.');
+                                forms.eq(i).find(childElementSelector).each(function () {
+                                    updateElementIndex($(this), options.prefix, i);
+                                });
+                            }
                         }
                     }
                     // Check if we need to show the add button:
