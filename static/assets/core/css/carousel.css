@@ -21,7 +21,14 @@
     left: 10px;
     top: 10px;
     border: 1px solid #c1d6e7;
+    cursor: pointer;
 }
+
+#carousel img:hover {
+    opacity: 40;
+}
+
+
 
 #carousel img:nth-child(1){
     -ms-transform: translateX(0px) translateZ(500px);
