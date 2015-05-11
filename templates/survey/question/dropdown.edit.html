@@ -5,33 +5,6 @@
             <i class="icon-speech font-green-sharp"></i>
             <span class="caption-subject bold uppercase">Dropdown Editor</span>
         </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-            <a href="javascript:;" class="fullscreen">
-            </a>
-        </div>
-        <div class="actions">
-            <div class="btn-group">
-                <a class="btn btn-sm btn-default" href="javascript:;" data-toggle="dropdown">
-                    <i class="fa fa-pencil"></i> Actions <i class="fa fa-angle-down"></i>
-                </a>
-                <ul class="dropdown-menu pull-right">
-                    <li>
-                        <a href="javascript:;">
-                            <i class="fa fa-arrow-up"></i> Upward </a>
-                    </li>
-                    <li>
-                        <a href="javascript:;">
-                            <i class="fa fa-arrow-down"></i> Downward </a>
-                    </li>
-                    <li>
-                        <a href="javascript:;">
-                            <i class="fa fa-trash-o"></i> Delete </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
     </div>
     <form action="{% url 'question.create' %}" method="POST">
         <div class="portlet-body">
@@ -65,8 +38,8 @@
         <div class="portlet-footer">
             <div class="row" style="margin: 0px;">
                 <div class="pull-right">
-                    <button class="btn btn-success btn-sm">Save</button>
-                    <button class="btn btn-warning btn-sm">Cancel</button>
+                    <button class="btn btn-success" type="submit">Save</button>
+                    <button class="btn btn-warning cancel" type="button">Cancel</button>
                 </div>
             </div>
         </div>

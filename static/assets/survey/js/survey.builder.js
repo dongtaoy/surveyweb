@@ -100,6 +100,11 @@ var surveyBuilder = (function () {
                                 return false;
                             });
 
+                            // bind question cancel button
+                            $('.question-edit button.cancel').click(function(){
+                               $('.question-edit').remove();
+                            });
+
                             notify.close();
                         });
                 } else {
