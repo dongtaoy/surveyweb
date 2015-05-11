@@ -45,14 +45,17 @@ class PageUpdateView(AJAXMixin, PermissionRequiredMixin, UpdateView):
     def form_valid(self, form):
         self.object = self.get_object()
         if form.cleaned_data['order'] == 0:
-            raise Exception
+            raise Exception('Cannot move the first element up!')
         else:
-            with atomic():
-                page = Page.objects.get(survey=self.object.survey, order=form.cleaned_data['order'])
-                page.order = self.object.order
-                page.save()
-                form.save()
-                return True
+            try:
+                with atomic():
+                    page = Page.objects.get(survey=self.object.survey, order=form.cleaned_data['order'])
+                    page.order = self.object.order
+                    page.save()
+                    form.save()
+                    return True
+            except:
+                raise Exception('Cannot move the last element down!')
 
 
 

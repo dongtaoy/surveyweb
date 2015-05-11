@@ -51,11 +51,11 @@
                     {% include "survey/page/survey.page.html" %}
                 {% endfor %}
 
-                <form class="pageCreateForm" action="{% url 'page.create' %}" method="POST"
+                <form id="page-create-form" action="{% url 'page.create' %}" method="POST"
                       style="margin-bottom: 25px;">
                     {% csrf_token %}
                     <input type="hidden" name="survey" value="{{ survey.id }}"/>
-                    <button class="btn btn-success btn-block" type="submit"><i class="fa fa-plus fa-fw"></i>Add
+                    <button class="btn btn-success btn-block" type="submit" id="page-create-form-submit"><i class="fa fa-plus fa-fw"></i>Add
                         Page
                     </button>
                 </form>

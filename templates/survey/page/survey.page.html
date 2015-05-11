@@ -1,16 +1,17 @@
 {% load bootstrap3 %}
-<div id="page_{{ page.id }}" class="portlet light" style="min-height: 510px">
+<div id="page-no-{{ page.id }}" class="portlet light page" style="min-height: 510px">
     <div class="portlet-title">
         <div class="caption font-green-sharp">
             <span class="caption-subject bold uppercase page">Page {{ page.order }}</span>
+            <input class="page-order" type="hidden" value="{{ page.order }}"/>
         </div>
         <div class="actions">
-            <a class="btn btn-sm btn-danger pageDelete">
+            <a class="btn btn-sm btn-danger page-delete">
                 <i class="fa fa-times"></i> Delete </a>
-            <a class="btn btn-sm btn-default pageEdit">
+            <a class="btn btn-sm btn-default page-edit">
                 <i class="fa fa-arrow-up"></i> Move Up </a>
             </a>
-            <a class="btn btn-sm btn-default pageEdit">
+            <a class="btn btn-sm btn-default page-edit">
                 <i class="fa fa-arrow-down"></i> Move Down </a>
             </a>
         </div>
