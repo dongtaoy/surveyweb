@@ -20,4 +20,6 @@ urlpatterns = patterns('',
     url(r"^page/", include('survey.page.urls')),
 
     url(r"^question/", include('survey.question.urls')),
+
+    url(r"^container/", include('survey.container.urls')),
 )

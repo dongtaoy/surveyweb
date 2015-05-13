@@ -63,18 +63,36 @@ var surveyBuilder = (function () {
         $(".nav-pills li a")
             .off('click')
             .on('click', function () {
-                if ($('.question-edit').length == 0) {
+                if ($('.container-edit').length == 0) {
                     var notify = $.notify("Add new question...");
                     var pageNumber = $('#page-select').val();
                     var pagePortlet = $('[id^=page-no-]').eq(pageNumber - 1);
-                    var questionTypeId = $(this).attr('id').replace(/[^\d.]/g, '');
                     var pageId = pagePortlet.attr('id').replace(/[^\d.]/g, '');
+                    var containerType = $(this).attr('id').substr(0, 2);
+                    var url = null;
+                    var data = null;
+                    console.log(containerType);
+                    if (containerType == 'QU') {
+                        url = Django.url('question.create');
+                        var questionTypeId = $(this).attr('id').replace(/[^\d.]/g, '');
+                        data = {
+                            questionType: questionTypeId,
+                            page: pageId,
+                            containerType: containerType
+                        }
+                    } else if(containerType == 'TE'){
+                        url = Django.url('container.text.create');
+                        data = {
+                            page: pageId,
+                            containerType: containerType
+                        }
+                    } else if(containerType == 'IM'){
+                        url = Django.url('container.image.create');
+                    }
+                    if(url == null)
+                        return;
 
-                    $.get(Django.url('question.create'), {
-                        questionType: questionTypeId,
-                        page: pageId,
-                        containerType: 'QU'
-                    })
+                    $.get(url, data)
                         .done(function (data) {
                             if (pagePortlet.find('.empty-page').length) {
                                 pagePortlet.find('.page-body').html($(data));
@@ -85,12 +103,12 @@ var surveyBuilder = (function () {
                             initQuestionPlugin();
 
                             // bind question save button
-                            $('.question-edit form').submit(function () {
+                            $('.container-edit form').submit(function () {
                                 $(this).find(':submit').attr('disabled', true);
                                 var notify = $.notify('Saving questions...');
                                 $(this).ajaxSubmit({
                                     success: function (response) {
-                                        $('.question-edit').remove();
+                                        $('.container-edit').remove();
                                         $(pagePortlet).find('.page-body').append(response);
                                         initQuestionTool();
                                         initNavbar();
@@ -101,8 +119,8 @@ var surveyBuilder = (function () {
                             });
 
                             // bind question cancel button
-                            $('.question-edit button.cancel').click(function(){
-                               $('.question-edit').remove();
+                            $('.container-edit button.cancel').click(function () {
+                                $('.container-edit').remove();
                             });
 
                             notify.close();
@@ -113,7 +131,7 @@ var surveyBuilder = (function () {
                     }, {
                         type: "warning",
                         onShow: function () {
-                            $('.question-edit').attr('tabindex', -1).focus();
+                            $('.container-edit').attr('tabindex', -1).focus();
                         }
                     });
                 }
@@ -124,8 +142,8 @@ var surveyBuilder = (function () {
 
     var initQuestionPlugin = function () {
 
-        $('.question-edit').attr('tabindex', -1).focus();
-        $('.question-edit').find('textarea').wysihtml5(WYSIHTML5OPTIONS);
+        $('.container-edit').attr('tabindex', -1).focus();
+        $('.container-edit').find('textarea').wysihtml5(WYSIHTML5OPTIONS);
     };
 
 

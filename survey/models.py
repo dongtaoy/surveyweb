@@ -1,6 +1,6 @@
 __author__ = 'dongtao'
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission, ContentType
 from guardian.shortcuts import assign_perm
 
 
@@ -46,6 +46,7 @@ class Survey(models.Model):
 
     def get_questions(self):
         import itertools
+
         return list(itertools.chain.from_iterable(map(lambda p: getattr(p, 'containers').all(), self.pages.all())))
 
 
@@ -71,7 +72,7 @@ class Page(models.Model):
 
 
 # class ContainerType(models.Model):
-#     text = models.CharField(max_length=50, null=False, blank=False)
+# text = models.CharField(max_length=50, null=False, blank=False)
 
 
 class Container(models.Model):
@@ -97,10 +98,6 @@ class Container(models.Model):
         if self.order is None:
             self.order = self.page.containers.count() + 1
         super(Container, self).save(*args, **kwargs)
-        assign_perm('survey.delete_questioncontainer', self.page.survey.creator, self)
-        assign_perm('survey.change_questioncontainer', self.page.survey.creator, self)
-
-
 
 
 class ImageContainer(Container):
@@ -109,6 +106,25 @@ class ImageContainer(Container):
 
 class TextContainer(Container):
     text = models.TextField(null=False, blank=False)
+    SUCCESS = 'SU'
+    PRIMARY = 'PR'
+    INFORMATION = 'IN'
+    WARNING = 'WA'
+    DANGER = 'DA'
+
+    CATEGORY_CHOICES = (
+        (SUCCESS, 'Success'),
+        (PRIMARY, 'Primary'),
+        (INFORMATION, 'Information'),
+        (WARNING, 'Warning'),
+        (DANGER, 'Danger'),
+    )
+    category = models.CharField(choices=CATEGORY_CHOICES, max_length=2, null=False, blank=False, default=PRIMARY)
+
+    def save(self, *args, **kwargs):
+        super(TextContainer, self).save(*args, **kwargs)
+        assign_perm('survey.delete_textcontainer', self.page.survey.creator, self)
+        assign_perm('survey.change_textcontainer', self.page.survey.creator, self)
 
 
 class QuestionType(models.Model):
@@ -122,8 +138,9 @@ class QuestionType(models.Model):
 
 
 
+
     def get_name(self):
-        return self.name.lower().replace(' ','-')
+        return self.name.lower().replace(' ', '-')
 
     def get_edit_template_name(self):
         return "survey/question/%s.edit.html" % self.get_name()
@@ -136,12 +153,18 @@ class QuestionType(models.Model):
 
 
 class QuestionContainer(Container):
-
     question = models.TextField(null=False, blank=False)
     questiontype = models.ForeignKey(QuestionType)
 
+    def save(self, *args, **kwargs):
+        super(QuestionContainer, self).save(*args, **kwargs)
+        assign_perm('survey.delete_questioncontainer', self.page.survey.creator, self)
+        assign_perm('survey.change_questioncontainer', self.page.survey.creator, self)
+
+
     def __unicode__(self):
         return self.question
+
 
 class Choice(models.Model):
     text = models.CharField(max_length=100, null=False, blank=False)
@@ -155,6 +178,8 @@ class Choice(models.Model):
         if self.order is None:
             self.order = self.question.choices.count() + 1
         super(Choice, self).save(*args, **kwargs)
+
+
 #
 
 class EloItem(models.Model):

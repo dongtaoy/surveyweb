@@ -1,0 +1,32 @@
+{% load bootstrap3 %}
+<div class="portlet light bordered container-edit">
+    <div class="portlet-title">
+        <div class="caption font-green-sharp">
+            <i class="icon-speech font-green-sharp"></i>
+            <span class="caption-subject bold uppercase">Help Text Editor</span>
+        </div>
+    </div>
+    <form action="{{ request.path }}" method="POST">
+        <div class="portlet-body">
+            {% for field in form %}
+                {% if field != form.category %}
+                    {% bootstrap_field field layout='inline' %}
+                {% endif %}
+            {% endfor %}
+            <div class="form-group form-md-line-input ">
+                <p class="note">Please choose corresponding category of your help text:</p>
+                {% bootstrap_field form.category layout='inline' %}
+
+            </div>
+            <div class="portlet-footer">
+                <div class="row" style="margin: 0px;">
+                    <div class="pull-right">
+                        {% buttons submit='OK' layout='inline' %}
+                            <button class="btn btn-warning cancel" type="button">Cancel</button>
+                        {% endbuttons %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,6 +1,6 @@
 __author__ = 'dongtao'
 from django import forms
-from survey.models import Survey, QuestionContainer, Choice
+from survey.models import Survey, QuestionContainer, Choice, TextContainer
 from django.forms.models import inlineformset_factory
 
 
@@ -15,12 +15,12 @@ ChoiceFormSet = inlineformset_factory(QuestionContainer,
                                       Choice,
                                       fields=('text', ),
                                       can_delete=False,
-                                      labels= {
+                                      labels={
                                           'text': 'choice'
                                       },
                                       min_num=1,
                                       validate_min=True,
-                                      extra=1,)
+                                      extra=1, )
 
 
 class QuestionForm(forms.ModelForm):
@@ -38,6 +38,20 @@ class QuestionForm(forms.ModelForm):
             'type': forms.HiddenInput
         }
 
+
+class TextContainerForm(forms.ModelForm):
+    class Meta:
+        model = TextContainer
+        exclude = ['order']
+
+        labels = {
+            'text': 'Please enter your text here...'
+        }
+
+        widgets = {
+            'page': forms.HiddenInput,
+            'type': forms.HiddenInput
+        }
 
 
 
