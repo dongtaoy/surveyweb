@@ -34,10 +34,10 @@
     /*-moz-border-radius: 5px;*/
     /*-webkit-border-radius: 5px;*/
 }
-.question-frame{
+.container-frame{
     border: 2px dotted #EEEEEE;
 }
-.question-set{
+.container-set{
     position: relative;
 }
 .edit-btn-group{

@@ -2,18 +2,17 @@ __author__ = 'dongtaoy'
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.http import HttpResponse
 from django.shortcuts import render
-from survey.models import TextContainer
 from survey.forms import TextContainerForm
 
 
 class TextContainerCreateView(CreateView):
     form_class = TextContainerForm
-    template_name = 'survey/container/helptext-edit.html'
+    template_name = 'survey/container/help-text.edit.html'
+
 
     def form_valid(self, form):
         container = form.save()
-        print container
-        return HttpResponse(1)
+        return render(self.request, 'survey/container/help-text.display.html', {'textcontainer': container})
 
     def get_initial(self):
         if self.request.GET:

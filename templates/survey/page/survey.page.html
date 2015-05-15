@@ -35,7 +35,11 @@
                             {% endwith %}
 
                         {% endif %}
-
+                        {% if container.type == 'TE' %}
+                            {% with container.textcontainer as textcontainer %}
+                                {% include 'survey/container/help-text.display.html' %}
+                            {% endwith %}
+                        {% endif %}
                     {% endfor %}
                 {% endif %}
             </div>

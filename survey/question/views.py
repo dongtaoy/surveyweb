@@ -48,3 +48,10 @@ class QuestionCreateView(CreateView):
             return super(QuestionCreateView, self).get_initial()
 
 
+class QuestionUpdateView(UpdateView):
+    form_class = QuestionForm
+    model = QuestionContainer
+    pk_url_kwarg = 'question'
+
+    def get_template_names(self):
+        return self.object.questiontype.get_edit_template_name()

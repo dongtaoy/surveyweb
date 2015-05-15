@@ -110,8 +110,7 @@ var surveyBuilder = (function () {
                                     success: function (response) {
                                         $('.container-edit').remove();
                                         $(pagePortlet).find('.page-body').append(response);
-                                        initQuestionTool();
-                                        initNavbar();
+                                        initDisplay();
                                     }
                                 });
                                 notify.close();
@@ -137,6 +136,28 @@ var surveyBuilder = (function () {
                 }
                 return false;
             });
+    };
+
+
+    var initQuestionEditAjax = function (){
+      $('.container-display-edit')
+          .off('click')
+          .on('click', function(){
+              $(this).attr('disabled', true);
+              var container = $(this).closest("[id^=container-]");
+              var containerId = container.attr('id').replace(/[^\d.]/g, '');
+              var containerType = container.attr('id').split('-')[1];
+              var url = null;
+              if(containerType == 'TE'){
+                  url = Django.url('textcontainter.edit')
+              }else if(containerType == 'QU'){
+                  url = Django.url('question.edit', containerId)
+              }
+              $.get(url)
+                  .done(function(data){
+                      container.replaceWith(data);
+                  })
+          })
     };
 
 
@@ -332,20 +353,19 @@ var surveyBuilder = (function () {
     };
 
     var initQuestionTool = function () {
-        $("[id^='question-']")
+        $("[id^='container-']")
             .off('mouseenter')
             .on('mouseenter', function () {
                 var questionId = $(this).attr('id').replace(/[^\d.]/g, '');
                 $("#edit-btn-group-" + questionId).css("visibility", "visible");
                 $(this).parent().addClass("highlight-frame");
-                $(this).parent().removeClass("question-frame");
+                $(this).parent().removeClass("container-frame");
             })
             .off('mouseleave')
             .on('mouseleave', function () {
-
                 var questionId = $(this).attr('id').replace(/[^\d.]/g, '');
                 $("#edit-btn-group-" + questionId).css("visibility", "hidden");
-                $(this).parent().addClass("question-frame");
+                $(this).parent().addClass("container-frame");
                 $(this).parent().removeClass("highlight-frame");
             });
     };
@@ -364,6 +384,7 @@ var surveyBuilder = (function () {
             initPageEditAjax();
 
             initQuestionCreateAjax();
+            initQuestionEditAjax();
 
             initDisplay();
 
