@@ -1,5 +1,7 @@
 <div class="well alert-{{ textcontainer.get_category_display }} container-set">
     <div id="container-{{ textcontainer.type }}-{{ textcontainer.id }}">
+        <h4><b>Help Text <b class="container-order">{{ textcontainer.order }}</b>:</b>{{ question.question|safe }}</h4>
+        <hr>
         <div>
             <h4>{{ textcontainer.text | safe }}</h4>
             <br/>
@@ -8,7 +10,7 @@
         <div class="edit-btn-group" id="edit-btn-group-{{ textcontainer.id }}" style="visibility: hidden">
             <a href="javascript:;" class="btn default container-move-up"><i class="fa fa-arrow-up"></i> Move Up </a>
             <a href="javascript:;" class="btn default container-display-edit"><i class="fa fa-edit"></i> Edit </a>
-            <a href="javascript:;" class="btn default"><i class="fa fa-arrow-down"></i> Move Down </a>
+            <a href="javascript:;" class="btn default container-move-down"><i class="fa fa-arrow-down"></i> Move Down </a>
         </div>
     </div>
 </div>

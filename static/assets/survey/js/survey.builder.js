@@ -110,6 +110,8 @@ var surveyBuilder = (function () {
                                     success: function (response) {
                                         $('.container-edit').remove();
                                         $(pagePortlet).find('.page-body').append(response);
+                                        initQuestionEditAjax();
+                                        initQuestionMoveUp();
                                         initDisplay();
                                     }
                                 });
@@ -149,7 +151,7 @@ var surveyBuilder = (function () {
                 var containerType = container.attr('id').split('-')[1];
                 var url = null;
                 if (containerType == 'TE') {
-                    url = Django.url('textcontainter.edit')
+                    url = Django.url('container.text.edit', containerId)
                 } else if (containerType == 'QU') {
                     url = Django.url('question.edit', containerId)
                 }
@@ -167,6 +169,7 @@ var surveyBuilder = (function () {
                                     container.closest('.well').remove();
                                     $('.container-edit').replaceWith(response);
                                     initQuestionEditAjax();
+                                    initQuestionMoveUp();
                                     initDisplay();
                                 }
                             });
@@ -194,7 +197,39 @@ var surveyBuilder = (function () {
                 $.post(Django.url('container.move.up', containerId))
                     .success(function(data){
                         if(data['status'] == 200){
+                            var order = $(container.closest('.well').find('.container-order')).text();
 
+                            $(container.closest('.well').find('.container-order')).text(order - 1);
+                            $(container.closest('.well').prev().find('.container-order')).text(order);
+                            container.closest('.well').insertBefore(container.closest('.well').prev());
+
+                        }else{
+                            $.notify(data['content'].split('\n')[1]);
+                        }
+                    });
+
+            });
+    };
+
+
+    var initQuestionMoveDown = function () {
+        $('.container-move-down')
+            .off('click')
+            .on('click', function () {
+                console.log($)
+                console.log('movedown');
+                var container = $(this).closest('[id^=container-]');
+                var containerId = container.attr('id').replace(/[^\d.]/g,'');
+                $.post(Django.url('container.move.down', containerId))
+                    .success(function(data){
+                        if(data['status'] == 200){
+
+                            var order = $(container.closest('.well').find('.container-order')).text();
+                            //
+                            $(container.closest('.well').find('.container-order')).text(parseInt(order) + 1);
+                            $(container.closest('.well').next().find('.container-order')).text(order);
+                            container.closest('.well').insertAfter(container.closest('.well').next());
+s
                         }else{
                             $.notify(data['content'].split('\n')[1]);
                         }
@@ -428,6 +463,7 @@ var surveyBuilder = (function () {
             initQuestionCreateAjax();
             initQuestionEditAjax();
             initQuestionMoveUp();
+            initQuestionMoveDown();
 
             initDisplay();
 

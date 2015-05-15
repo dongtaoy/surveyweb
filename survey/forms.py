@@ -57,5 +57,3 @@ class TextContainerForm(forms.ModelForm):
 
 
 
-
-
