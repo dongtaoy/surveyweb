@@ -107,19 +107,19 @@ class ImageContainer(Container):
 class TextContainer(Container):
     text = models.TextField(null=False, blank=False)
     SUCCESS = 'SU'
-    PRIMARY = 'PR'
+    DEFAULT = 'DE'
     INFORMATION = 'IN'
     WARNING = 'WA'
     DANGER = 'DA'
 
     CATEGORY_CHOICES = (
         (SUCCESS, 'Success'),
-        (PRIMARY, 'Primary'),
-        (INFORMATION, 'Information'),
+        (DEFAULT, 'Default'),
+        (INFORMATION, 'Info'),
         (WARNING, 'Warning'),
         (DANGER, 'Danger'),
     )
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=2, null=False, blank=False, default=PRIMARY)
+    category = models.CharField(choices=CATEGORY_CHOICES, max_length=2, null=False, blank=False, default=DEFAULT)
 
     def save(self, *args, **kwargs):
         super(TextContainer, self).save(*args, **kwargs)
@@ -160,6 +160,10 @@ class QuestionContainer(Container):
         super(QuestionContainer, self).save(*args, **kwargs)
         assign_perm('survey.delete_questioncontainer', self.page.survey.creator, self)
         assign_perm('survey.change_questioncontainer', self.page.survey.creator, self)
+
+    def get_choices(self):
+        choices = self.choices.all()
+        return tuple([(choice.text, choice.text) for choice in choices])
 
 
     def __unicode__(self):

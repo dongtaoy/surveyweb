@@ -1,6 +1,8 @@
 Django==1.8
 django-allauth==0.19.1
 django-bootstrap3==5.4.0
+django-crispy-forms==1.4.0
+django-formtools==1.0
 django-guardian==1.2.5
 django.js==0.8.1
 djangoajax==2.2.15
@@ -8,6 +10,7 @@ MySQL-python==1.2.5
 oauthlib==0.7.2
 Pillow==2.8.1
 python-openid==2.2.5
+pytz==2015.4
 requests==2.6.2
 requests-oauthlib==0.4.2
 six==1.9.0

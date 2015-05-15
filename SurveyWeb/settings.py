@@ -50,6 +50,9 @@ INSTALLED_APPS = (
     # bootstrap3 form
     'bootstrap3',
 
+    # crispy form
+    'crispy_forms',
+
     # guardian
     # object level permission
     'guardian',
@@ -60,6 +63,8 @@ INSTALLED_APPS = (
     # app
     'survey',
     'core',
+
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -182,3 +187,6 @@ BOOTSTRAP3 = {
 
 ## guardians setting
 ANONYMOUS_USER_ID = -1
+
+
+CRISPY_TEMPLATE_PACK='bootstrap3'

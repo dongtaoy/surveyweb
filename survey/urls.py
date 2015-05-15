@@ -1,7 +1,8 @@
 __author__ = 'dongtaoy'
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required
-from survey.views import SurveyCreateView, SurveryDetailView, SurveyDeleteView, SurveyUpdateView, SurveyCollectView
+from survey.views import SurveyCreateView, SurveryDetailView, SurveyDeleteView, SurveyUpdateView, SurveyCollectView, ResponseView
+
 
 
 urlpatterns = patterns('',
@@ -19,7 +20,7 @@ urlpatterns = patterns('',
 
     url(r"^(?P<survey>\d+)/collect/$", login_required(SurveyCollectView.as_view()), name="survey.collect"),
 
-    # url(r"^(?P<survey>\d+)/preview/$", login_required(SurveyPreviewView.as_view()), name='survey.preview'),
+    url(r"^(?P<survey>\d+)/do/$", 'survey.views.response_factory', name='survey.preview'),
 
     url(r"^page/", include('survey.page.urls')),
 

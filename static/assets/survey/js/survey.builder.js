@@ -144,8 +144,8 @@ var surveyBuilder = (function () {
         $('.container-display-edit')
             .off('click')
             .on('click', function () {
-                $(this).closest('.well').find('a').attr('disabled', true);
-                $(this).closest('.well').find('button').attr('disabled', true);
+                $(this).closest('.container-set').find('a').attr('disabled', true);
+                $(this).closest('.container-set').find('button').attr('disabled', true);
                 var container = $(this).closest("[id^=container-]");
                 var containerId = container.attr('id').replace(/[^\d.]/g, '');
                 var containerType = container.attr('id').split('-')[1];
@@ -157,8 +157,8 @@ var surveyBuilder = (function () {
                 }
                 $.get(url)
                     .done(function (data) {
-                        container.closest('.well').hide();
-                        container.closest('.well').after(data);
+                        container.closest('.container-set').hide();
+                        container.closest('.container-set').after(data);
                         //.replaceWith(data);
                         initQuestionPlugin();
                         $('.container-edit form').submit(function () {
@@ -166,7 +166,7 @@ var surveyBuilder = (function () {
                             var notify = $.notify('Saving questions...');
                             $(this).ajaxSubmit({
                                 success: function (response) {
-                                    container.closest('.well').remove();
+                                    container.closest('.container-set').remove();
                                     $('.container-edit').replaceWith(response);
                                     initQuestionEditAjax();
                                     initQuestionMoveUp();
@@ -180,9 +180,9 @@ var surveyBuilder = (function () {
                         // bind question cancel button
                         $('.container-edit button.cancel').click(function () {
                             $('.container-edit').remove();
-                            container.closest('.well').show();
-                            container.closest('.well').closest('.well').find('a').attr('disabled', false);
-                            container.closest('.well').closest('.well').find('button').attr('disabled', false);
+                            container.closest('.container-set').show();
+                            container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
+                            container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
                         });
                     })
             })
@@ -197,11 +197,11 @@ var surveyBuilder = (function () {
                 $.post(Django.url('container.move.up', containerId))
                     .success(function(data){
                         if(data['status'] == 200){
-                            var order = $(container.closest('.well').find('.container-order')).text();
+                            var order = $(container.closest('.container-set').find('.container-order')).text();
 
-                            $(container.closest('.well').find('.container-order')).text(order - 1);
-                            $(container.closest('.well').prev().find('.container-order')).text(order);
-                            container.closest('.well').insertBefore(container.closest('.well').prev());
+                            $(container.closest('.container-set').find('.container-order')).text(order - 1);
+                            $(container.closest('.container-set').prev().find('.container-order')).text(order);
+                            container.closest('.container-set').insertBefore(container.closest('.container-set').prev());
 
                         }else{
                             $.notify(data['content'].split('\n')[1]);
@@ -224,11 +224,11 @@ var surveyBuilder = (function () {
                     .success(function(data){
                         if(data['status'] == 200){
 
-                            var order = $(container.closest('.well').find('.container-order')).text();
+                            var order = $(container.closest('.container-set').find('.container-order')).text();
                             //
-                            $(container.closest('.well').find('.container-order')).text(parseInt(order) + 1);
-                            $(container.closest('.well').next().find('.container-order')).text(order);
-                            container.closest('.well').insertAfter(container.closest('.well').next());
+                            $(container.closest('.container-set').find('.container-order')).text(parseInt(order) + 1);
+                            $(container.closest('.container-set').next().find('.container-order')).text(order);
+                            container.closest('.container-set').insertAfter(container.closest('.container-set').next());
 s
                         }else{
                             $.notify(data['content'].split('\n')[1]);
