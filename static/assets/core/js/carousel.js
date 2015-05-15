@@ -70,7 +70,7 @@ moveNext = function () {
         var left_x = getTranslateX(left_obj);
         var left_angle = getRotationDegrees(left_obj);
         left_x -= 20;
-        if (left_x < -260) {
+        if (left_x < -240) {
             left_obj.css("visibility", "hidden");
         } else {
             left_obj.css("visibility", "visible");
@@ -169,7 +169,7 @@ moveBack = function () {
         var left_x = getTranslateX(left_obj);
         var left_angle = getRotationDegrees(left_obj);
         left_x += 20;
-        if (left_x < -260) {
+        if (left_x < -240) {
             left_obj.css("visibility", "hidden");
         } else {
             left_obj.css("visibility", "visible");
@@ -263,4 +263,20 @@ for (var i = 1; i <= total; i++) {
             backClick_loop(Math.abs(diff) - 1);
         }
     })
-};
+}
+;
+
+$("body").keydown(function (e) {
+    if (e.keyCode == 39) { // left
+        nextClick++;
+        backClick = 0;
+        moveNext();
+        nextClick_loop(nextClick - 1);
+    }
+    if (e.keyCode == 37) {
+        backClick++;
+        nextClick = 0;
+        moveBack();
+        backClick_loop(backClick - 1);
+    }
+})

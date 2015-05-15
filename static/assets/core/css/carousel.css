@@ -28,6 +28,20 @@
     opacity: 40;
 }
 
+#prevButton{
+    height: 100%;
+    width: 20px;
+    background: blue;
+    display: block;
+    position: absolute;
+}
+#carouselHelpText{
+    border: 1px solid #000000;
+
+    position: absolute;
+    margin: 0 auto;
+}
+
 
 
 #carousel img:nth-child(1){

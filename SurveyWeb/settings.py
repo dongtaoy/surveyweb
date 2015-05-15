@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.humanize',
 
 
     # all auth
@@ -50,8 +51,6 @@ INSTALLED_APPS = (
     # bootstrap3 form
     'bootstrap3',
 
-    # crispy form
-    'crispy_forms',
 
     # guardian
     # object level permission
@@ -188,5 +187,3 @@ BOOTSTRAP3 = {
 ## guardians setting
 ANONYMOUS_USER_ID = -1
 
-
-CRISPY_TEMPLATE_PACK='bootstrap3'

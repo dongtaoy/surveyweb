@@ -1,4 +1,3 @@
-{% load crispy_forms_tags %}
 {% load bootstrap3 %}
 {% load staticfiles %}
 <!DOCTYPE html>
@@ -43,14 +42,13 @@
             {{ wizard.form.management_form }}
             {% for form in wizard.form.forms %}
                 {% for field in form %}
-                    {#                    {% bootstrap_label field %}#}
-                {% endfor %}
+                <span style="font-size: 17px;"><b>Question {{ forloop.counter }}: </b> {% bootstrap_label field.label %}</span>
+                {% bootstrap_field field layout='inline' %}
+                <hr/>
+            {% endfor %}
 
             {% endfor %}
         {% else %}
-            {#            {% for field in wizard.form %}#}
-            {#                {% crispy field.field %}#}
-            {#            {% endfor %}#}
             {% for field in wizard.form %}
                 <span style="font-size: 17px;"><b>Question {{ forloop.counter }}: </b> {% bootstrap_label field.label %}</span>
                 {% bootstrap_field field layout='inline' %}
