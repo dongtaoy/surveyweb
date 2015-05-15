@@ -32,7 +32,14 @@ class QuestionCreateView(CreateView):
             choiceformset = ChoiceFormSet(self.request.POST, instance=question)
             if choiceformset.is_valid():
                 question.save()
-                choiceformset.save()
+                texts = set()
+                for form in choiceformset:
+                    if 'text' in form.cleaned_data.keys():
+                        if form.cleaned_data['text'] not in texts:
+                            choice = form.save(commit=False)
+                            choice.question = question
+                            choice.save()
+                            texts.add(form.cleaned_data['text'])
         else:
             question.save()
         return render(self.request, question.questiontype.get_display_template_name(), {'question': question})
@@ -66,11 +73,20 @@ class QuestionUpdateView(UpdateView):
     def form_valid(self, form):
         question = form.save(commit=False)
         if question.questiontype.get_name() != 'single-textbox':
-            print 1
             choiceformset = ChoiceFormSet(self.request.POST, instance=question)
             if choiceformset.is_valid():
                 question.save()
                 choiceformset.save()
+            else:
+                question.save()
+                texts = set()
+                for form in choiceformset:
+                    if 'text' in form.cleaned_data.keys():
+                        if form.cleaned_data['text'] not in texts:
+                            choice = form.save(commit=False)
+                            choice.question = question
+                            choice.save()
+                            texts.add(form.cleaned_data['text'])
         else:
             question.save()
         return render(self.request, question.questiontype.get_display_template_name(), {'question': question})

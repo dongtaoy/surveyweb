@@ -1,0 +1,86 @@
+{% load crispy_forms_tags %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>SurveyWeb | {% block title %} {% endblock %}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+
+    <link href="{% static 'assets/global/plugins/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static 'assets/global/plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<form action="" method="post">{% csrf_token %}
+
+    <div class="navbar" role="navigation">
+        <div class="navbar-header navbar-fixed-top  navbar-default">
+            <div class="container">
+                <p href="" class="navbar-brand">{{ survey.name }} - Preview</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar"
+                 aria-valuenow="{{ wizard.steps.current }}" aria-valuemin="1"
+                 aria-valuemax="{{ wizard.steps.count }}"
+                 style="width: {% widthratio wizard.steps.current wizard.steps.count 100 %}%">
+                <p>{% widthratio wizard.steps.current wizard.steps.count 100 %}% complete</p>
+            </div>
+        </div>
+        {#    {{ form }}#}
+        {{ wizard.management_form }}
+        {% if wizard.form.forms %}
+            {{ wizard.form.management_form }}
+            {% for form in wizard.form.forms %}
+                {% for field in form %}
+                    {#                    {% bootstrap_label field %}#}
+                {% endfor %}
+
+            {% endfor %}
+        {% else %}
+            {#            {% for field in wizard.form %}#}
+            {#                {% crispy field.field %}#}
+            {#            {% endfor %}#}
+            {% for field in wizard.form %}
+                <span style="font-size: 17px;"><b>Question {{ forloop.counter }}: </b> {% bootstrap_label field.label %}</span>
+                {% bootstrap_field field layout='inline' %}
+                <hr/>
+            {% endfor %}
+
+        {% endif %}
+    </div>
+    <div class="navbar">
+        <div class="navbar-default navbar-fixed-bottom">
+            <p style="text-align: center;margin-bottom: 20px; padding-top: 20px;">
+                {% if wizard.steps.prev %}
+                    <button type="submit" class="btn btn-warning" name="wizard_goto_step"
+                            value="{{ wizard.steps.prev }}"><i class="fa fa-arrow-circle-left fa-fw"></i>Back
+                    </button>
+                {% endif %}
+
+                {% if wizard.steps.next %}
+                    <button type="submit" class="btn btn-info"><i class="fa fa-arrow-circle-right  fa-fw"></i>Next
+                    </button>
+                {% else %}
+                    <button type="submit" class="btn btn-success"><i class="fa fa-arrow-circle-right  fa-fw"></i>Submit
+                    </button>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</form>
+
+<script src="{% static 'assets/global/plugins/jquery.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/global/plugins/bootstrap/js/bootstrap.min.js' %}" type="text/javascript"></script>
+</body>
+</html>

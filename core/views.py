@@ -2,6 +2,8 @@ __author__ = 'dongtao'
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView
+import datetime
+from django.utils.timezone import get_current_timezone
 
 
 def home(request):
@@ -20,7 +22,8 @@ class DashboardView(TemplateView):
             itertools.chain.from_iterable(map(
                 lambda s: getattr(s, "responses").all(), self.request.user.surveys.all())))
 
-        today_responses = filter(lambda res: res.created == datetime.datetime.today(), total_responses)
+        today_responses = filter(lambda res: res.created == datetime.datetime.now(get_current_timezone()), total_responses)
+
 
         return {"num_total_responses": len(total_responses), "num_today_responses": len(today_responses),
                 "surveys": reversed(self.request.user.surveys.all())}

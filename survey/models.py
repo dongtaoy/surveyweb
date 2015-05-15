@@ -175,6 +175,9 @@ class Choice(models.Model):
     order = models.IntegerField(null=False, blank=False)
     question = models.ForeignKey(QuestionContainer, null=False, blank=False, related_name='choices')
 
+    class Meta:
+        unique_together = ('text', 'question')
+
     def __unicode__(self):
         return self.text
 
@@ -227,35 +230,6 @@ class AnswerCheck(AnswerBase):
 class AnswerElo(AnswerBase):
     item = models.ForeignKey(EloItem, null=False, blank=False)
     current_rating = models.FloatField(null=False, blank=False)
-
-
-#
-
-# class AnswerDateTime(AnswerBase):
-#     choice = models.DateTimeField(null=False, blank=False)
-#
-#
-# class AnswerInteger(AnswerBase):
-#     choice = models.IntegerField(null=False, blank=False)
-
-#
-#
-# Community
-# Customer Feedback
-# Demographics
-# Education
-# Events
-# Healthcare
-# Human Resources
-# Industry Specific
-# Just for Fun
-# Market Research
-# Non-Profit
-# Political
-# Other
-
-
-
 
 
 

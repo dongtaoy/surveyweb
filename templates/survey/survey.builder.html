@@ -24,7 +24,8 @@
     <div class="portlet gren">
         <div class="portlet-title survey-head">
             <div class="caption font-blue-hoki">
-                <a a href="#surveyEdit" data-toggle="modal" role="button" style="font-size: 25px;">{{ survey.name }}</a><br/>
+                <a a href="#survey-edit" data-toggle="modal" role="button"
+                   style="font-size: 25px;">{{ survey.name }}</a><br/>
                 <span style="font-size: 12px;margin-top: 2px;color: grey;"><i
                         class="fa fa-tags fa-fw"></i>Category: {{ survey.category }}</span>
             </div>
@@ -56,28 +57,32 @@
                       style="margin-bottom: 25px;">
                     {% csrf_token %}
                     <input type="hidden" name="survey" value="{{ survey.id }}"/>
-                    <button class="btn btn-success btn-block" type="submit" id="page-create-form-submit"><i class="fa fa-plus fa-fw"></i>Add
+                    <button class="btn btn-success btn-block" type="submit" id="page-create-form-submit"><i
+                            class="fa fa-plus fa-fw"></i>Add
                         Page
                     </button>
                 </form>
             </div>
-            <div id="surveyEdit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                            <h4 class="modal-title">First Thumbnail label</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form action="">
+            <div id="survey-edit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+
+                <form action="" method="POST">{% csrf_token %}
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h4 class="modal-title">Survey Details</h4>
+                            </div>
+                            <div class="modal-body">
                                 {% bootstrap_form form %}
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button data-dismiss="modal" class="btn green">OK</button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn green">OK</button>
+                                <button data-dismiss="modal" class="btn red">Cancel</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
+
             </div>
         </div>
     </div>

@@ -1,5 +1,5 @@
-    <div class="container-frame well container-set">
-        <div id="container-{{ question.type }}-{{ question.id }}">
+<div class="container-frame well container-set">
+    <div id="container-{{ question.type }}-{{ question.id }}">
 
         <h4><b>Question <b class="container-order">{{ question.order }}</b>:</b>{{ question.question|safe }}</h4>
         <br/>
@@ -13,8 +13,11 @@
         <div class="edit-btn-group" id="edit-btn-group-{{ question.id }}" style="visibility: hidden">
             <a href="javascript:;" class="btn default container-move-up"><i class="fa fa-arrow-up"></i> Move Up </a>
             <a href="javascript:;" class="btn default container-display-edit"><i class="fa fa-edit"></i> Edit </a>
-            <a href="javascript:;" class="btn default container-move-down"><i class="fa fa-arrow-down"></i> Move Down </a>
+            <a href="javascript:;" class="btn default container-display-delete"><i class="fa fa-warning"></i> Delete
+            </a>
+            <a href="javascript:;" class="btn default container-move-down"><i class="fa fa-arrow-down"></i> Move
+                Down </a>
         </div>
-            </div>
-
     </div>
+
+</div>

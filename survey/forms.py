@@ -3,7 +3,7 @@ from django import forms
 from survey.models import Survey, QuestionContainer, Choice, TextContainer, Response, Container, QuestionType, \
     AnswerText, AnswerBase, AnswerCheck, AnswerRadio, AnswerSelect
 from django.forms.models import inlineformset_factory
-# from crispy_forms.helper import FormHelper
+from django.forms.models import BaseInlineFormSet
 
 class SurveyForm(forms.ModelForm):
     class Meta:
@@ -11,6 +11,23 @@ class SurveyForm(forms.ModelForm):
         fields = '__all__'
         exclude = ['creator', 'status']
 
+class IgnoreSameValueInlineFormSet(BaseInlineFormSet):
+    def clean(self):
+        super(IgnoreSameValueInlineFormSet, self).clean()
+        print 'in'
+        values = set()
+        for form in self.forms:
+            if 'text' in form.cleaned_data.keys():
+                print form.cleaned_data['text']
+                # if form.cleaned_data['text'] in values:
+                #     del form
+                values.add(form.cleaned_data['text'])
+
+        # for form in self.forms:
+        #     if 'text' in form.cleaned_data.keys():
+        #         print form.cleaned_data['text']
+        #         if form.cleaned_data['text'] not in values:
+        #             del form
 
 ChoiceFormSet = inlineformset_factory(QuestionContainer,
                                       Choice,
@@ -22,6 +39,8 @@ ChoiceFormSet = inlineformset_factory(QuestionContainer,
                                       min_num=1,
                                       validate_min=True,
                                       extra=1, )
+
+
 
 
 class QuestionForm(forms.ModelForm):
@@ -100,19 +119,22 @@ class ResponseForm(forms.ModelForm):
         for field_name, field_value in self.cleaned_data.iteritems():
             if field_name.startswith("question_"):
                 question_id = int(field_name.split("_")[1])
+                print field_name, field_value
+
+                # Choice.objects.get(text=field_value)
                 question = QuestionContainer.objects.get(pk=question_id)
                 if question.questiontype == QuestionType.objects.get(name='Single Textbox'):
                     answer = AnswerText(question=question)
                     answer.text = field_value
                 elif question.questiontype == QuestionType.objects.get(name='Multiple Choice'):
                     answer = AnswerRadio(question=question)
-                    answer.choice = Choice.objects.get(question=question, text=field_value[0])
+                    answer.choice = Choice.objects.get(question=question, text=field_value)
                 elif question.questiontype == QuestionType.objects.get(name='Dropdown'):
                     answer = AnswerSelect(question=question)
-                    answer.choice = Choice.objects.get(question=question, text=field_value[0])
+                    answer.choice = Choice.objects.get(question=question, text=field_value)
                 elif question.questiontype == QuestionType.objects.get(name='Checkbox'):
                     answer = AnswerCheck(question=question)
-                    answer.choice = Choice.objects.get(question=question, text=field_value[0])
+                    answer.choice = Choice.objects.get(question=question, text=field_value)
                 answer.response = response
                 answer.save()
 

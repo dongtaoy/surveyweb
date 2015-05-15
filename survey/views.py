@@ -6,6 +6,7 @@ from django.http.response import HttpResponse
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.db.transaction import atomic
+from django_ajax.mixin import AJAXMixin
 from guardian.mixins import PermissionRequiredMixin
 from survey.models import Survey, QuestionType, Page
 from survey.forms import SurveyForm, ResponseForm
@@ -43,12 +44,20 @@ class SurveyUpdateView(PermissionRequiredMixin, UpdateView):
     template_name = 'survey/survey.builder.html'
     context_object_name = 'survey'
     raise_exception = True
+    # success_url = reverse_lazy('survey.builder', kwargs={'survey': })
 
     def get_context_data(self, **kwargs):
         context = super(SurveyUpdateView, self).get_context_data(**kwargs)
         context['questiontypes'] = QuestionType.objects.all()
         context['pages'] = self.object.pages.all()
         return context
+
+    def get_success_url(self):
+        return reverse_lazy('survey.builder', kwargs={'survey': self.object.id})
+
+    # def form_valid(self, form):
+    #     self.object = form.save()
+    #     return HttpResponse(1)
 
 
 class SurveyDeleteView(PermissionRequiredMixin, DeleteView):
@@ -67,17 +76,17 @@ class SurveyCollectView(PermissionRequiredMixin, DetailView):
     raise_exception = True
 
 
-class ResponseView(SessionWizardView):
+class SurveyPreviewView(SessionWizardView):
     template_name = 'survey/survey.do.html'
 
     def done(self, form_list, **kwargs):
-        for form in form_list:
-            form.save(user=self.request.user)
-        return redirect(reverse_lazy('home'))
+        # for form in form_list:
+        #     form.save(user=self.request.user)
+        return redirect(reverse_lazy('survey.builder', kwargs={'survey': self.kwargs['survey']}))
 
     def get_context_data(self, form, **kwargs):
-        context = super(ResponseView, self).get_context_data(form, **kwargs)
-        context['survey'] = Survey.objects.get(id = self.kwargs['survey'])
+        context = super(SurveyPreviewView, self).get_context_data(form, **kwargs)
+        context['survey'] = Survey.objects.get(id=self.kwargs['survey'])
         return context
 
     def get_form_kwargs(self, step=None):
@@ -89,7 +98,7 @@ class ResponseView(SessionWizardView):
 def response_factory(request, *args, **kwargs):
     ret_form_list = [ResponseForm for i in Survey.objects.get(id=kwargs['survey']).pages.all()]
 
-    class ReturnClass(ResponseView):
+    class ReturnClass(SurveyPreviewView):
         form_list = ret_form_list
 
     return ReturnClass.as_view()(request, *args, **kwargs)
