@@ -75,7 +75,7 @@
                             <a class="btn btn-default" id="backCarousel" href="{% url 'survey.builder' survey.id %}"><i
                                     class="fa fa-edit"> </i> Edit Design
                             </a>
-                            <a class="btn btn-default">Preview Survey <i
+                            <a class="btn btn-default" href="{% url 'survey.preview' survey.id %}" target="_blank">Preview Survey <i
                                     class="fa fa-file-powerpoint-o"> </i>
                             </a>
                         </div>
