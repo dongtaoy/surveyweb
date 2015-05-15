@@ -55,3 +55,24 @@ class QuestionUpdateView(UpdateView):
 
     def get_template_names(self):
         return self.object.questiontype.get_edit_template_name()
+
+    def get_context_data(self, **kwargs):
+        context = super(QuestionUpdateView, self).get_context_data(**kwargs)
+
+        if self.object.questiontype.get_name() != 'single-textbox':
+            context['formset'] = ChoiceFormSet(instance=self.object)
+        return context
+
+    def form_valid(self, form):
+        question = form.save(commit=False)
+        if question.questiontype.get_name() != 'single-textbox':
+            print 1
+            choiceformset = ChoiceFormSet(self.request.POST, instance=question)
+            if choiceformset.is_valid():
+                question.save()
+                choiceformset.save()
+        else:
+            question.save()
+        return render(self.request, question.questiontype.get_display_template_name(), {'question': question})
+
+

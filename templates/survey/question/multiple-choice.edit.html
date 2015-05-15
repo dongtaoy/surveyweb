@@ -6,17 +6,18 @@
             <span class="caption-subject bold uppercase">Multiple Choice Editor</span>
         </div>
     </div>
-    <form action="{% url 'question.create' %}" method="POST">
+    <form action="{{ request.path }}" method="POST">
         <div class="portlet-body">
             <div>
                 {% bootstrap_form form layout='inline' %}
 
                 <p class="note">Please create your choices for the answers:</p>
-
                 {{ formset.management_form }}
                 <div>
                     {% for form in formset %}
                         <div class="choice-container">
+
+                            {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon">{{ forloop.counter }}.</span>
@@ -30,7 +31,9 @@
                                 </div>
                             </div>
                         </div>
-
+                        {% for hidden in form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
                     {% endfor %}
                 </div>
             </div>

@@ -71,11 +71,11 @@
                         // We're dealing with an inline formset.
                         // Rather than remove this form from the DOM, we'll mark it as deleted
                         // and hide it, then let Django handle the deleting:
+
                         del.val('on');
                         row.hide();
                         forms = $('.' + options.formCssClass).not(':hidden');
                     } else {
-                        console.log(totalForms.val());
                         if (totalForms.val() != 1) {
                             row.remove();
                             // Update the TOTAL_FORMS count:
@@ -97,6 +97,8 @@
                                 forms.eq(i).find(childElementSelector).each(function () {
                                     updateElementIndex($(this), options.prefix, i);
                                 });
+                            }else{
+                                forms.eq(i).find('.input-group-addon').text((i + 1) + '.');
                             }
                         }
                     }

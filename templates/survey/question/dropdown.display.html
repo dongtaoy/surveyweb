@@ -1,5 +1,5 @@
 <div class="container-frame well container-set">
-    <div id="container-{{ question.id }}">
+    <div id="container-{{ question.type }}-{{ question.id }}">
 
         <h4><b>Question {{ question.order }}:</b>{{ question.question|safe }}</h4>
 
@@ -8,14 +8,15 @@
             <select class="form-control" id="form_control_1">
                 {% for choice in question.choices.all %}
                     <option value="">{{ choice.text }}</option>
+
                 {% endfor %}
             </select>
 
             <div class="form-control-focus">
             </div>
         </div>
-        <div class="edit-btn-group" id="edit-btn-group-{{ container.id }}" style="visibility: hidden">
-            <a href="javascript:;" class="btn default"><i class="fa fa-arrow-up"></i> Move Up </a>
+        <div class="edit-btn-group" id="edit-btn-group-{{ question.id }}" style="visibility: hidden">
+            <a href="javascript:;" class="btn default container-move-up"><i class="fa fa-arrow-up"></i> Move Up </a>
             <a href="javascript:;" class="btn default container-display-edit"><i class="fa fa-edit"></i> Edit </a>
             <a href="javascript:;" class="btn default"><i class="fa fa-arrow-down"></i> Move Down </a>
         </div>

@@ -80,16 +80,16 @@ var surveyBuilder = (function () {
                             page: pageId,
                             containerType: containerType
                         }
-                    } else if(containerType == 'TE'){
+                    } else if (containerType == 'TE') {
                         url = Django.url('container.text.create');
                         data = {
                             page: pageId,
                             containerType: containerType
                         }
-                    } else if(containerType == 'IM'){
+                    } else if (containerType == 'IM') {
                         url = Django.url('container.image.create');
                     }
-                    if(url == null)
+                    if (url == null)
                         return;
 
                     $.get(url, data)
@@ -138,28 +138,70 @@ var surveyBuilder = (function () {
             });
     };
 
+    var initQuestionEditAjax = function () {
+        $('.container-display-edit')
+            .off('click')
+            .on('click', function () {
+                $(this).closest('.well').find('a').attr('disabled', true);
+                $(this).closest('.well').find('button').attr('disabled', true);
+                var container = $(this).closest("[id^=container-]");
+                var containerId = container.attr('id').replace(/[^\d.]/g, '');
+                var containerType = container.attr('id').split('-')[1];
+                var url = null;
+                if (containerType == 'TE') {
+                    url = Django.url('textcontainter.edit')
+                } else if (containerType == 'QU') {
+                    url = Django.url('question.edit', containerId)
+                }
+                $.get(url)
+                    .done(function (data) {
+                        container.closest('.well').hide();
+                        container.closest('.well').after(data);
+                        //.replaceWith(data);
+                        initQuestionPlugin();
+                        $('.container-edit form').submit(function () {
+                            $(this).find(':submit').attr('disabled', true);
+                            var notify = $.notify('Saving questions...');
+                            $(this).ajaxSubmit({
+                                success: function (response) {
+                                    container.closest('.well').remove();
+                                    $('.container-edit').replaceWith(response);
+                                    initQuestionEditAjax();
+                                    initDisplay();
+                                }
+                            });
+                            notify.close();
+                            return false;
+                        });
 
-    var initQuestionEditAjax = function (){
-      $('.container-display-edit')
-          .off('click')
-          .on('click', function(){
-              $(this).attr('disabled', true);
-              var container = $(this).closest("[id^=container-]");
-              var containerId = container.attr('id').replace(/[^\d.]/g, '');
-              var containerType = container.attr('id').split('-')[1];
-              var url = null;
-              if(containerType == 'TE'){
-                  url = Django.url('textcontainter.edit')
-              }else if(containerType == 'QU'){
-                  url = Django.url('question.edit', containerId)
-              }
-              $.get(url)
-                  .done(function(data){
-                      container.replaceWith(data);
-                  })
-          })
+                        // bind question cancel button
+                        $('.container-edit button.cancel').click(function () {
+                            $('.container-edit').remove();
+                            container.closest('.well').show();
+                            container.closest('.well').closest('.well').find('a').attr('disabled', false);
+                            container.closest('.well').closest('.well').find('button').attr('disabled', false);
+                        });
+                    })
+            })
     };
 
+    var initQuestionMoveUp = function () {
+        $('.container-move-up')
+            .off('click')
+            .on('click', function () {
+                var container = $(this).closest('[id^=container-]');
+                var containerId = container.attr('id').replace(/[^\d.]/g,'');
+                $.post(Django.url('container.move.up', containerId))
+                    .success(function(data){
+                        if(data['status'] == 200){
+
+                        }else{
+                            $.notify(data['content'].split('\n')[1]);
+                        }
+                    });
+
+            });
+    };
 
     var initQuestionPlugin = function () {
 
@@ -385,6 +427,7 @@ var surveyBuilder = (function () {
 
             initQuestionCreateAjax();
             initQuestionEditAjax();
+            initQuestionMoveUp();
 
             initDisplay();
 
