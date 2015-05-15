@@ -9,7 +9,6 @@ from survey.models import Survey, QuestionType, Page
 from survey.forms import SurveyForm
 
 
-
 class SurveryDetailView(PermissionRequiredMixin, DetailView):
     model = Survey
     template_name = "survey/survey.detail.html"
@@ -56,4 +55,18 @@ class SurveyDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = 'survey.delete_survey'
     success_url = reverse_lazy("dashboard")
 
+
+class SurveyCollectView(PermissionRequiredMixin, DetailView):
+    model = Survey
+    template_name = "survey/survey.collect.html"
+    pk_url_kwarg = 'survey'
+    context_object_name = 'survey'
+    permission_required = 'survey.view_survey'
+    raise_exception = True
+
+
+# class SurveyPreviewView(PermissionRequiredMixin, CreateView):
+#     model = Survey
+#     template_name = "survey/survey.preview.html"
+#     form_class = SurveyPreviewForm
 

@@ -39,7 +39,7 @@
                         <a class="btn btn-default" href="{% url 'survey.detail' survey.id %}">
                             <i class="fa fa-arrow-left"></i> back
                         </a>
-                        <a class="btn btn-default">Next
+                        <a href="{% url 'survey.collect' survey.id %}" class="btn btn-default">Next
                             <i class="fa fa-arrow-right"></i></a>
                         </a>
                     </div>
