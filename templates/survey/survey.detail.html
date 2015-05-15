@@ -20,14 +20,15 @@
             <div class="tabbable-line ">
                 <ul class="nav nav-tabs pull-right">
                     <li class="active">
-                        <a>Summary </a>
+                        <a href="{% url 'survey.detail' survey.id %}">
+                            Detail </a>
                     </li>
                     <li>
                         <a href="{% url 'survey.builder' survey.id %}">
                             Builder </a>
                     </li>
                     <li>
-                        <a>
+                        <a href="{% url 'survey.collect' survey.id %}">
                             Collector </a>
                     </li>
                 </ul>
