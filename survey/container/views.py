@@ -32,9 +32,7 @@ class TextContainerUpdateView(UpdateView):
     pk_url_kwarg = 'container_pk'
 
     def form_valid(self, form):
-        print form
         self.object = form.save()
-        print self.object.text
         return render(self.request, 'survey/container/help-text.display.html', {'textcontainer': self.object})
 
 
