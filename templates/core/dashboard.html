@@ -302,9 +302,9 @@
                                         </div>
                                         <div class="cont-col2 ">
                                             <div class="desc ">
-                                                {{ survey.name }}  <span class="label label-sm label-info">
+                                                {{ survey.name }}  <a class="label label-sm label-info" href="{% url 'survey.preview' survey.id %}">
 												Take a survey <i class="fa fa-share"></i>
-												</span>
+												</a>
                                             </div>
                                         </div>
                                     </div>
