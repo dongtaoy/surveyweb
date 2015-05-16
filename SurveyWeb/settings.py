@@ -185,6 +185,3 @@ BOOTSTRAP3 = {
 
 ## guardians setting
 ANONYMOUS_USER_ID = -1
-
-
-CRISPY_TEMPLATE_PACK='bootstrap3'
