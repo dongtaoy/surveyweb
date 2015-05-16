@@ -94,10 +94,25 @@ class Container(models.Model):
     # def get_name(self):
     #     pass
 
+    def has_change_permission(self, user):
+        if self.type == Container.TEXT:
+            return user.has_perm('survey.change_textcontainer', self.textcontainer)
+        elif self.type == Container.QUESTION:
+            return user.has_perm('survey.change_questioncontainer', self.questioncontainer)
+        return False
+
+    def has_delete_permission(self, user):
+        if self.type == Container.TEXT:
+            return user.has_perm('survey.delete_textcontainer', self.textcontainer)
+        elif self.type == Container.QUESTION:
+            return user.has_perm('survey.delete_questioncontainer', self.questioncontainer)
+        return False
+
     def save(self, *args, **kwargs):
         if self.order is None:
             self.order = self.page.containers.count() + 1
         super(Container, self).save(*args, **kwargs)
+
 
 
 class ImageContainer(Container):
@@ -125,6 +140,8 @@ class TextContainer(Container):
         super(TextContainer, self).save(*args, **kwargs)
         assign_perm('survey.delete_textcontainer', self.page.survey.creator, self)
         assign_perm('survey.change_textcontainer', self.page.survey.creator, self)
+        print self.page.survey.creator.has_perm('delete_textcontainer', self)
+        print self.page.survey.creator.has_perm('change_textcontainer', self)
 
 
 class QuestionType(models.Model):

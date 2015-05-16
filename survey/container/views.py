@@ -1,10 +1,12 @@
 __author__ = 'dongtaoy'
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.http import HttpResponse
 from django.shortcuts import render
 from django.db.transaction import atomic
 from django_ajax.decorators import ajax
+from django.http.response import HttpResponseForbidden
 from django_ajax.mixin import AJAXMixin
+from guardian.mixins import PermissionRequiredMixin
+from guardian.decorators import permission_required_or_403
 from survey.forms import TextContainerForm
 from survey.models import TextContainer, Container
 
@@ -26,11 +28,13 @@ class TextContainerCreateView(CreateView):
             }
 
 
-class TextContainerUpdateView(UpdateView):
+class TextContainerUpdateView(PermissionRequiredMixin, UpdateView):
     form_class = TextContainerForm
     template_name = 'survey/container/help-text.edit.html'
     model = TextContainer
     pk_url_kwarg = 'container_pk'
+    permission_required = 'survey.change_textcontainer'
+    raise_exception = True
 
     def form_valid(self, form):
         self.object = form.save()
@@ -40,9 +44,11 @@ class TextContainerUpdateView(UpdateView):
 
 @ajax
 def move_container_up(request, container_pk=None):
+    container = Container.objects.get(id=container_pk)
+    if not container.has_change_permission(request.user):
+        return HttpResponseForbidden()
     try:
         with atomic():
-            container = Container.objects.get(id=container_pk)
             container_up = Container.objects.get(page=container.page, order=container.order - 1)
             container.order -= 1
             container_up.order += 1
@@ -55,9 +61,11 @@ def move_container_up(request, container_pk=None):
 
 @ajax
 def move_container_down(request, container_pk=None):
+    container = Container.objects.get(id=container_pk)
+    if not container.has_change_permission(request.user):
+        return HttpResponseForbidden()
     try:
         with atomic():
-            container = Container.objects.get(id=container_pk)
             container_down = Container.objects.get(page=container.page, order=container.order + 1)
             container.order += 1
             container_down.order -= 1
@@ -68,6 +76,7 @@ def move_container_down(request, container_pk=None):
         raise Exception("Cannot move down the last container")
 
 
+
 class ContainerDeleteView(AJAXMixin, DeleteView):
     model = Container
     pk_url_kwarg = 'container_pk'
@@ -76,8 +85,12 @@ class ContainerDeleteView(AJAXMixin, DeleteView):
     #     return
 
     def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
+        if not self.object.has_delete_permission(request.user):
+            return HttpResponseForbidden()
+
         with atomic():
-            self.object = self.get_object()
             for p in Container.objects.filter(order__gt=self.object.order).filter(page=self.object.page):
                 p.order -= 1
                 p.save()
