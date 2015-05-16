@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+    Survey Analysis
+{% endblock %}
+
+{% block plugincss %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/global/plugins/datatables/extensions/ColReorder/css/dataTables.colReorder.min.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css' %}"/>
+{% endblock %}
+
+{% block header %}
+    Survey
+{% endblock %}
+
+{% block subheader %}
+    Response Analysis
+{% endblock %}
+
+{% block content %}
+    <div class="portlet gren">
+        <div class="portlet-title">
+            <div class="caption font-blue-hoki">
+                <a a href="#surveyEdit" data-toggle="modal" role="button"
+                   style="font-size: 25px;">Name</a><br/>
+            <span style="font-size: 12px;margin-top: 2px;color: grey;"><i
+                    class="fa fa-tags fa-fw"></i>Category: XX</span>
+            </div>
+            <div class="tabbable-line ">
+                <ul class="nav nav-tabs pull-right">
+                    <li>
+                        {#                        <a href="{% url 'survey.detail' survey.id %}">#}
+                        <a>
+                            Detail </a>
+                    </li>
+                    <li>
+                        {#                        <a href="{% url 'survey.builder' survey.id %}">#}
+                        <a href="">
+                            Builder </a>
+                    </li>
+                    <li class="active">
+                        {#                        <a href="{% url 'survey.collect' survey.id %}">#}
+                        <a href="">
+                            Collector </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption font-blue-hoki ">
+                        <i class="icon-layers font-blue-hoki"></i> COLLECTORS <span
+                            class="caption-helper">2 of 2</span>
+                    </div>
+                    <div class="actions">
+                        <a href="javascript:;" class="btn btn-circle btn-default btn-icon-only fullscreen"></a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <h2 style="text-align: center;"><b>Question 1: This is the best question
+                        ever!</b></h2>
+                    <h4 style="text-align: center;margin-bottom: 30px;">Answered: 1 Skipped: 0</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="chart_1_2" class="chart">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table  table-hover" id="sample_6">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        Answer Choices
+                                    </th>
+                                    <th>
+                                        Responses
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>choice 1</td>
+                                    <td>33.3%</td>
+                                    <td>3</td>
+                                </tr>
+                                <tr>
+                                    <td>choice 2</td>
+                                    <td>66.7%</td>
+                                    <td>6</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <hr/>
+                <div class="portlet-body">
+                    <h2 style="text-align: center;"><b>Question 1: This is the best question
+                        ever!</b></h2>
+                    <h4 style="text-align: center;margin-bottom: 30px;">Answered: 1 Skipped: 0</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="chart_1_2" class="chart">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table  table-hover" id="sample_6">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        Answer Choices
+                                    </th>
+                                    <th>
+                                        Responses
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>choice 1</td>
+                                    <td>33.3%</td>
+                                    <td>3</td>
+                                </tr>
+                                <tr>
+                                    <td>choice 2</td>
+                                    <td>66.7%</td>
+                                    <td>6</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block pluginjs %}
+    <script type="text/javascript"
+            src="{% static 'assets/global/plugins/datatables/media/js/jquery.dataTables.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'assets/global/plugins/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js' %}"></script>
+    <script src="{% static 'assets/admin/pages/scripts/charts-flotcharts.js' %}"></script>
+    <script src="{% static 'assets/global/plugins/flot/jquery.flot.min.js' %}"></script>
+{% endblock %}
+
+{% block script %}
+    <script>
+        jQuery(document).ready(function () {
+            $('.table').dataTable();
+            var data1 = [
+                [10, 10],
+                [20, 20],
+                [30, 30],
+                [40, 40],
+                [50, 50]
+            ];
+
+            var options = {
+                series: {
+                    bars: {
+                        show: true
+                    }
+                },
+                bars: {
+                    horizontal: true,
+                    barWidth: 6,
+                    lineWidth: 0, // in pixels
+                    shadowSize: 0,
+                    align: 'left'
+                },
+                grid: {
+                    tickColor: "#eee",
+                    borderColor: "#eee",
+                    borderWidth: 1
+                }
+            };
+
+            if ($('#chart_1_2').size() !== 0) {
+                $.plot($("#chart_1_2"), [data1], options);
+            }
+        });
+    </script>
+{% endblock %}
