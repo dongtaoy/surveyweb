@@ -105,7 +105,6 @@ var surveyBuilder = (function () {
                             $('.container-edit form').submit(function () {
 
                                 if ($(this).find('textarea').val().length<=0){
-                                    alert(1);
                                     var notify = $.notify("Text filed cannot be empty!");
                                     notify.close();
                                     return false;
