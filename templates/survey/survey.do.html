@@ -36,23 +36,25 @@
                 <p><b>{% widthratio wizard.steps.current|add:1 wizard.steps.count 100 %}%</b></p>
             </div>
         </div>
-        {#    {{ form }}#}
         {{ wizard.management_form }}
         {% if wizard.form.forms %}
             {{ wizard.form.management_form }}
             {% for form in wizard.form.forms %}
                 {% for field in form %}
-                    {#                    {% bootstrap_label field %}#}
+                    {% if field.name|slice:":5" == 'help_' %}
+                        <span style="font-size: 17px;"><b>Help Text {{ forloop.counter }}: </b> {{ field.label | safe }}</span>
+                    {% else %}
+                        <span style="font-size: 17px;"><b>Question {{ forloop.counter }}: </b> {% bootstrap_label field.label %}</span>
+                    {% endif %}
+                    {% bootstrap_field field layout='inline' %}
+                    <hr/>
                 {% endfor %}
-
             {% endfor %}
         {% else %}
-            {#            {% for field in wizard.form %}#}
-            {#                {% crispy field.field %}#}
-            {#            {% endfor %}#}
             {% for field in wizard.form %}
                 {% if field.name|slice:":5" == 'help_' %}
-                    <span style="font-size: 17px;"><b>Help Text {{ forloop.counter }}: </b> {{ field.label | safe }}</span>
+                    <span style="font-size: 17px;"><b>Help
+                        Text {{ forloop.counter }}: </b> {{ field.label | safe }}</span>
                 {% else %}
                     <span style="font-size: 17px;"><b>Question {{ forloop.counter }}: </b> {% bootstrap_label field.label %}</span>
                 {% endif %}

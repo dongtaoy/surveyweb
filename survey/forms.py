@@ -1,7 +1,7 @@
 __author__ = 'dongtao'
 from django import forms
 from survey.models import Survey, QuestionContainer, Choice, TextContainer, Response, Container, QuestionType, \
-    AnswerText, AnswerBase, AnswerCheck, AnswerRadio, AnswerSelect
+    AnswerText, AnswerBase, AnswerChoice
 from django.forms.models import inlineformset_factory
 from django.forms.models import BaseInlineFormSet
 
@@ -126,25 +126,26 @@ class ResponseForm(forms.ModelForm):
 
         for field_name, field_value in self.cleaned_data.iteritems():
             if field_name.startswith("question_"):
-                question_id = int(field_name.split("_")[1])
-                print field_name, field_value
+                if field_value != '':
+                    question_id = int(field_name.split("_")[1])
+                    print question_id
+                    question = QuestionContainer.objects.get(pk=question_id)
+                    if question.questiontype == QuestionType.objects.get(name='Single Textbox'):
+                        answer = AnswerText(question=question)
+                        answer.text = field_value
+                    elif question.questiontype == QuestionType.objects.get(name='Multiple Choice'):
+                        answer = AnswerChoice(question=question)
+                        answer.choice = Choice.objects.get(question=question, text=field_value)
+                    elif question.questiontype == QuestionType.objects.get(name='Dropdown'):
+                        answer = AnswerChoice(question=question)
+                        answer.choice = Choice.objects.get(question=question, text=field_value)
+                    elif question.questiontype == QuestionType.objects.get(name='Checkbox'):
+                        for value in field_value:
+                            answer = AnswerChoice(question=question)
+                            answer.choice = Choice.objects.get(question=question, text=value)
 
-                # Choice.objects.get(text=field_value)
-                question = QuestionContainer.objects.get(pk=question_id)
-                if question.questiontype == QuestionType.objects.get(name='Single Textbox'):
-                    answer = AnswerText(question=question)
-                    answer.text = field_value
-                elif question.questiontype == QuestionType.objects.get(name='Multiple Choice'):
-                    answer = AnswerRadio(question=question)
-                    answer.choice = Choice.objects.get(question=question, text=field_value)
-                elif question.questiontype == QuestionType.objects.get(name='Dropdown'):
-                    answer = AnswerSelect(question=question)
-                    answer.choice = Choice.objects.get(question=question, text=field_value)
-                elif question.questiontype == QuestionType.objects.get(name='Checkbox'):
-                    answer = AnswerCheck(question=question)
-                    answer.choice = Choice.objects.get(question=question, text=field_value)
-                answer.response = response
-                answer.save()
+                    answer.response = response
+                    answer.save()
 
         return response
 

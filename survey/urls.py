@@ -24,7 +24,9 @@ urlpatterns = patterns('',
                        url(r"^(?P<survey>\d+)/collect/$", login_required(SurveyCollectView.as_view()),
                            name="survey.collect"),
 
-                       url(r"^(?P<survey>\d+)/preview/$", 'survey.views.response_factory', name='survey.preview'),
+                       url(r"^(?P<survey>\d+)/preview/$", 'survey.views.preview_survey_factory', name='survey.preview'),
+
+                       url(r"^(?P<survey>\d+)/do/$", 'survey.views.do_survey_factory', name='survey.do'),
 
                        url(r"^(?P<survey>\d+)/analysis/$",
                            TemplateView.as_view(template_name='survey/survey.response.html'), name='survey.analysis'),

@@ -228,20 +228,23 @@ class AnswerBase(models.Model):
 
 
 
+
 class AnswerText(AnswerBase):
     text = models.TextField(null=False, blank=False)
 
 
-class AnswerRadio(AnswerBase):
+class AnswerChoice(AnswerBase):
     choice = models.ForeignKey(Choice, null=False, blank=False)
 
 
-class AnswerSelect(AnswerBase):
-    choice = models.ForeignKey(Choice, null=False, blank=False)
-
-
-class AnswerCheck(AnswerBase):
-    choice = models.ManyToManyField(Choice)
+class Heelo(models.Model):
+    test = models.CharField(max_length=100, default='t')
+# class AnswerSelect(AnswerBase):
+#     choice = models.ForeignKey(Choice, null=False, blank=False)
+#
+#
+# class AnswerCheck(AnswerBase):
+#     choice = models.ManyToManyField(Choice)
 
 
 class AnswerElo(AnswerBase):
