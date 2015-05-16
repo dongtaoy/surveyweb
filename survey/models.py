@@ -236,9 +236,9 @@ class AnswerText(AnswerBase):
 class AnswerChoice(AnswerBase):
     choice = models.ForeignKey(Choice, null=False, blank=False)
 
-
-class Heelo(models.Model):
-    test = models.CharField(max_length=100, default='t')
+#
+# class Heelo(models.Model):
+#     test = models.CharField(max_length=100, default='t')
 # class AnswerSelect(AnswerBase):
 #     choice = models.ForeignKey(Choice, null=False, blank=False)
 #
