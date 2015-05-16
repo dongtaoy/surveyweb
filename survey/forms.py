@@ -126,27 +126,36 @@ class ResponseForm(forms.ModelForm):
 
         for field_name, field_value in self.cleaned_data.iteritems():
             if field_name.startswith("question_"):
-                if field_value != '':
+                if field_value != '' or []:
                     question_id = int(field_name.split("_")[1])
                     print question_id
                     question = QuestionContainer.objects.get(pk=question_id)
                     if question.questiontype == QuestionType.objects.get(name='Single Textbox'):
                         answer = AnswerText(question=question)
                         answer.text = field_value
+                        answer.response = response
+                        answer.save()
                     elif question.questiontype == QuestionType.objects.get(name='Multiple Choice'):
                         answer = AnswerChoice(question=question)
                         answer.choice = Choice.objects.get(question=question, text=field_value)
+                        answer.response = response
+                        answer.save()
                     elif question.questiontype == QuestionType.objects.get(name='Dropdown'):
                         answer = AnswerChoice(question=question)
                         answer.choice = Choice.objects.get(question=question, text=field_value)
+                        answer.response = response
+                        answer.save()
                     elif question.questiontype == QuestionType.objects.get(name='Checkbox'):
                         for value in field_value:
                             answer = AnswerChoice(question=question)
                             answer.choice = Choice.objects.get(question=question, text=value)
-
-                    answer.response = response
-                    answer.save()
-
+                            answer.response = response
+                            answer.save()
+                    #
+                    # print question.questiontype
+                    # print field_value
+                    # print answer
+        print response
         return response
 
 

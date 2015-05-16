@@ -234,7 +234,7 @@ class AnswerText(AnswerBase):
 
 
 class AnswerChoice(AnswerBase):
-    choice = models.ForeignKey(Choice, null=False, blank=False)
+    choice = models.ForeignKey(Choice, null=False, blank=False, related_name='answers')
 
 #
 # class Heelo(models.Model):
