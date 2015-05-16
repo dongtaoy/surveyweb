@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.db.transaction import atomic
 from guardian.mixins import PermissionRequiredMixin
-from survey.models import Survey, QuestionType, Page
+from survey.models import Survey, QuestionType, Page, Response
 from survey.forms import SurveyForm, ResponseForm
 
 
@@ -91,6 +91,15 @@ class SurveyPreviewView(SessionWizardView):
         }
 
 
+class SurveyAnalyzeView(PermissionRequiredMixin, DetailView):
+    model = Survey
+    template_name = "survey/survey.analyze.html"
+    pk_url_kwarg = "survey"
+    context_object_name = 'survey'
+    permission_required = 'survey.view_survey'
+    raise_exception = True
+
+
 class SurveyDoView(SessionWizardView):
     template_name = 'survey/survey.do.html'
 
@@ -126,6 +135,7 @@ def do_survey_factory(request, *args, **kwargs):
         form_list = ret_form_list
 
     return ReturnClass.as_view()(request, *args, **kwargs)
+
 
 
 
