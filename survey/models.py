@@ -247,15 +247,7 @@ class AnswerChoice(AnswerBase):
 
 class AnswerCheck(AnswerBase):
     choices = models.ManyToManyField(Choice, related_name='checkanswers')
-#321
-# class Heelo(models.Model):
-#     test = models.CharField(max_length=100, default='t')
-# class AnswerSelect(AnswerBase):
-#     choice = models.ForeignKey(Choice, null=False, blank=False)
-#
-#
-# class AnswerCheck(AnswerBase):
-#     choice = models.ManyToManyField(Choice)
+
 
 
 class AnswerElo(AnswerBase):
