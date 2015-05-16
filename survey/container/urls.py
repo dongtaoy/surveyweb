@@ -1,7 +1,7 @@
 __author__ = 'dongtaoy'
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required
-from .views import TextContainerCreateView, TextContainerUpdateView
+from .views import TextContainerCreateView, TextContainerUpdateView, ContainerDeleteView
 
 urlpatterns = (
 
@@ -14,4 +14,6 @@ urlpatterns = (
     url(r"^(?P<container_pk>\d+)/up/$", 'survey.container.views.move_container_up', name="container.move.up"),
 
     url(r"^(?P<container_pk>\d+)/down/$", 'survey.container.views.move_container_down', name="container.move.down"),
+
+    url(r"^(?P<container_pk>\d+)/delete/", login_required(ContainerDeleteView.as_view()), name='container.delete'),
 )

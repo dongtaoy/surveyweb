@@ -55,8 +55,6 @@ var surveyBuilder = (function () {
         $(window)
             .off('scroll')
             .on('scroll', navbarAdjust);
-        //.scroll(navbarAdjust)
-        //.on('scrollstop', navbarAdjust);
     };
 
     var initQuestionCreateAjax = function () {
@@ -110,8 +108,7 @@ var surveyBuilder = (function () {
                                     success: function (response) {
                                         $('.container-edit').remove();
                                         $(pagePortlet).find('.page-body').append(response);
-                                        initQuestionEditAjax();
-                                        initQuestionMoveUp();
+                                        initQuestionAjax();
                                         initDisplay();
                                     }
                                 });
@@ -168,8 +165,7 @@ var surveyBuilder = (function () {
                                 success: function (response) {
                                     container.closest('.container-set').remove();
                                     $('.container-edit').replaceWith(response);
-                                    initQuestionEditAjax();
-                                    initQuestionMoveUp();
+                                    initQuestionAjax();
                                     initDisplay();
                                 }
                             });
@@ -193,24 +189,23 @@ var surveyBuilder = (function () {
             .off('click')
             .on('click', function () {
                 var container = $(this).closest('[id^=container-]');
-                var containerId = container.attr('id').replace(/[^\d.]/g,'');
+                var containerId = container.attr('id').replace(/[^\d.]/g, '');
                 $.post(Django.url('container.move.up', containerId))
-                    .success(function(data){
-                        if(data['status'] == 200){
+                    .success(function (data) {
+                        if (data['status'] == 200) {
                             var order = $(container.closest('.container-set').find('.container-order')).text();
 
                             $(container.closest('.container-set').find('.container-order')).text(order - 1);
                             $(container.closest('.container-set').prev().find('.container-order')).text(order);
                             container.closest('.container-set').insertBefore(container.closest('.container-set').prev());
 
-                        }else{
+                        } else {
                             $.notify(data['content'].split('\n')[1]);
                         }
                     });
 
             });
     };
-
 
     var initQuestionMoveDown = function () {
         $('.container-move-down')
@@ -219,18 +214,17 @@ var surveyBuilder = (function () {
                 console.log($)
                 console.log('movedown');
                 var container = $(this).closest('[id^=container-]');
-                var containerId = container.attr('id').replace(/[^\d.]/g,'');
+                var containerId = container.attr('id').replace(/[^\d.]/g, '');
                 $.post(Django.url('container.move.down', containerId))
-                    .success(function(data){
-                        if(data['status'] == 200){
+                    .success(function (data) {
+                        if (data['status'] == 200) {
 
                             var order = $(container.closest('.container-set').find('.container-order')).text();
                             //
                             $(container.closest('.container-set').find('.container-order')).text(parseInt(order) + 1);
                             $(container.closest('.container-set').next().find('.container-order')).text(order);
                             container.closest('.container-set').insertAfter(container.closest('.container-set').next());
-s
-                        }else{
+                        } else {
                             $.notify(data['content'].split('\n')[1]);
                         }
                     });
@@ -238,10 +232,58 @@ s
             });
     };
 
-    var initQuestionPlugin = function () {
+    var initQuestionDelete = function () {
+        $('.container-display-delete')
+            .off('click')
+            .on('click', function () {
+                console.log('click');
+                var notify = $.notify('Deleting....');
+                var container = $(this).closest('.container-set');
+                var containerid = $(this).closest('[id^=container-]').attr('id').replace(/[^\d.]/g, '');
+                bootbox.dialog({
+                    title: "Delete Confirmation",
+                    message: "Are you sure?",
+                    buttons: {
+                        cancelBtn: {
+                            label: "Cancel",
+                            className: "btn-default"
+                        },
+                        deleteBtn: {
+                            label: "Confirm",
+                            className: "btn-danger",
+                            callback: function () {
+                                $.post(Django.url('container.delete', containerid))
+                                    .success(function (response) {
+                                        if (response['status'] == 200) {
+                                            var page = container.closest('[id^=page-no-]');
+                                            container.remove();
+                                            page.find('.container-order').each(function (i) {
+                                                $(this).text(i + 1);
+                                            });
+                                            notify.close();
+                                        } else {
+                                            notify.update('type', "danger");
+                                            notify.update('message', "Something went wrong.... Please try refreshing your browser.");
+                                        }
+                                    })
+                            }
+                        }
+                    }
+                })
+            });
+    };
 
+    var initQuestionPlugin = function () {
         $('.container-edit').attr('tabindex', -1).focus();
         $('.container-edit').find('textarea').wysihtml5(WYSIHTML5OPTIONS);
+
+    };
+
+    var initQuestionAjax = function () {
+        initQuestionEditAjax();
+        initQuestionMoveUp();
+        initQuestionMoveDown();
+        initQuestionDelete();
     };
 
 
@@ -464,6 +506,7 @@ s
             initQuestionEditAjax();
             initQuestionMoveUp();
             initQuestionMoveDown();
+            initQuestionDelete();
 
             initDisplay();
 

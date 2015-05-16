@@ -4,7 +4,6 @@ from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView
 import datetime
 from django.utils.timezone import get_current_timezone
-from survey.models import Survey
 
 
 def home(request):
@@ -19,17 +18,14 @@ class DashboardView(TemplateView):
     def get_context_data(self, **kwargs):
         import datetime
         import itertools
-
         total_responses = list(
             itertools.chain.from_iterable(map(
                 lambda s: getattr(s, "responses").all(), self.request.user.surveys.all())))
 
-        today_responses = filter(lambda res: res.created == datetime.datetime.now(get_current_timezone()),
-                                 total_responses)
+        today_responses = filter(lambda res: res.created == datetime.datetime.now(get_current_timezone()), total_responses)
 
-        all_surveys = Survey.objects.all().order_by("created").reverse()
 
         return {"num_total_responses": len(total_responses), "num_today_responses": len(today_responses),
-                "surveys": reversed(self.request.user.surveys.all()), "all_surveys": all_surveys}
+                "surveys": reversed(self.request.user.surveys.all())}
 
 
