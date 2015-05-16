@@ -10,7 +10,14 @@ from survey.models import Survey, QuestionType, Page, Response
 from survey.forms import SurveyForm, ResponseForm
 
 
-class SurveryDetailView(PermissionRequiredMixin, DetailView):
+class SurveyListView(DetailView):
+    model = Survey
+    template_name = "survey/survey.list.html"
+    pk_url_kwarg = "survey"
+    context_object_name = "survey"
+
+
+class SurveyDetailView(PermissionRequiredMixin, DetailView):
     model = Survey
     template_name = "survey/survey.detail.html"
     pk_url_kwarg = 'survey'

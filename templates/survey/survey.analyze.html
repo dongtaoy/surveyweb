@@ -66,7 +66,8 @@
                                         <div>
                                             <h2 style="text-align: center;">
                                                 <b>Question {{ question.order }} {{ question.question|safe }}</b></h2>
-                                            <h4 style="text-align: center;margin-bottom: 30px;">Answered: {{ question.answers.all|length }} | Total Responses:
+                                            <h4 style="text-align: center;margin-bottom: 30px;">
+                                                Answered: {{ question.answers.all|length }} | Total Responses:
                                                 {{ question.page.survey.responses.all|length }}</h4>
 
                                             <div class="row">
@@ -87,7 +88,8 @@
                                                             <tr>
                                                                 {% with answer.answertext as answer_text %}
                                                                     <td>{{ answer_text.text }}</td>
-                                                                    <td><span style="color: #808080; font-size: 10px;">{{ answer_text.created }}</span>
+                                                                    <td><span
+                                                                            style="color: #808080; font-size: 10px;">{{ answer_text.created }}</span>
                                                                     </td>
                                                                 {% endwith %}
                                                             </tr>
@@ -99,10 +101,11 @@
                                         </div>
                                     {% else %}
                                         <div>
-                                            <h2 style="text-align: center;"><b>Question {{ question.order }}: {{ question.question|safe }}
-                                                choice</b></h2>
-                                            <h4 style="text-align: center;margin-bottom: 30px;">Answered: {{ question.answers|length }} Total:
-                                                {{ question.page.survey.responses|length }}</h4>
+                                            <h2 style="text-align: center;">
+                                                <b>Question {{ question.order }}: {{ question.question|safe }}</b></h2>
+                                            <h4 style="text-align: center;margin-bottom: 30px;">
+                                                Answered: {{ question.answers.all|length }} Total:
+                                                {{ question.page.survey.responses.all|length }}</h4>
 
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -119,29 +122,22 @@
                                                             <th>
                                                                 Responses
                                                             </th>
-                                                            <th></th>
+                                                            <th>Ratio</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        {% for answer in question.answers.all %}
+                                                        {% for choice in question.choices.all %}
                                                             <tr>
-                                                                {% with answer.answertext as answer_text %}
-                                                                    <td>{{ answer_text.text }}</td>
-                                                                    <td><span style="color: #808080; font-size: 10px;">{{ answer_text.created }}</span>
-                                                                    </td>
-                                                                {% endwith %}
+                                                                <td>{{ choice.text }}</td>
+                                                                {% if question.questiontype.name == "Checkbox" %}
+                                                                    <td>{{ choice.checkanswers.all|length }}</td>
+                                                                    <td>{% widthratio choice.checkanswers.all|length question.answers.all|length 100 %}%</td>
+                                                                {% else %}
+                                                                    <td>{{ choice.answers.all|length }}</td>
+                                                                    <td>{% widthratio choice.answers.all|length question.answers.all|length 100 %}%</td>
+                                                                {% endif %}
                                                             </tr>
                                                         {% endfor %}
-                                                        <tr>
-                                                            <td>choice 1</td>
-                                                            <td>33.3%</td>
-                                                            <td>3</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>choice 2</td>
-                                                            <td>66.7%</td>
-                                                            <td>6</td>
-                                                        </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -178,37 +174,6 @@
     <script>
         jQuery(document).ready(function () {
             $('.table').dataTable();
-            var data1 = [
-                [10, 10],
-                [20, 20],
-                [30, 30],
-                [40, 40],
-                [50, 50]
-            ];
-
-            var options = {
-                series: {
-                    bars: {
-                        show: true
-                    }
-                },
-                bars: {
-                    horizontal: true,
-                    barWidth: 6,
-                    lineWidth: 0, // in pixels
-                    shadowSize: 0,
-                    align: 'left'
-                },
-                grid: {
-                    tickColor: "#eee",
-                    borderColor: "#eee",
-                    borderWidth: 1
-                }
-            };
-
-            if ($('#chart_1_2').size() !== 0) {
-                $.plot($("#chart_1_2"), [data1], options);
-            }
         });
     </script>
 {% endblock %}
