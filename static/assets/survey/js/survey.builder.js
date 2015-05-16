@@ -111,6 +111,7 @@ var surveyBuilder = (function () {
                                         initQuestionAjax();
                                         initDisplay();
                                     }
+
                                 });
                                 notify.close();
                                 return false;
@@ -188,6 +189,8 @@ var surveyBuilder = (function () {
         $('.container-move-up')
             .off('click')
             .on('click', function () {
+                $(this).closest('.container-set').find('a').attr('disabled', true);
+                $(this).closest('.container-set').find('button').attr('disabled', true);
                 var container = $(this).closest('[id^=container-]');
                 var containerId = container.attr('id').replace(/[^\d.]/g, '');
                 $.post(Django.url('container.move.up', containerId))
@@ -202,6 +205,8 @@ var surveyBuilder = (function () {
                         } else {
                             $.notify(data['content'].split('\n')[1]);
                         }
+                        container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
+                        container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
                     });
 
             });
@@ -211,6 +216,8 @@ var surveyBuilder = (function () {
         $('.container-move-down')
             .off('click')
             .on('click', function () {
+                $(this).closest('.container-set').find('a').attr('disabled', true);
+                $(this).closest('.container-set').find('button').attr('disabled', true);
                 console.log($)
                 console.log('movedown');
                 var container = $(this).closest('[id^=container-]');
@@ -227,6 +234,8 @@ var surveyBuilder = (function () {
                         } else {
                             $.notify(data['content'].split('\n')[1]);
                         }
+                        container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
+                        container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
                     });
 
             });
@@ -236,6 +245,8 @@ var surveyBuilder = (function () {
         $('.container-display-delete')
             .off('click')
             .on('click', function () {
+                $(this).closest('.container-set').find('a').attr('disabled', true);
+                $(this).closest('.container-set').find('button').attr('disabled', true);
                 console.log('click');
                 var notify = $.notify('Deleting....');
                 var container = $(this).closest('.container-set');
@@ -265,6 +276,8 @@ var surveyBuilder = (function () {
                                             notify.update('type', "danger");
                                             notify.update('message', "Something went wrong.... Please try refreshing your browser.");
                                         }
+                                        container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
+                                        container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
                                     })
                             }
                         }
@@ -293,6 +306,7 @@ var surveyBuilder = (function () {
         $('#page-create-form')
             .off('submit')
             .on('submit', function () {
+
                 $(this).find(':submit').attr('disabled', true);
                 $(this).ajaxSubmit({
                     beforeSubmit: function () {
@@ -326,6 +340,8 @@ var surveyBuilder = (function () {
                     });
                     return;
                 }
+                $(this).closest('.container-set').find('a').attr('disabled', true);
+                $(this).closest('.container-set').find('button').attr('disabled', true);
                 var pagePortlet = $(this).closest('[id^=page-no-]');
                 var pageId = pagePortlet.attr('id').replace(/[^\d.]/g, '');
                 var pageOrder = pagePortlet.find('.page-order').val();
