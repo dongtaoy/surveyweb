@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.db.transaction import atomic
 from django_ajax.decorators import ajax
+from django_ajax.mixin import AJAXMixin
 from survey.forms import TextContainerForm
 from survey.models import TextContainer, Container
 
@@ -66,5 +67,21 @@ def move_container_down(request, container_pk=None):
     except:
         raise Exception("Cannot move down the last container")
 
+
+class ContainerDeleteView(AJAXMixin, DeleteView):
+    model = Container
+    pk_url_kwarg = 'container_pk'
+
+    # def get_success_url(self):
+    #     return
+
+    def delete(self, request, *args, **kwargs):
+        with atomic():
+            self.object = self.get_object()
+            for p in Container.objects.filter(order__gt=self.object.order).filter(page=self.object.page):
+                p.order -= 1
+                p.save()
+            self.object.delete()
+            return True
 
 

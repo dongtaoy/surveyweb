@@ -55,8 +55,6 @@ var surveyBuilder = (function () {
         $(window)
             .off('scroll')
             .on('scroll', navbarAdjust);
-        //.scroll(navbarAdjust)
-        //.on('scrollstop', navbarAdjust);
     };
 
     var initQuestionCreateAjax = function () {
@@ -104,17 +102,21 @@ var surveyBuilder = (function () {
 
                             // bind question save button
                             $('.container-edit form').submit(function () {
-                                $(this).find(':submit').attr('disabled', true);
+                                $(this).closest('.container-edit').find('a').attr('disabled', true);
+                                $(this).closest('.container-edit').find('button').attr('disabled', true);
                                 var notify = $.notify('Saving questions...');
                                 $(this).ajaxSubmit({
                                     success: function (response) {
                                         $('.container-edit').remove();
                                         $(pagePortlet).find('.page-body').append(response);
-                                        initQuestionEditAjax();
-                                        initQuestionMoveUp();
+                                        initQuestionAjax();
                                         initDisplay();
+
                                     }
+
                                 });
+                                $(this).closest('.container-edit').find('a').attr('disabled', true);
+                                $(this).closest('.container-edit').find('button').attr('disabled', true);
                                 notify.close();
                                 return false;
                             });
@@ -168,8 +170,7 @@ var surveyBuilder = (function () {
                                 success: function (response) {
                                     container.closest('.container-set').remove();
                                     $('.container-edit').replaceWith(response);
-                                    initQuestionEditAjax();
-                                    initQuestionMoveUp();
+                                    initQuestionAjax();
                                     initDisplay();
                                 }
                             });
@@ -179,6 +180,7 @@ var surveyBuilder = (function () {
 
                         // bind question cancel button
                         $('.container-edit button.cancel').click(function () {
+
                             $('.container-edit').remove();
                             container.closest('.container-set').show();
                             container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
@@ -192,56 +194,118 @@ var surveyBuilder = (function () {
         $('.container-move-up')
             .off('click')
             .on('click', function () {
+                $(this).closest('.container-set').find('a').attr('disabled', true);
+                $(this).closest('.container-set').find('button').attr('disabled', true);
                 var container = $(this).closest('[id^=container-]');
-                var containerId = container.attr('id').replace(/[^\d.]/g,'');
+                var containerId = container.attr('id').replace(/[^\d.]/g, '');
                 $.post(Django.url('container.move.up', containerId))
-                    .success(function(data){
-                        if(data['status'] == 200){
+                    .success(function (data) {
+                        if (data['status'] == 200) {
                             var order = $(container.closest('.container-set').find('.container-order')).text();
 
                             $(container.closest('.container-set').find('.container-order')).text(order - 1);
                             $(container.closest('.container-set').prev().find('.container-order')).text(order);
                             container.closest('.container-set').insertBefore(container.closest('.container-set').prev());
 
-                        }else{
+                        } else {
                             $.notify(data['content'].split('\n')[1]);
                         }
+                        container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
+                        container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
                     });
 
             });
     };
 
-
     var initQuestionMoveDown = function () {
         $('.container-move-down')
             .off('click')
             .on('click', function () {
+                $(this).closest('.container-set').find('a').attr('disabled', true);
+                $(this).closest('.container-set').find('button').attr('disabled', true);
                 console.log($)
                 console.log('movedown');
                 var container = $(this).closest('[id^=container-]');
-                var containerId = container.attr('id').replace(/[^\d.]/g,'');
+                var containerId = container.attr('id').replace(/[^\d.]/g, '');
                 $.post(Django.url('container.move.down', containerId))
-                    .success(function(data){
-                        if(data['status'] == 200){
+                    .success(function (data) {
+                        if (data['status'] == 200) {
 
                             var order = $(container.closest('.container-set').find('.container-order')).text();
                             //
                             $(container.closest('.container-set').find('.container-order')).text(parseInt(order) + 1);
                             $(container.closest('.container-set').next().find('.container-order')).text(order);
                             container.closest('.container-set').insertAfter(container.closest('.container-set').next());
-s
-                        }else{
+                        } else {
                             $.notify(data['content'].split('\n')[1]);
                         }
+                        container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
+                        container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
                     });
 
             });
     };
 
-    var initQuestionPlugin = function () {
+    var initQuestionDelete = function () {
+        $('.container-display-delete')
+            .off('click')
+            .on('click', function () {
+                $(this).closest('.container-set').find('a').attr('disabled', true);
+                $(this).closest('.container-set').find('button').attr('disabled', true);
+                console.log('click');
+                var notify = $.notify('Deleting....');
+                var container = $(this).closest('.container-set');
+                var containerid = $(this).closest('[id^=container-]').attr('id').replace(/[^\d.]/g, '');
+                bootbox.dialog({
+                    title: "Delete Confirmation",
+                    message: "Are you sure?",
+                    buttons: {
+                        cancelBtn: {
+                            label: "Cancel",
+                            className: "btn-default",
+                            callback: function(){
+                                container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
+                                container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
+                            }
+                        },
+                        deleteBtn: {
+                            label: "Confirm",
+                            className: "btn-danger",
+                            callback: function () {
+                                $.post(Django.url('container.delete', containerid))
+                                    .success(function (response) {
+                                        if (response['status'] == 200) {
+                                            var page = container.closest('[id^=page-no-]');
+                                            container.remove();
+                                            page.find('.container-order').each(function (i) {
+                                                $(this).text(i + 1);
+                                            });
+                                            notify.close();
+                                        } else {
+                                            notify.update('type', "danger");
+                                            notify.update('message', "Something went wrong.... Please try refreshing your browser.");
+                                        }
+                                        container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
+                                        container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
+                                    })
+                            }
+                        }
+                    }
+                })
+            });
+    };
 
+    var initQuestionPlugin = function () {
         $('.container-edit').attr('tabindex', -1).focus();
         $('.container-edit').find('textarea').wysihtml5(WYSIHTML5OPTIONS);
+
+    };
+
+    var initQuestionAjax = function () {
+        initQuestionEditAjax();
+        initQuestionMoveUp();
+        initQuestionMoveDown();
+        initQuestionDelete();
     };
 
 
@@ -251,6 +315,7 @@ s
         $('#page-create-form')
             .off('submit')
             .on('submit', function () {
+
                 $(this).find(':submit').attr('disabled', true);
                 $(this).ajaxSubmit({
                     beforeSubmit: function () {
@@ -284,6 +349,8 @@ s
                     });
                     return;
                 }
+                $(this).closest('.portlet-title').find('a').attr('disabled', true);
+                $(this).closest('.portlet-title').find('button').attr('disabled', true);
                 var pagePortlet = $(this).closest('[id^=page-no-]');
                 var pageId = pagePortlet.attr('id').replace(/[^\d.]/g, '');
                 var pageOrder = pagePortlet.find('.page-order').val();
@@ -294,15 +361,20 @@ s
                     buttons: {
                         cancelBtn: {
                             label: "Cancel",
-                            className: "btn-default"
+                            className: "btn-default",
+                            callback: function(){
+                                pagePortlet.find('.actions > a').attr('disabled', false);
+                                //$(this).closest('.portlet-title').find('a').attr('disabled', false);
+                                //$(this).closest('.portlet-title').find('button').attr('disabled', false);
+                            }
                         },
                         deleteBtn: {
                             label: "Confirm",
                             className: "btn-danger",
                             callback: function () {
-                                pagePortlet.find('.actions > a').attr('disabled', true);
+                                //pagePortlet.find('.actions > a').attr('disabled', true);
                                 // Post ajax request to delete a page
-                                var notify = $.notify("Deleting page...")
+                                var notify = $.notify("Deleting page...");
                                 $.post(Django.url('page.delete', pageId), function (response) {
                                     // if successfully deleted a page
 
@@ -321,6 +393,8 @@ s
                                     } else {
                                         notify.update('message', 'Something went wrong... :(');
                                     }
+                                    $(this).closest('.portlet-title').find('a').attr('disabled', false);
+                                    $(this).closest('.portlet-title').find('button').attr('disabled', false);
                                 });
                             }
                         }
@@ -333,10 +407,15 @@ s
         $('.page-edit')
             .off('click')
             .on('click', function () {
+                //$(this).closest('.portlet-title').find('a').attr('disabled', true);
+                //$(this).closest('.portlet-title').find('button').attr('disabled', true);
+
                 var notify = $.notify("Moving pages...");
                 var pagePortlet = $(this).closest('[id^=page-no-]');
                 var pageId = pagePortlet.attr('id').replace(/[^\d.]/g, '');
                 var pageOrder = pagePortlet.find('.page-order').val();
+                pagePortlet.find('.actions > a').attr('disabled', true);
+
                 var isUp = false;
                 if (/up/.test($(this).text().toLowerCase())) {
                     isUp = true;
@@ -359,12 +438,16 @@ s
                                 $(pagePortlet).prev('[id^=page-no-]').find('.page-order').val(pageOrder - 1);
                                 $(pagePortlet).insertAfter($(pagePortlet).next('.portlet'));
                             }
+
                             initDisplay();
                             notify.close();
                         } else {
                             var error = response['content'].split('\n')[1];
                             notify.update('message', error);
                         }
+                        pagePortlet.find('.actions > a').attr('disabled', false);
+
+
                     });
             });
     };
@@ -464,6 +547,7 @@ s
             initQuestionEditAjax();
             initQuestionMoveUp();
             initQuestionMoveDown();
+            initQuestionDelete();
 
             initDisplay();
 
