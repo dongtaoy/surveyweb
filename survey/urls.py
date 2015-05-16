@@ -2,7 +2,7 @@ __author__ = 'dongtaoy'
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required
 from survey.views import SurveyCreateView, SurveryDetailView, SurveyDeleteView, SurveyUpdateView, SurveyCollectView, \
-    SurveyPreviewView
+    SurveyPreviewView, SurveyAnalyzeView
 from django.views.generic.base import TemplateView
 
 
@@ -26,8 +26,8 @@ urlpatterns = patterns('',
 
                        url(r"^(?P<survey>\d+)/preview/$", 'survey.views.response_factory', name='survey.preview'),
 
-                       url(r"^(?P<survey>\d+)/analysis/$",
-                           TemplateView.as_view(template_name='survey/survey.response.html'), name='survey.analysis'),
+                       url(r"^(?P<survey>\d+)/analyze/$",
+                           login_required(SurveyAnalyzeView.as_view()), name='survey.analyze'),
 
                        url(r"^page/", include('survey.page.urls')),
 
