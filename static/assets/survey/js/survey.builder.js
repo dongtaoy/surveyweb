@@ -70,6 +70,7 @@ var surveyBuilder = (function () {
                     var url = null;
                     var data = null;
                     console.log(containerType);
+                    //console.log("1");
                     if (containerType == 'QU') {
                         url = Django.url('question.create');
                         var questionTypeId = $(this).attr('id').replace(/[^\d.]/g, '');
@@ -102,11 +103,18 @@ var surveyBuilder = (function () {
 
                             // bind question save button
                             $('.container-edit form').submit(function () {
+
+                                if ($(this).find('textarea').val().length<=0){
+                                    var notify = $.notify("Text filed cannot be empty!");
+                                    notify.close();
+                                    return false;
+                                }
                                 $(this).closest('.container-edit').find('a').attr('disabled', true);
                                 $(this).closest('.container-edit').find('button').attr('disabled', true);
                                 var notify = $.notify('Saving questions...');
                                 $(this).ajaxSubmit({
                                     success: function (response) {
+
                                         $('.container-edit').remove();
                                         $(pagePortlet).find('.page-body').append(response);
                                         initQuestionAjax();
@@ -263,7 +271,7 @@ var surveyBuilder = (function () {
                         cancelBtn: {
                             label: "Cancel",
                             className: "btn-default",
-                            callback: function(){
+                            callback: function () {
                                 container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
                                 container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
                             }
@@ -362,7 +370,7 @@ var surveyBuilder = (function () {
                         cancelBtn: {
                             label: "Cancel",
                             className: "btn-default",
-                            callback: function(){
+                            callback: function () {
                                 pagePortlet.find('.actions > a').attr('disabled', false);
                                 //$(this).closest('.portlet-title').find('a').attr('disabled', false);
                                 //$(this).closest('.portlet-title').find('button').attr('disabled', false);
