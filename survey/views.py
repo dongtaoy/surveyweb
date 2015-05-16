@@ -104,6 +104,25 @@ class SurveyAnalyzeView(PermissionRequiredMixin, DetailView):
     raise_exception = True
 
 
+class SurveyDoView(SessionWizardView):
+    template_name = 'survey/survey.do.html'
+
+    def done(self, form_list, **kwargs):
+        # for form in form_list:
+        #     form.save(user=self.request.user)
+        return redirect(reverse_lazy('survey.builder', kwargs={'survey': self.kwargs['survey']}))
+
+    def get_context_data(self, form, **kwargs):
+        context = super(SurveyPreviewView, self).get_context_data(form, **kwargs)
+        context['survey'] = Survey.objects.get(id=self.kwargs['survey'])
+        return context
+
+    def get_form_kwargs(self, step=None):
+        return {
+            'page': Page.objects.get(order=int(step)+1, survey=self.kwargs['survey'])
+        }
+
+
 def response_factory(request, *args, **kwargs):
     ret_form_list = [ResponseForm for i in Survey.objects.get(id=kwargs['survey']).pages.all()]
 

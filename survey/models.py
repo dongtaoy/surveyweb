@@ -140,8 +140,6 @@ class TextContainer(Container):
         super(TextContainer, self).save(*args, **kwargs)
         assign_perm('survey.delete_textcontainer', self.page.survey.creator, self)
         assign_perm('survey.change_textcontainer', self.page.survey.creator, self)
-        print self.page.survey.creator.has_perm('delete_textcontainer', self)
-        print self.page.survey.creator.has_perm('change_textcontainer', self)
 
 
 class QuestionType(models.Model):
@@ -172,6 +170,7 @@ class QuestionType(models.Model):
 class QuestionContainer(Container):
     question = models.TextField(null=False, blank=False)
     questiontype = models.ForeignKey(QuestionType)
+    required = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         super(QuestionContainer, self).save(*args, **kwargs)
@@ -222,10 +221,11 @@ class Response(models.Model):
 
 
 class AnswerBase(models.Model):
-    question = models.ForeignKey(QuestionContainer, null=False, blank=False)
-    response = models.ForeignKey(Response, null=False, blank=False)
+    question = models.ForeignKey(QuestionContainer, null=False, blank=False, related_name="answers")
+    response = models.ForeignKey(Response, null=False, blank=False, related_name="answers")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
 
 
 class AnswerText(AnswerBase):

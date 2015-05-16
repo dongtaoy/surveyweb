@@ -89,23 +89,31 @@ class ResponseForm(forms.ModelForm):
                 if question.questiontype == QuestionType.objects.get(name='Single Textbox'):
                     self.fields["question_%d" % question.pk] = forms.CharField(label=question.question,
                                                                                widget=forms.Textarea(
-                                                                                   attrs={'placeholder': ''}))
+                                                                                   attrs={'placeholder': ''}),
+                                                                               required=question.required)
                 elif question.questiontype == QuestionType.objects.get(name='Multiple Choice'):
                     question_choices = question.get_choices()
 
                     self.fields["question_%d" % question.pk] = forms.ChoiceField(label=question.question,
                                                                                  widget=forms.RadioSelect,
-                                                                                 choices=question_choices)
+                                                                                 choices=question_choices,
+                                                                                 required=question.required)
                 elif question.questiontype == QuestionType.objects.get(name='Dropdown'):
                     question_choices = question.get_choices()
                     # question_choices = tuple([('', '---------')]) + question_choices
                     self.fields["question_%d" % question.pk] = forms.ChoiceField(label=question.question,
-                                                                                 choices=question_choices)
+                                                                                 choices=question_choices,
+                                                                                 required=question.required)
                 elif question.questiontype == QuestionType.objects.get(name='Checkbox'):
                     question_choices = question.get_choices()
                     self.fields["question_%d" % question.pk] = forms.MultipleChoiceField(label=question.question,
                                                                                          widget=forms.CheckboxSelectMultiple,
-                                                                                         choices=question_choices)
+                                                                                         choices=question_choices,
+                                                                                         required=question.required)
+            if container.type == Container.TEXT:
+                textcontainer = container.textcontainer
+                self.fields["help_%d" % textcontainer.pk] = forms.CharField(label=textcontainer.text,
+                                                                            widget=forms.HiddenInput, required=False)
 
 
 
