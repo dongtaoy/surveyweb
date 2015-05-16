@@ -262,7 +262,11 @@ var surveyBuilder = (function () {
                     buttons: {
                         cancelBtn: {
                             label: "Cancel",
-                            className: "btn-default"
+                            className: "btn-default",
+                            callback: function(){
+                                container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
+                                container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
+                            }
                         },
                         deleteBtn: {
                             label: "Confirm",
