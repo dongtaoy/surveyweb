@@ -102,7 +102,8 @@ var surveyBuilder = (function () {
 
                             // bind question save button
                             $('.container-edit form').submit(function () {
-                                $(this).find(':submit').attr('disabled', true);
+                                $(this).closest('.container-edit').find('a').attr('disabled', true);
+                                $(this).closest('.container-edit').find('button').attr('disabled', true);
                                 var notify = $.notify('Saving questions...');
                                 $(this).ajaxSubmit({
                                     success: function (response) {
@@ -110,9 +111,12 @@ var surveyBuilder = (function () {
                                         $(pagePortlet).find('.page-body').append(response);
                                         initQuestionAjax();
                                         initDisplay();
+
                                     }
 
                                 });
+                                $(this).closest('.container-edit').find('a').attr('disabled', true);
+                                $(this).closest('.container-edit').find('button').attr('disabled', true);
                                 notify.close();
                                 return false;
                             });
