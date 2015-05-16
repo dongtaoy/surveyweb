@@ -51,9 +51,6 @@ INSTALLED_APPS = (
     # bootstrap3 form
     'bootstrap3',
 
-    # crispy form
-    'crispy_forms',
-
     # guardian
     # object level permission
     'guardian',
