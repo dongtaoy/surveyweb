@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.humanize',
 
 
     # all auth
@@ -184,6 +185,3 @@ BOOTSTRAP3 = {
 
 ## guardians setting
 ANONYMOUS_USER_ID = -1
-
-
-CRISPY_TEMPLATE_PACK='bootstrap3'
