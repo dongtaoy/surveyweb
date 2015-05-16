@@ -30,10 +30,10 @@
     <div class="container">
         <div class="progress">
             <div class="progress-bar progress-bar-info" role="progressbar"
-                 aria-valuenow="{{ wizard.steps.current }}" aria-valuemin="1"
+                 aria-valuenow="{{ wizard.steps.current|add:1 }}"
                  aria-valuemax="{{ wizard.steps.count }}"
-                 style="width: {% widthratio wizard.steps.current wizard.steps.count 100 %}%">
-                <p>{% widthratio wizard.steps.current wizard.steps.count 100 %}% complete</p>
+                 style="width: {% widthratio wizard.steps.current|add:1 wizard.steps.count 100 %}%">
+                <p><b>{% widthratio wizard.steps.current|add:1 wizard.steps.count 100 %}%</b></p>
             </div>
         </div>
         {#    {{ form }}#}
@@ -51,7 +51,11 @@
             {#                {% crispy field.field %}#}
             {#            {% endfor %}#}
             {% for field in wizard.form %}
-                <span style="font-size: 17px;"><b>Question {{ forloop.counter }}: </b> {% bootstrap_label field.label %}</span>
+                {% if field.name|slice:":5" == 'help_' %}
+                    <span style="font-size: 17px;"><b>Help Text {{ forloop.counter }}: </b> {{ field.label | safe }}</span>
+                {% else %}
+                    <span style="font-size: 17px;"><b>Question {{ forloop.counter }}: </b> {% bootstrap_label field.label %}</span>
+                {% endif %}
                 {% bootstrap_field field layout='inline' %}
                 <hr/>
             {% endfor %}

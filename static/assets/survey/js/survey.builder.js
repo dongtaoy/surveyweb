@@ -69,8 +69,6 @@ var surveyBuilder = (function () {
                     var containerType = $(this).attr('id').substr(0, 2);
                     var url = null;
                     var data = null;
-                    console.log(containerType);
-                    //console.log("1");
                     if (containerType == 'QU') {
                         url = Django.url('question.create');
                         var questionTypeId = $(this).attr('id').replace(/[^\d.]/g, '');
