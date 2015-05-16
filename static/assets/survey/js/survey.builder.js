@@ -176,6 +176,7 @@ var surveyBuilder = (function () {
 
                         // bind question cancel button
                         $('.container-edit button.cancel').click(function () {
+
                             $('.container-edit').remove();
                             container.closest('.container-set').show();
                             container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
@@ -340,8 +341,8 @@ var surveyBuilder = (function () {
                     });
                     return;
                 }
-                $(this).closest('.container-set').find('a').attr('disabled', true);
-                $(this).closest('.container-set').find('button').attr('disabled', true);
+                $(this).closest('.portlet-title').find('a').attr('disabled', true);
+                $(this).closest('.portlet-title').find('button').attr('disabled', true);
                 var pagePortlet = $(this).closest('[id^=page-no-]');
                 var pageId = pagePortlet.attr('id').replace(/[^\d.]/g, '');
                 var pageOrder = pagePortlet.find('.page-order').val();
@@ -352,15 +353,20 @@ var surveyBuilder = (function () {
                     buttons: {
                         cancelBtn: {
                             label: "Cancel",
-                            className: "btn-default"
+                            className: "btn-default",
+                            callback: function(){
+                                pagePortlet.find('.actions > a').attr('disabled', false);
+                                //$(this).closest('.portlet-title').find('a').attr('disabled', false);
+                                //$(this).closest('.portlet-title').find('button').attr('disabled', false);
+                            }
                         },
                         deleteBtn: {
                             label: "Confirm",
                             className: "btn-danger",
                             callback: function () {
-                                pagePortlet.find('.actions > a').attr('disabled', true);
+                                //pagePortlet.find('.actions > a').attr('disabled', true);
                                 // Post ajax request to delete a page
-                                var notify = $.notify("Deleting page...")
+                                var notify = $.notify("Deleting page...");
                                 $.post(Django.url('page.delete', pageId), function (response) {
                                     // if successfully deleted a page
 
@@ -379,6 +385,8 @@ var surveyBuilder = (function () {
                                     } else {
                                         notify.update('message', 'Something went wrong... :(');
                                     }
+                                    $(this).closest('.portlet-title').find('a').attr('disabled', false);
+                                    $(this).closest('.portlet-title').find('button').attr('disabled', false);
                                 });
                             }
                         }
@@ -391,10 +399,15 @@ var surveyBuilder = (function () {
         $('.page-edit')
             .off('click')
             .on('click', function () {
+                //$(this).closest('.portlet-title').find('a').attr('disabled', true);
+                //$(this).closest('.portlet-title').find('button').attr('disabled', true);
+
                 var notify = $.notify("Moving pages...");
                 var pagePortlet = $(this).closest('[id^=page-no-]');
                 var pageId = pagePortlet.attr('id').replace(/[^\d.]/g, '');
                 var pageOrder = pagePortlet.find('.page-order').val();
+                pagePortlet.find('.actions > a').attr('disabled', true);
+
                 var isUp = false;
                 if (/up/.test($(this).text().toLowerCase())) {
                     isUp = true;
@@ -417,12 +430,16 @@ var surveyBuilder = (function () {
                                 $(pagePortlet).prev('[id^=page-no-]').find('.page-order').val(pageOrder - 1);
                                 $(pagePortlet).insertAfter($(pagePortlet).next('.portlet'));
                             }
+
                             initDisplay();
                             notify.close();
                         } else {
                             var error = response['content'].split('\n')[1];
                             notify.update('message', error);
                         }
+                        pagePortlet.find('.actions > a').attr('disabled', false);
+
+
                     });
             });
     };
