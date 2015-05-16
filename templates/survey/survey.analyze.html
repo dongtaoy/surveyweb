@@ -24,9 +24,9 @@
         <div class="portlet-title">
             <div class="caption font-blue-hoki">
                 <a a href="#surveyEdit" data-toggle="modal" role="button"
-                   style="font-size: 25px;">Name</a><br/>
+                   style="font-size: 25px;">{{ survey.name }}</a><br/>
             <span style="font-size: 12px;margin-top: 2px;color: grey;"><i
-                    class="fa fa-tags fa-fw"></i>Category: XX</span>
+                    class="fa fa-tags fa-fw"></i>Category: {{ survey.category }}</span>
             </div>
             <div class="tabbable-line ">
                 <ul class="nav nav-tabs pull-right">
@@ -66,8 +66,8 @@
                                         <div>
                                             <h2 style="text-align: center;">
                                                 <b>Question {{ question.order }} {{ question.question|safe }}</b></h2>
-                                            <h4 style="text-align: center;margin-bottom: 30px;">Answered: 1 Skipped:
-                                                0</h4>
+                                            <h4 style="text-align: center;margin-bottom: 30px;">Answered: {{ question.answers.all|length }} | Total Responses:
+                                                {{ question.page.survey.responses.all|length }}</h4>
 
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -83,17 +83,15 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        {% for answer in question.answers %}
+                                                        {% for answer in question.answers.all %}
                                                             <tr>
-                                                                {% with answer.text as text_answer %}
-                                                                    <td>{{ text_answer.text }}</td>
-                                                                    <td><span style="color: #808080; font-size: 10px;">{{ answer.created }}</span>
+                                                                {% with answer.answertext as answer_text %}
+                                                                    <td>{{ answer_text.text }}</td>
+                                                                    <td><span style="color: #808080; font-size: 10px;">{{ answer_text.created }}</span>
                                                                     </td>
                                                                 {% endwith %}
                                                             </tr>
                                                         {% endfor %}
-
-
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -101,10 +99,10 @@
                                         </div>
                                     {% else %}
                                         <div>
-                                            <h2 style="text-align: center;"><b>Question 1: This is the mupltiple
+                                            <h2 style="text-align: center;"><b>Question {{ question.order }}: {{ question.question|safe }}
                                                 choice</b></h2>
-                                            <h4 style="text-align: center;margin-bottom: 30px;">Answered: 1 Skipped:
-                                                0</h4>
+                                            <h4 style="text-align: center;margin-bottom: 30px;">Answered: {{ question.answers|length }} Total:
+                                                {{ question.page.survey.responses|length }}</h4>
 
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -125,6 +123,15 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
+                                                        {% for answer in question.answers.all %}
+                                                            <tr>
+                                                                {% with answer.answertext as answer_text %}
+                                                                    <td>{{ answer_text.text }}</td>
+                                                                    <td><span style="color: #808080; font-size: 10px;">{{ answer_text.created }}</span>
+                                                                    </td>
+                                                                {% endwith %}
+                                                            </tr>
+                                                        {% endfor %}
                                                         <tr>
                                                             <td>choice 1</td>
                                                             <td>33.3%</td>
