@@ -31,8 +31,6 @@
                                     <a href="{% url 'account_change_password' %}">
                                         <i class="icon-lock"></i> Change Password </a>
                                 </li>
-                                <li class="divider">
-                                </li>
                                 <li>
                                     <a href="{% url 'account_logout' %}">
                                         <i class="icon-logout"></i> Log Out </a>
@@ -65,7 +63,7 @@
                         <a href="{% url 'survey.create' %}"><i class="icon-doc"></i>New Survey</a>
                     </li>
                     <li>
-                        <a href="{% url 'aboutus' %}"><i class="icon-note"></i>What's New</a>
+                        <a href="{% url 'survey.list' %}"><i class="icon-note"></i>What's New</a>
                     </li>
                     {% if request.user.username %}
                         <li>
