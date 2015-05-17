@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load bootstrap3 %}
 {% load humanize %}
 {% block title %}
     Survey List
@@ -38,8 +39,7 @@
         <div class="portlet-title">
             <div class="caption font-blue-hoki ">
                 <i class="icon-layers font-blue-hoki"></i>
-                {% if category %}Current category: {{ category }}
-                {% else %}All Surveys{% endif %}
+                Current category: {{ current.name }}
             </div>
             <div class="actions">
                 <a href="javascript:;" class="btn btn-circle btn-default btn-icon-only fullscreen"></a>
@@ -48,18 +48,24 @@
         <div class="portlet-body">
             <div class="row">
                 <div class="col-md-12">
-                    <form action="javascript:;" class="alert alert-info alert-borderless form-inline">
+                    <form action="{% url 'survey.list' %}" method="GET"
+                          class="alert alert-info alert-borderless form-inline">
                         <div class="form-group">
-                            Please Choose one of the categories
-                            <select class="form-control" id="form_control_1">
-                                {% for category in categories.all %}
-                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                            Please Choose one of the categories:
+                            <select class="form-control" name="category">
+                                {% for category in categories %}
+                                    {% if category == current %}
+                                        <option value="{{ category.id }}"
+                                                selected="selected">{{ category.name }}</option>{% else %}
+                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
-                            <button class="btn btn-success">Submit</button>
+                            <button class="btn btn-success" type="submit">Submit</button>
                             <div class="form-control-focus">
                             </div>
                         </div>
+                        {#                        {% bootstrap_form form %}#}
                     </form>
                 </div>
             </div>
@@ -88,18 +94,17 @@
                     </thead>
                     <tbody>
 
-                    {% for survey in surveys.all %}
-                        {% if survey.category.name == category.name %}
-                            <tr>
-                                <td>{{ survey.name }}</td>
-                                <td>{{ survey.category }}</td>
-                                <td>{{ survey.description }}</td>
-                                <td>{{ survey.responses.all|length }}</td>
-                                <td>{{ survey.created|naturaltime }}</td>
-                                <td><a class="btn default btn-xs blue-stripe" href="{% url "survey.do" survey.id%}">
-											Do Survey </a></td>
-                            </tr>
-                        {% endif %}
+                    {% for survey in surveys %}
+                        <tr>
+                            <td>{{ survey.name }}</td>
+                            <td>{{ survey.category }}</td>
+                            <td>{{ survey.description }}</td>
+                            <td>{{ survey.responses.all|length }}</td>
+                            <td>{{ survey.created|naturaltime }}</td>
+                            <td><a class="label label-info" href="{% url 'survey.do' survey.id %}">
+                                Take a survey <i class="fa fa-share"></i>
+                            </td>
+                        </tr>
                     {% endfor %}
                     </tbody>
                 </table>
@@ -123,7 +128,7 @@
     <script>
         jQuery(document).ready(function () {
             $('#surveyList').dataTable({
-                "order": [[ 4, "desc" ]]
+                "order": [[4, "desc"]]
             })
         });
     </script>

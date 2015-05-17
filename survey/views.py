@@ -16,15 +16,25 @@ from survey.forms import SurveyForm, ResponseForm
 class SurveyListView(ListView):
     model = Survey
     template_name = "survey/survey.list.html"
-    context_object_name = "survey"
-
+    context_object_name = "surveys"
+    # allow_empty = False
     # def get_queryset(self):
-    #     return Survey.objects.filter()
+    # return Survey.objects.filter()
+
+    def get_queryset(self):
+        try:
+            category = Category.objects.get(id=self.request.GET['category'])
+            print category
+            object_list = self.model.objects.filter(category=category)
+            return object_list
+        except:
+            return self.model.objects.all()
+
 
     def get_context_data(self, **kwargs):
         context = super(SurveyListView, self).get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
-        context['surveys'] = Survey.objects.all()
+        context['current'] = Category.objects.get(id=self.request.GET['category'])
         return context
 
 
@@ -71,9 +81,9 @@ class SurveyUpdateView(PermissionRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('survey.builder', kwargs={'survey': self.object.id})
 
-    # def form_valid(self, form):
-    #     self.object = form.save()
-    #     return HttpResponse(1)
+        # def form_valid(self, form):
+        # self.object = form.save()
+        #     return HttpResponse(1)
 
 
 class SurveyDeleteView(PermissionRequiredMixin, DeleteView):
@@ -119,7 +129,7 @@ class SurveyPreviewView(SessionWizardView):
 
     def get_form_kwargs(self, step=None):
         return {
-            'page': Page.objects.get(order=int(step)+1, survey=self.kwargs['survey'])
+            'page': Page.objects.get(order=int(step) + 1, survey=self.kwargs['survey'])
         }
 
 
@@ -147,7 +157,7 @@ class SurveyDoView(SessionWizardView):
 
     def get_form_kwargs(self, step=None):
         return {
-            'page': Page.objects.get(order=int(step)+1, survey=self.kwargs['survey'])
+            'page': Page.objects.get(order=int(step) + 1, survey=self.kwargs['survey'])
         }
 
 
@@ -171,13 +181,6 @@ def do_survey_factory(request, *args, **kwargs):
         form_list = ret_form_list
 
     return ReturnClass.as_view()(request, *args, **kwargs)
-
-
-
-
-
-
-
 
 
 

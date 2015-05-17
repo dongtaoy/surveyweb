@@ -163,8 +163,4 @@ class ResponseForm(forms.ModelForm):
 class SurveyListForm(forms.ModelForm):
     class Meta:
         Model = Category
-        field = ['name']
-
-
-
-
+        fields = ['name']
