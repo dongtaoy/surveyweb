@@ -6,7 +6,7 @@ from guardian.mixins import PermissionRequiredMixin
 from django_ajax.mixin import AJAXMixin
 from survey.models import Page, Survey
 
-
+#create a page
 class PageCreateView(CreateView):
     model = Page
     fields = ['survey']
@@ -16,6 +16,7 @@ class PageCreateView(CreateView):
         return render(self.request, 'survey/page/survey.page.html', {'page': page})
 
 
+#delete a page
 class PageDeleteView(AJAXMixin, PermissionRequiredMixin, DeleteView):
     model = Page
     permission_required = 'survey.delete_page'
@@ -35,6 +36,7 @@ class PageDeleteView(AJAXMixin, PermissionRequiredMixin, DeleteView):
             return True
 
 
+#update a page
 class PageUpdateView(AJAXMixin, PermissionRequiredMixin, UpdateView):
     model = Page
     permission_required = 'survey.change_page'
