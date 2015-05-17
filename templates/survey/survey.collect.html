@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load js %}
 {% block title %}
     Survey Collector
 {% endblock %}
@@ -81,84 +82,39 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for collector in survey.collectors.all %}
-                        <tr>
-                            <td>
-                                {{ collector.name }}
-                            </td>
-                            <td>
-                                {{ collector.get_status_display }}
-                            </td>
-                            <td>
-                                {{ collector.responses }}
-                            </td>
-                            <td>
-                                {{ collector.updated }}
-                            </td>
-                            <td>
-                                <a href="#" class="btn  btn-xs btn-default btn-circle">
-                                    <i class="fa fa-edit"></i>Edit
-                                </a>
-                            </td>
-                        </tr>
+                        {% for collect in survey.collectors.all %}
+                            <tr>
+                                <td>
+                                    {{ collect.name }}
+                                </td>
+                                <td>
+                                    {{ collect.get_status_display }}
+                                </td>
+                                <td>
+                                    {{ collect.responses.all|length }}
+                                </td>
+                                <td>
+                                    {{ collect.updated }}
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-circle">
+                                        <button class="btn  btn-xs btn-default collect-share"
+                                                id="copy-button-{{ collect.id }}"
+                                                data-clipboard-text="{% url 'survey.do' collect.uuid %}"
+                                                title="Click to copy me."><i class="fa fa-share fa-fw"></i>Share
+                                        </button>
+                                        <a href="{% url 'collect.edit' survey.id collect.id %}"
+                                           class="btn  btn-xs btn-default">
+                                            <i class="fa fa-edit fa-fw"></i>Edit
+                                        </a>
+                                        <a class="btn  btn-xs btn-default collect-delete"
+                                           id="collect-{{ collect.id }}" name="survey-{{ survey.id }}">
+                                            Delete<i class="fa fa-trash fa-fw"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
                         {% endfor %}
-                        <tr>
-                            <td>
-                                Web Link 1
-                            </td>
-                            <td>
-                                OPEN
-                            </td>
-                            <td>
-                                100
-                            </td>
-                            <td>
-                                Sunday, April 12, 2015 11:06 PM
-                            </td>
-                            <td>
-                                <a href="#" class="btn  btn-xs btn-default btn-circle">
-                                    <i class="fa fa-edit"></i>Edit
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Web Link 1
-                            </td>
-                            <td>
-                                OPEN
-                            </td>
-                            <td>
-                                100
-                            </td>
-                            <td>
-                                Sunday, April 12, 2015 11:06 PM
-                            </td>
-                            <td>
-                                <a href="#" class="btn  btn-xs btn-default btn-circle">
-                                    <i class="fa fa-edit"></i>Edit
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Web Link 1
-                            </td>
-                            <td>
-                                OPEN
-                            </td>
-                            <td>
-                                100
-                            </td>
-                            <td>
-                                Sunday, April 12, 2015 11:06 PM
-                            </td>
-                            <td>
-                                <a href="#" class="btn  btn-xs btn-default btn-circle">
-                                    <i class="fa fa-edit"></i>Edit
-                                </a>
-                            </td>
-                        </tr>
 
                         </tbody>
                     </table>
@@ -203,7 +159,7 @@
                                         Embed your survey on your website
                                     </div>
                                 </div>
-                                <a class="more" href="javascript:;">
+                                <a class="more" href="{% url 'collect.create' survey.id %}">
                                     Create collector<i class="m-icon-swapright m-icon-white"></i>
                                 </a>
                             </div>
@@ -254,18 +210,29 @@
 {% endblock %}
 
 {% block pluginjs %}
+    <script src="{% static 'assets/global/plugins/zeroclipboard/zeroclipboard.min.js' %}"></script>
+
+
     <script type="text/javascript"
             src="{% static 'assets/global/plugins/datatables/media/js/jquery.dataTables.min.js' %}"></script>
     <script type="text/javascript"
             src="{% static 'assets/global/plugins/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js' %}"></script>
     <script type="text/javascript"
             src="{% static 'assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js' %}"></script>
+    <script src="{% static 'assets/global/plugins/bootbox/bootbox.min.js' %}"></script>
+    <script src="{% static 'assets/global/plugins/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'assets/survey/js/survey.collect.js' %}"></script>
+    {% django_js jquery=false i18n=false %}
 {% endblock %}
 
 {% block script %}
     <script>
         jQuery(document).ready(function () {
-            $('.table').dataTable();
+            $('.table').dataTable({
+                "order": [[3, "desc"]]
+            });
+            surveyCollect.init();
         });
     </script>
 {% endblock %}
