@@ -59,7 +59,7 @@ class TextContainerForm(forms.ModelForm):
 class ResponseForm(forms.ModelForm):
     class Meta:
         model = Response
-        exclude = ['survey', 'interviewee']
+        exclude = ['survey', 'interviewee', 'collector']
 
     def __init__(self, *args, **kwargs):
         self.page = kwargs.pop('page')
