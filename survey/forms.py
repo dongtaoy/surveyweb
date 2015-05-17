@@ -59,7 +59,7 @@ class TextContainerForm(forms.ModelForm):
 class ResponseForm(forms.ModelForm):
     class Meta:
         model = Response
-        exclude = ['survey', 'interviewee']
+        exclude = ['survey', 'interviewee', 'collector']
 
     def __init__(self, *args, **kwargs):
         self.page = kwargs.pop('page')
@@ -118,12 +118,7 @@ class ResponseForm(forms.ModelForm):
 
 
     def save(self, commit=True, **kwargs):
-        user = kwargs.pop('user')
-        response = super(ResponseForm, self).save(commit=False)
-        response.survey = self.page.survey
-        response.interviewee = user
-        response.save()
-        print response
+        response = kwargs.pop('response')
         for field_name, field_value in self.cleaned_data.iteritems():
             if field_name.startswith("question_"):
                 if field_value != '' and field_value != []:
@@ -160,7 +155,7 @@ class ResponseForm(forms.ModelForm):
         return response
 
 
-class CollectorForm(forms.ModelForm):
+class CollectForm(forms.ModelForm):
     class Meta:
         fields = ['name', 'status']
         model = ResponseCollector

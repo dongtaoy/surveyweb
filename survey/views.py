@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.db.transaction import atomic
 from guardian.mixins import PermissionRequiredMixin
-from survey.models import Survey, QuestionType, Page, ResponseCollector, Category
+from survey.models import Survey, QuestionType, Page, ResponseCollector, Category, Response
 from survey.forms import SurveyForm, ResponseForm
 
 
@@ -146,8 +146,10 @@ class SurveyDoView(SessionWizardView):
     template_name = 'survey/survey.do.html'
 
     def done(self, form_list, **kwargs):
+        collector = ResponseCollector.objects.get(uuid=self.kwargs['collectuuid'])
+        response = Response.objects.create(survey=collector.survey, interviewee=self.request.user, collector=collector)
         for form in form_list:
-            form.save(user=self.request.user)
+            form.save(user=self.request.user, response=response)
         return redirect(reverse_lazy('home'))
 
     def get_context_data(self, form, **kwargs):
@@ -156,6 +158,7 @@ class SurveyDoView(SessionWizardView):
         return context
 
     def get_form_kwargs(self, step=None):
+
         return {
             'page': Page.objects.get(order=int(step) + 1, survey=self.kwargs['survey'])
         }
@@ -175,8 +178,12 @@ def preview_survey_factory(request, *args, **kwargs):
 
 
 def do_survey_factory(request, *args, **kwargs):
-    ret_form_list = [ResponseForm for i in Survey.objects.get(id=kwargs['survey']).pages.all()]
+    collect = ResponseCollector.objects.get(uuid=kwargs['collectuuid'])
+    kwargs['survey'] = collect.survey.id
+    print collect.survey
+    ret_form_list = [ResponseForm for i in collect.survey.pages.all()]
 
+    # return HttpResponseForbidden()
     class ReturnClass(SurveyDoView):
         form_list = ret_form_list
 

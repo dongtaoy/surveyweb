@@ -28,7 +28,10 @@ urlpatterns = patterns('',
 
                        url(r"^(?P<survey>\d+)/preview/$", 'survey.views.preview_survey_factory', name='survey.preview'),
 
-                       url(r"^(?P<survey>\d+)/do/$", 'survey.views.do_survey_factory', name='survey.do'),
+                       # url(r"^(?P<survey>\d+)/do/$", 'survey.views.do_survey_factory', name='survey.do'),
+
+                       url(r"^(?P<collectuuid>[\w -]+)/$", 'survey.views.do_survey_factory', name='survey.do'),
+
 
                        url(r"^(?P<survey>\d+)/analyze/$",
                            login_required(SurveyAnalyzeView.as_view()), name='survey.analyze'),
@@ -37,7 +40,7 @@ urlpatterns = patterns('',
 
                        url(r"^question/", include('survey.question.urls')),
 
-                       url(r"^collector/", include('survey.collector.urls')),
+                       url(r"^(?P<survey>\d+)/collect/", include('survey.collect.urls')),
 
                        url(r"^container/", include('survey.container.urls')),
                        )
