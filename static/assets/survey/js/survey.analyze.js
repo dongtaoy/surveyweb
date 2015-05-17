@@ -3,31 +3,38 @@
  */
 var surveyAnalyze = (function () {
 
+    //function that inits the statistic charts for all questions in a survey
     var initCharts = function () {
         $('[id^=chart]').each(function () {
+            //get information of a question
             var type = $(this).attr('id').split('_')[1],
                 id = $(this).attr('id').split('_')[2],
                 chart = $(this),
                 table = $('#question_table_' + id + ' tbody tr'),
                 data = [];
+            //collect data for non-checkbox question
             if (type != 'checkbox') {
                 $(table).each(function () {
                     data.push([$(this).find('td:first').text(), parseInt($(this).find('td:last').text())]);
                 });
+                //render a pie chart for non-checkbox question
                 chart.highcharts(PIE_CHART_OPTIONS(data));
             }
+            //collect data for checkbox question
             else {
                 var categories = [];
                 $(table).each(function () {
                     categories.push($(this).find('td:first').text());
                     data.push(parseInt($(this).find('td:nth-child(2)').text()));
                 });
+                //render a bar chart for non-checkbox question
                 chart.highcharts(BAR_CHART_OPTIONS(categories, data));
             }
 
         })
     };
 
+    //configure bar charts
     var BAR_CHART_OPTIONS = function (categories, data) {
         return {
             chart: {
@@ -77,6 +84,7 @@ var surveyAnalyze = (function () {
     };
 
 
+    //configure pie charts
     var PIE_CHART_OPTIONS = function (data) {
         return {
             chart: {

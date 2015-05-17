@@ -1,13 +1,15 @@
 var surveyCollect = (function () {
+
+    //delete a collector
     var initCollectDelete = function () {
         $(".collect-delete")
             .off('click')
             .on('click', function () {
                 var currentrow = $(this).closest("tr");
-                console.log(currentrow)
+                //console.log(currentrow)
                 var collectid = $(this).attr('id').replace(/[^\d.]/g, '');
                 var surveyid = $(this).attr('name').replace(/[^\d.]/g, '');
-                console.log(surveyid);
+                //pop out confirmation window
                 bootbox.dialog({
                     title: "Delete Confirmation",
                     message: "Are you sure?",
@@ -38,11 +40,13 @@ var surveyCollect = (function () {
             })
     };
 
+
+    //generate and keep in clipboard a hashed link to current survey that can be shared
     var initCollectShare = function () {
         $(".collect-share").each(function () {
             var client = new ZeroClipboard($(this));
             client.on("ready", function (readyEvent) {
-                // alert( "ZeroClipboard SWF is ready!" );
+                //bind the function to 'aftercopy' event
                 client.on("aftercopy", function (event) {
                     // `this` === `client`
                     // `event.target` === the element that was clicked
