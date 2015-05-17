@@ -40,11 +40,6 @@
     <div class="portlet-body form" id="form_wizard_1">
         <p class="well">Please drag your images into this Area:</p>
 
-        {#        <form action="/file-upload" class="dropzone" style="border: 2px dotted #4DB3A2;" id="image-edit-upload">#}
-        {#            <div class="fallback">#}
-        {#                <input name="file" type="file" multiple/>#}
-        {#            </div>#}
-        {#        </form>#}
 
         <div class="form-wizard">
             <div class="form-body">
@@ -90,8 +85,13 @@
                     <div class="tab-pane active" id="tab1">
                         <h3 class="block">Upload your images</h3>
                         <hr/>
-                        <form action="/file-upload" class="dropzone" id="elo-edit-upload"
-                              style="border: 2px dotted #4DB3A2;"></form>
+
+                        <form action="//file-upload" class="dropzone" style="height:400px; border: 2px dotted #4DB3A2;"
+                              id="image-edit-upload">
+                            <div class="fallback">
+                                <input name="file" type="file" multiple/>
+                            </div>
+                        </form>
                     </div>
                     <div class="tab-pane" id="tab2">
                         <h3 class="block">Set the details of each image</h3>
