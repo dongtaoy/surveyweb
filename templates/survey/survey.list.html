@@ -101,7 +101,7 @@
                             <td>{{ survey.description }}</td>
                             <td>{{ survey.responses.all|length }}</td>
                             <td>{{ survey.created|naturaltime }}</td>
-                            <td><a class="label label-info" href="{% url 'survey.do' survey.id %}">
+                            <td><a class="label label-info" href="{% url 'survey.do' survey.collectors.all.0.uuid %}">
                                 Take a survey <i class="fa fa-share"></i>
                             </td>
                         </tr>

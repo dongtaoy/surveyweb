@@ -53,19 +53,27 @@
             <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
             <div class="hor-menu ">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="{% url 'home' %}"> <i class="icon-home"></i> Dashboard</a>
-                    </li>
+                    {% if request.user.is_authenticated %}
+                        <li>
+                            <a href="{% url 'home' %}"> <i class="icon-home"></i> Dashboard</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{% url 'home' %}"> <i class="icon-home"></i> Home</a>
+                        </li>
+                    {% endif %}
                     <li>
                         <a href="{% url 'aboutus' %}"><i class="icon-users"></i>About Us</a>
                     </li>
-                    <li>
-                        <a href="{% url 'survey.create' %}"><i class="icon-doc"></i>New Survey</a>
-                    </li>
+                    {% if request.user.is_authenticated %}
+                        <li>
+                            <a href="{% url 'survey.create' %}"><i class="icon-doc"></i>New Survey</a>
+                        </li>
+                    {% endif %}
                     <li>
                         <a href="{% url 'survey.list' %}"><i class="icon-note"></i>What's New</a>
                     </li>
-                    {% if request.user.username %}
+                    {% if request.user.is_authenticated %}
                         <li>
                             <a href="{% url 'account_logout' %}"><i class="icon-logout"></i>Sign Out</a>
                         </li>

@@ -24,7 +24,6 @@ class SurveyListView(ListView):
     def get_queryset(self):
         try:
             category = Category.objects.get(id=self.request.GET['category'])
-            print category
             object_list = self.model.objects.filter(category=category)
             return object_list
         except:
@@ -34,7 +33,10 @@ class SurveyListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(SurveyListView, self).get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
-        context['current'] = Category.objects.get(id=self.request.GET['category'])
+        try:
+            context['current'] = Category.objects.get(id=self.request.GET['category'])
+        except:
+            pass
         return context
 
 

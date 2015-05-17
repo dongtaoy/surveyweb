@@ -304,11 +304,10 @@
                                                 <div class="desc ">
                                                     {{ survey.name }}
                                                     <a class="label label-sm label-info"
-                                                       href="{% url 'survey.do' survey.id %}">
+                                                       href="{% url 'survey.do' survey.collectors.all.0.uuid %}">
                                                         Take a survey <i class="fa fa-share"></i>
                                                     </a>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>

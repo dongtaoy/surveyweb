@@ -76,7 +76,7 @@
                                 Responses
                             </th>
                             <th class="hidden-xs">
-                                Date Modified
+                                URL
                             </th>
                             <th></th>
                         </tr>
@@ -94,7 +94,7 @@
                                     {{ collect.responses.all|length }}
                                 </td>
                                 <td>
-                                    {{ collect.updated }}
+                                    {{ request.get_host }}{% url 'survey.do' collect.uuid %}
                                 </td>
                                 <td>
                                     <div class="btn-group btn-group-circle">
@@ -230,7 +230,7 @@
     <script>
         jQuery(document).ready(function () {
             $('.table').dataTable({
-                "order": [[3, "desc"]]
+                "order": [[2, "desc"]]
             });
             surveyCollect.init();
         });
