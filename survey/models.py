@@ -245,7 +245,9 @@ class ResponseCollector(models.Model):
         (OPEN, 'OPEN'),
         (CLOSED, 'CLOSED')
     )
-    status = models.CharField(max_length=2, choices=STATUS_CHOICES)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, null=False, blank=False, default=OPEN)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)
     #
     # def create(self, survey):
     #

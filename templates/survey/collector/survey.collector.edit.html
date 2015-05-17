@@ -1,0 +1,49 @@
+{% extends 'base.header.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block plugincss %}
+{% endblock %}
+{% block header %}
+    Collector
+{% endblock %}
+{% block subHeader %}
+    Configuration
+{% endblock %}
+{% block breadcrumb %}
+    <ul class="page-breadcrumb breadcrumb">
+        <li>
+            <a href="{% url 'home' %}">Home</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li class="active">
+            Collector
+        </li>
+    </ul>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet box green-haze">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-ge"></i>Collector Edit
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        {% buttons submit='OK' reset="Reset" %}{% endbuttons %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block pluginjs %}
+{% endblock %}
+{% block script %}
+    <script>
+    </script>
+{% endblock %}
