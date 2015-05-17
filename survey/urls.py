@@ -37,7 +37,7 @@ urlpatterns = patterns('',
 
                        url(r"^question/", include('survey.question.urls')),
 
-                       url(r"^collector/", include('survey.collector.urls')),
+                       url(r"^(?P<survey>\d+)/collect/", include('survey.collect.urls')),
 
                        url(r"^container/", include('survey.container.urls')),
                        )

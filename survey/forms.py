@@ -160,7 +160,7 @@ class ResponseForm(forms.ModelForm):
         return response
 
 
-class CollectorForm(forms.ModelForm):
+class CollectForm(forms.ModelForm):
     class Meta:
         fields = ['name', 'status']
         model = ResponseCollector
