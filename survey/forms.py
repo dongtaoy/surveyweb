@@ -152,18 +152,14 @@ class ResponseForm(forms.ModelForm):
                     if question.questiontype == QuestionType.objects.get(name='Single Textbox'):
                         answer = AnswerText(question=question)
                         answer.text = field_value
-                        answer.type = AnswerBase.TEXT
                     elif question.questiontype == QuestionType.objects.get(name='Multiple Choice'):
                         answer = AnswerChoice(question=question)
                         answer.choice = Choice.objects.get(question=question, text=field_value)
-                        answer.type = AnswerBase.SINGLE_CHOICE
                     elif question.questiontype == QuestionType.objects.get(name='Dropdown'):
                         answer = AnswerChoice(question=question)
                         answer.choice = Choice.objects.get(question=question, text=field_value)
-                        answer.type = AnswerBase.SINGLE_CHOICE
                     elif question.questiontype == QuestionType.objects.get(name='Checkbox'):
                         answer = AnswerCheck(question=question)
-                        answer.type = AnswerBase.MULTIPLE_CHOICE
                         answer.response = response
                         answer.save()
                         for value in field_value:
@@ -171,15 +167,12 @@ class ResponseForm(forms.ModelForm):
                     elif question.questiontype == QuestionType.objects.get(name='Email'):
                         answer = AnswerText(question=question)
                         answer.text = field_value
-                        answer.type = AnswerBase.TEXT
                     elif question.questiontype == QuestionType.objects.get(name='Date'):
                         answer = AnswerText(question=question)
                         answer.text = field_value
-                        answer.type = AnswerBase.TEXT
                     elif question.questiontype == QuestionType.objects.get(name='TextArea'):
                         answer = AnswerText(question=question)
                         answer.text = field_value
-                        answer.type = AnswerBase.TEXT
 
                     answer.response = response
                     answer.save()

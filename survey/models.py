@@ -248,15 +248,6 @@ class AnswerBase(models.Model):
     response = models.ForeignKey(Response, null=False, blank=False, related_name="answers")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    TEXT = 'TE'
-    SINGLE_CHOICE = 'SC'
-    MULTIPLE_CHOICE = 'MC'
-    choices = (
-        (TEXT, 'TEXT'),
-        (SINGLE_CHOICE, 'SINGLE_CHOICE'),
-        (MULTIPLE_CHOICE, 'MULTIPLE_CHOICE'),
-    )
-    type = models.CharField(choices=choices, max_length=2, null=False, blank=False, default=TEXT)
 
 
 class AnswerText(AnswerBase):
