@@ -98,17 +98,18 @@
                                 </td>
                                 <td>
                                     <div class="btn-group btn-group-circle">
-                                        <a class="btn  btn-xs btn-default collect-share"
-                                           name="{{ collect.get_url }}">
-                                            <i class="fa fa-share"></i>Share
-                                        </a>
+                                        <button class="btn  btn-xs btn-default collect-share"
+                                                id="copy-button-{{ collect.id }}"
+                                                data-clipboard-text="{% url 'survey.do' collect.uuid %}"
+                                                title="Click to copy me."><i class="fa fa-share fa-fw"></i>Share
+                                        </button>
                                         <a href="{% url 'collect.edit' survey.id collect.id %}"
                                            class="btn  btn-xs btn-default">
-                                            <i class="fa fa-edit"></i>Edit
+                                            <i class="fa fa-edit fa-fw"></i>Edit
                                         </a>
                                         <a class="btn  btn-xs btn-default collect-delete"
                                            id="collect-{{ collect.id }}" name="survey-{{ survey.id }}">
-                                            <i class="fa fa-trash"></i>Delete
+                                            Delete<i class="fa fa-trash fa-fw"></i>
                                         </a>
                                     </div>
                                 </td>
@@ -209,6 +210,9 @@
 {% endblock %}
 
 {% block pluginjs %}
+    <script src="{% static 'assets/global/plugins/zeroclipboard/zeroclipboard.min.js' %}"></script>
+
+
     <script type="text/javascript"
             src="{% static 'assets/global/plugins/datatables/media/js/jquery.dataTables.min.js' %}"></script>
     <script type="text/javascript"

@@ -1,10 +1,8 @@
-
-
-var surveyCollect = (function(){
-    var initCollectDelete = function(){
+var surveyCollect = (function () {
+    var initCollectDelete = function () {
         $(".collect-delete")
             .off('click')
-            .on('click', function(){
+            .on('click', function () {
                 var currentrow = $(this).closest("tr");
                 console.log(currentrow)
                 var collectid = $(this).attr('id').replace(/[^\d.]/g, '');
@@ -40,18 +38,30 @@ var surveyCollect = (function(){
             })
     };
 
-    var initCollectURL = function(){
-        $(".collect-show")
-            .off('click')
-            .on('click', function(){
+    var initCollectShare = function () {
+        $(".collect-share").each(function () {
+            var client = new ZeroClipboard($(this));
+            client.on("ready", function (readyEvent) {
+                // alert( "ZeroClipboard SWF is ready!" );
 
-            })
-    }
+                client.on("aftercopy", function (event) {
+                    // `this` === `client`
+                    // `event.target` === the element that was clicked
+                    //event.target.style.display = "none";
+                    alert("Copied text to clipboard: " + event.data["text/plain"]);
+                });
+            });
+        });
+
+
+    };
+
 
 
     return {
-        init : function(){
+        init: function () {
             initCollectDelete();
+            initCollectShare();
         }
     }
 }());
