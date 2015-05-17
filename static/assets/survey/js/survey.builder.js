@@ -101,7 +101,7 @@ var surveyBuilder = (function () {
 
                             // bind question save button
                             $('.container-edit form').submit(function () {
-                                if ($(this).find('textarea').val().length<=0){
+                                if ($(this).find('textarea').val().length <= 0) {
                                     var notify = $.notify("Text field cannot be empty!");
                                     //notify.close();
                                     return false;
@@ -169,7 +169,7 @@ var surveyBuilder = (function () {
                         //.replaceWith(data);
                         initQuestionPlugin();
                         $('.container-edit form').submit(function () {
-                            if ($(this).find('textarea').val().length<=0){
+                            if ($(this).find('textarea').val().length <= 0) {
                                 var notify = $.notify("Text field cannot be empty!");
                                 notify.close();
                                 return false;
@@ -263,7 +263,6 @@ var surveyBuilder = (function () {
                 $(this).closest('.container-set').find('a').attr('disabled', true);
                 $(this).closest('.container-set').find('button').attr('disabled', true);
                 console.log('click');
-                var notify = $.notify('Deleting....');
                 var container = $(this).closest('.container-set');
                 var containerid = $(this).closest('[id^=container-]').attr('id').replace(/[^\d.]/g, '');
                 bootbox.dialog({
@@ -282,6 +281,7 @@ var surveyBuilder = (function () {
                             label: "Confirm",
                             className: "btn-danger",
                             callback: function () {
+                                var notify = $.notify('Deleting....');
                                 $.post(Django.url('container.delete', containerid))
                                     .success(function (response) {
                                         if (response['status'] == 200) {
