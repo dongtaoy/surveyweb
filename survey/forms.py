@@ -122,6 +122,7 @@ class ResponseForm(forms.ModelForm):
         response = super(ResponseForm, self).save(commit=False)
         response.survey = self.page.survey
         response.interviewee = user
+        response.collector = kwargs.pop('collector')
         response.save()
         print response
         for field_name, field_value in self.cleaned_data.iteritems():

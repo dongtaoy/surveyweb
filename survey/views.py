@@ -147,7 +147,7 @@ class SurveyDoView(SessionWizardView):
 
     def done(self, form_list, **kwargs):
         for form in form_list:
-            form.save(user=self.request.user)
+            form.save(user=self.request.user, collector=ResponseCollector.objects.get(uuid=self.kwargs['collectuuid']))
         return redirect(reverse_lazy('home'))
 
     def get_context_data(self, form, **kwargs):
