@@ -91,6 +91,13 @@ class SurveyCollectView(PermissionRequiredMixin, DetailView):
     permission_required = 'survey.view_survey'
     raise_exception = True
 
+    def get_object(self, queryset=None):
+        object = super(SurveyCollectView, self).get_object(queryset)
+        if object.status != Survey.OPEN:
+            object.status = Survey.OPEN
+            object.save()
+        return object
+
 
 class SurveyPreviewView(SessionWizardView):
     template_name = 'survey/survey.do.html'

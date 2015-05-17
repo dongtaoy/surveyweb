@@ -162,6 +162,15 @@ class QuestionType(models.Model):
     helper = models.TextField(null=True, blank=True)
     order = models.IntegerField(null=True, blank=True)
     icon_css = models.CharField(max_length=100, null=True, blank=True)
+    MULTIPLE_CHOICE = 'MC'
+    SINGLE_CHOICE = 'SC'
+    TEXT = 'TE'
+    ANSWERTYPE_CHOICES = (
+        (MULTIPLE_CHOICE, 'MULTIPLE_CHOICE'),
+        (SINGLE_CHOICE, 'SINGLE_CHOICE'),
+        (TEXT, 'TEXT')
+    )
+    answertype = models.CharField(choices=ANSWERTYPE_CHOICES, max_length=2, null=False, blank=False, default='TE')
 
     class Meta:
         ordering = ['order']
@@ -184,6 +193,7 @@ class QuestionContainer(Container):
     question = models.TextField(null=False, blank=False)
     questiontype = models.ForeignKey(QuestionType)
     required = models.BooleanField(default=False)
+
 
     def save(self, *args, **kwargs):
         super(QuestionContainer, self).save(*args, **kwargs)
@@ -228,7 +238,7 @@ class EloItem(models.Model):
 
 class Response(models.Model):
     survey = models.ForeignKey(Survey, null=False, blank=False, related_name="responses")
-    interviewee = models.ForeignKey(User, null=False, blank=False)
+    interviewee = models.ForeignKey(User, null=False, blank=False, related_name="responses")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

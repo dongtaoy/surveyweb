@@ -1,0 +1,45 @@
+{% load bootstrap3 %}
+<div class="portlet light bordered container-edit">
+
+    <div class="portlet-title">
+        <div class="caption font-green-sharp">
+            <i class="icon-speech font-green-sharp"></i>
+            <span class="caption-subject bold uppercase"> Single Question Editing</span>
+        </div>
+    </div>
+    <form action="{{ request.path }}" method="POST" novalidate="novalidate">
+        <div class="portlet-body">
+            {% for field in form %}
+                    {% if field.label == 'Required' %}
+                        <div class="md-checkbox-list pull-right">
+                            <div class="md-checkbox">
+                                {{ field }}
+                                <label for="id_required">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span>
+                                    Required </label>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                    {% else %}
+                        {% bootstrap_field field %}
+                    {% endif %}
+                {% endfor %}
+            <br/>
+        </div>
+        <div class="portlet-footer">
+            <div class="row">
+                <br>
+            </div>
+            <div class="row" style="margin: 0px;">
+                <div class="pull-right">
+                    <button class="btn btn-success" type="submit">Save</button>
+                    <button class="btn btn-warning cancel" type="button">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
