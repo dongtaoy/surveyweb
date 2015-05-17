@@ -24,23 +24,6 @@ var surveyAnalyze = (function () {
                 chart.highcharts(BAR_CHART_OPTIONS(categories, data));
             }
 
-
-            //$.getJSON(Django.url('question.data', id), {'type': type})
-            //    .success(function (response) {
-            //        if (response['status'] == 200) {
-            //            if (type == 'SC') {
-            //                var options = PIE_CHART_OPTIONS(response['content']);
-            //                chart.highcharts(options);
-            //            }
-            //            if (type == 'MC') {
-            //                var categories = $('#question_table_'+id);
-            //                console.log(categories);
-            //                chart.highcharts(BAR_CHART_OPTIONS(response['content']));
-            //            }
-            //        }
-            //    });
-
-
         })
     };
 
@@ -74,6 +57,11 @@ var surveyAnalyze = (function () {
                     dataLabels: {
                         enabled: true
                     }
+                }
+            },
+            tooltip :{
+                formatter:function(){
+                    return '<b>'+ this.point.name +'</b>: ' +' %'
                 }
             },
             series: [{
