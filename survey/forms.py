@@ -158,9 +158,3 @@ class ResponseForm(forms.ModelForm):
                     answer.response = response
                     answer.save()
         return response
-
-
-class SurveyListForm(forms.ModelForm):
-    class Meta:
-        Model = Category
-        fields = ['name']
