@@ -2,6 +2,7 @@
  * Created by dongtaoy on 5/17/15.
  */
 var surveyAnalyze = (function () {
+
     var initCharts = function () {
         $('[id^=chart]').each(function () {
             var type = $(this).attr('id').split('_')[1],
@@ -24,27 +25,10 @@ var surveyAnalyze = (function () {
                 chart.highcharts(BAR_CHART_OPTIONS(categories, data));
             }
 
-
-            //$.getJSON(Django.url('question.data', id), {'type': type})
-            //    .success(function (response) {
-            //        if (response['status'] == 200) {
-            //            if (type == 'SC') {
-            //                var options = PIE_CHART_OPTIONS(response['content']);
-            //                chart.highcharts(options);
-            //            }
-            //            if (type == 'MC') {
-            //                var categories = $('#question_table_'+id);
-            //                console.log(categories);
-            //                chart.highcharts(BAR_CHART_OPTIONS(response['content']));
-            //            }
-            //        }
-            //    });
-
-
         })
     };
 
-    var BAR_CHART_OPTIONS = function (categories ,data) {
+    var BAR_CHART_OPTIONS = function (categories, data) {
         return {
             chart: {
                 type: 'bar'
@@ -76,6 +60,11 @@ var surveyAnalyze = (function () {
                     }
                 }
             },
+            tooltip: {
+                formatter: function () {
+                    return 'Total responses for choice <b>' + this.point.category + '</b>: <strong>' + this.point.y +'</strong>';
+                }
+            },
             series: [{
                 name: 'responses',
                 data: data
@@ -105,6 +94,11 @@ var surveyAnalyze = (function () {
                             color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                         }
                     }
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    return 'Total responses for choice <b>' + this.point.name + '</b>: <strong>' + this.point.percentage + '%' + '</strong>';
                 }
             },
             series: [{
