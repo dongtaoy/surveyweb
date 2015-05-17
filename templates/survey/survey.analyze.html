@@ -62,7 +62,7 @@
                         {% for container in page.containers.all %}
                             {% if container.type == 'QU' %}
                                 {% with container.questioncontainer as question %}
-                                    {% if question.questiontype.name == "Single Textbox" %}
+                                    {% if question.questiontype.answertype == "TE" %}
                                         <div>
                                             <h2 style="text-align: center;">
                                                 <b>Question {{ question.order }} {{ question.question|safe }}</b></h2>
@@ -130,7 +130,7 @@
                                                         {% for choice in question.choices.all %}
                                                             <tr>
                                                                 <td>{{ choice.text }}</td>
-                                                                {% if question.questiontype.name == "Checkbox" %}
+                                                                {% if question.questiontype.answertype == "MC" %}
                                                                     <td>{{ choice.checkanswers.all|length }}</td>
                                                                     <td>{% widthratio choice.checkanswers.all|length question.answers.all|length 100 %}%</td>
                                                                 {% else %}

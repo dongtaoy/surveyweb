@@ -24,13 +24,13 @@ class QuestionCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(QuestionCreateView, self).get_context_data(**kwargs)
         if self.request.GET:
-            if self.question_type.get_name() != 'single-textbox':
+            if self.question_type.answertype != QuestionType.TEXT:
                 context['formset'] = ChoiceFormSet(instance=QuestionContainer())
         return context
 
     def form_valid(self, form):
         question = form.save(commit=False)
-        if question.questiontype.get_name() != 'single-textbox':
+        if question.questiontype.answertype != QuestionType.TEXT:
             choiceformset = ChoiceFormSet(self.request.POST, instance=question)
             if choiceformset.is_valid():
                 question.save()
@@ -68,13 +68,13 @@ class QuestionUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(QuestionUpdateView, self).get_context_data(**kwargs)
 
-        if self.object.questiontype.get_name() != 'single-textbox':
+        if self.object.questiontype.answertype != QuestionType.TEXT:
             context['formset'] = ChoiceFormSet(instance=self.object)
         return context
 
     def form_valid(self, form):
         question = form.save(commit=False)
-        if question.questiontype.get_name() != 'single-textbox':
+        if question.questiontype.answertype != QuestionType.TEXT:
             choiceformset = ChoiceFormSet(self.request.POST, instance=question)
             if choiceformset.is_valid():
                 question.save()
