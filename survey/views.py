@@ -1,20 +1,29 @@
 __author__ = 'dongtao'
 from formtools.wizard.views import SessionWizardView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic import ListView
 from django.views.generic import DetailView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.db.transaction import atomic
 from guardian.mixins import PermissionRequiredMixin
-from survey.models import Survey, QuestionType, Page, Response
+from survey.models import Survey, QuestionType, Page, Response, Category
 from survey.forms import SurveyForm, ResponseForm
 
 
-class SurveyListView(DetailView):
+class SurveyListView(ListView):
     model = Survey
     template_name = "survey/survey.list.html"
-    pk_url_kwarg = "survey"
     context_object_name = "survey"
+
+    # def get_queryset(self):
+    #     return Survey.objects.filter()
+
+    def get_context_data(self, **kwargs):
+        context = super(SurveyListView, self).get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        context['surveys'] = Survey.objects.all()
+        return context
 
 
 class SurveyDetailView(PermissionRequiredMixin, DetailView):

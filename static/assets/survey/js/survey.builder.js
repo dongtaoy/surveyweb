@@ -103,7 +103,7 @@ var surveyBuilder = (function () {
                             $('.container-edit form').submit(function () {
 
                                 if ($(this).find('textarea').val().length<=0){
-                                    var notify = $.notify("Text filed cannot be empty!");
+                                    var notify = $.notify("Text field cannot be empty!");
                                     notify.close();
                                     return false;
                                 }
@@ -170,6 +170,11 @@ var surveyBuilder = (function () {
                         //.replaceWith(data);
                         initQuestionPlugin();
                         $('.container-edit form').submit(function () {
+                            if ($(this).find('textarea').val().length<=0){
+                                var notify = $.notify("Text field cannot be empty!");
+                                notify.close();
+                                return false;
+                            }
                             $(this).find(':submit').attr('disabled', true);
                             var notify = $.notify('Saving questions...');
                             $(this).ajaxSubmit({

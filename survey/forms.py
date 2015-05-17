@@ -1,7 +1,7 @@
 __author__ = 'dongtao'
 from django import forms
 from survey.models import Survey, QuestionContainer, Choice, TextContainer, Response, Container, QuestionType, \
-    AnswerText, AnswerBase, AnswerChoice, AnswerCheck
+    AnswerText, AnswerBase, AnswerChoice, AnswerCheck, Category
 from django.forms.models import inlineformset_factory
 from django.forms.models import BaseInlineFormSet
 
@@ -154,6 +154,13 @@ class ResponseForm(forms.ModelForm):
                     answer.response = response
                     answer.save()
         return response
+
+
+class SurveyListForm(forms.ModelForm):
+    class Meta:
+        Model = Category
+        field = ['name']
+
 
 
 
