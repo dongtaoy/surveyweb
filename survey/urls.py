@@ -28,7 +28,10 @@ urlpatterns = patterns('',
 
                        url(r"^(?P<survey>\d+)/preview/$", 'survey.views.preview_survey_factory', name='survey.preview'),
 
-                       url(r"^(?P<survey>\d+)/do/$", 'survey.views.do_survey_factory', name='survey.do'),
+                       # url(r"^(?P<survey>\d+)/do/$", 'survey.views.do_survey_factory', name='survey.do'),
+
+                       url(r"^(?P<collectuuid>[\w -]+)/$", 'survey.views.do_survey_factory', name='survey.do'),
+
 
                        url(r"^(?P<survey>\d+)/analyze/$",
                            login_required(SurveyAnalyzeView.as_view()), name='survey.analyze'),
