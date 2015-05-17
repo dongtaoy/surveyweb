@@ -94,10 +94,25 @@ class Container(models.Model):
     # def get_name(self):
     #     pass
 
+    def has_change_permission(self, user):
+        if self.type == Container.TEXT:
+            return user.has_perm('survey.change_textcontainer', self.textcontainer)
+        elif self.type == Container.QUESTION:
+            return user.has_perm('survey.change_questioncontainer', self.questioncontainer)
+        return False
+
+    def has_delete_permission(self, user):
+        if self.type == Container.TEXT:
+            return user.has_perm('survey.delete_textcontainer', self.textcontainer)
+        elif self.type == Container.QUESTION:
+            return user.has_perm('survey.delete_questioncontainer', self.questioncontainer)
+        return False
+
     def save(self, *args, **kwargs):
         if self.order is None:
             self.order = self.page.containers.count() + 1
         super(Container, self).save(*args, **kwargs)
+
 
 
 class ImageContainer(Container):
@@ -155,6 +170,7 @@ class QuestionType(models.Model):
 class QuestionContainer(Container):
     question = models.TextField(null=False, blank=False)
     questiontype = models.ForeignKey(QuestionType)
+    required = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         super(QuestionContainer, self).save(*args, **kwargs)
@@ -205,26 +221,33 @@ class Response(models.Model):
 
 
 class AnswerBase(models.Model):
-    question = models.ForeignKey(QuestionContainer, null=False, blank=False)
-    response = models.ForeignKey(Response, null=False, blank=False)
+    question = models.ForeignKey(QuestionContainer, null=False, blank=False, related_name="answers")
+    response = models.ForeignKey(Response, null=False, blank=False, related_name="answers")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    TEXT = 'TE'
+    SINGLE_CHOICE = 'SC'
+    MULTIPLE_CHOICE = 'MC'
+    choices = (
+        (TEXT, 'TEXT'),
+        (SINGLE_CHOICE, 'SINGLE_CHOICE'),
+        (MULTIPLE_CHOICE, 'MULTIPLE_CHOICE'),
+    )
+    type = models.CharField(choices=choices, max_length=2, null=False, blank=False, default=TEXT)
+
 
 
 class AnswerText(AnswerBase):
     text = models.TextField(null=False, blank=False)
 
 
-class AnswerRadio(AnswerBase):
-    choice = models.ForeignKey(Choice, null=False, blank=False)
-
-
-class AnswerSelect(AnswerBase):
-    choice = models.ForeignKey(Choice, null=False, blank=False)
+class AnswerChoice(AnswerBase):
+    choice = models.ForeignKey(Choice, null=False, blank=False, related_name='answers')
 
 
 class AnswerCheck(AnswerBase):
-    choice = models.ManyToManyField(Choice)
+    choices = models.ManyToManyField(Choice, related_name='checkanswers')
+
 
 
 class AnswerElo(AnswerBase):

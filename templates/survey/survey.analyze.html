@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+    Survey Analysis
+{% endblock %}
+
+{% block plugincss %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/global/plugins/datatables/extensions/ColReorder/css/dataTables.colReorder.min.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css' %}"/>
+{% endblock %}
+
+{% block header %}
+    Survey
+{% endblock %}
+
+{% block subheader %}
+    Response Analysis
+{% endblock %}
+
+{% block content %}
+    <div class="portlet gren">
+        <div class="portlet-title">
+            <div class="caption font-blue-hoki">
+                <a a href="#surveyEdit" data-toggle="modal" role="button"
+                   style="font-size: 25px;">{{ survey.name }}</a><br/>
+            <span style="font-size: 12px;margin-top: 2px;color: grey;"><i
+                    class="fa fa-tags fa-fw"></i>Category: {{ survey.category }}</span>
+            </div>
+            <div class="tabbable-line ">
+                <ul class="nav nav-tabs pull-right">
+                    <li>
+                        <a href="{% url 'survey.detail' survey.id %}">Detail </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'survey.builder' survey.id %}">Builder </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'survey.collect' survey.id %}">Collector </a>
+                    </li>
+                    <li class="active">
+                        <a href="{% url 'survey.analyze' survey.id %}">Analyze </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% for page in survey.pages.all %}
+            <div class="portlet-body">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption font-blue-hoki ">
+                            <i class="icon-layers font-blue-hoki"></i> Page {{ page.order }} <span
+                                class="caption-helper"> of {{ survey.pages.all|length }}</span>
+                        </div>
+                        <div class="actions">
+                            <a href="javascript:;" class="btn btn-circle btn-default btn-icon-only fullscreen"></a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        {% for container in page.containers.all %}
+                            {% if container.type == 'QU' %}
+                                {% with container.questioncontainer as question %}
+
+                                    {% if question.questiontype.name == "Single Textbox" %}
+                                        <div>
+                                            <h2 style="text-align: center;">
+                                                <b>Question {{ question.order }} {{ question.question|safe }}</b></h2>
+                                            <h4 style="text-align: center;margin-bottom: 30px;">
+                                                Answered: {{ question.answers.all|length }} | Total Responses:
+                                                {{ question.page.survey.responses.all|length }}</h4>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <table class="table  table-hover singleTextTable" id="sample_6">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>
+                                                                Answers
+                                                            </th>
+                                                            <th>
+                                                                Time
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for answer in question.answers.all %}
+                                                            <tr>
+                                                                {% with answer.answertext as answer_text %}
+                                                                    <td>{{ answer_text.text }}</td>
+                                                                    <td><span
+                                                                            style="color: #808080; font-size: 10px;">{{ answer_text.created }}</span>
+                                                                    </td>
+                                                                {% endwith %}
+                                                            </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div>
+                                            <h2 style="text-align: center;">
+                                                <b>Question {{ question.order }}: {{ question.question|safe }}</b></h2>
+                                            <h4 style="text-align: center;margin-bottom: 30px;">
+                                                Answered: {{ question.answers.all|length }} Total:
+                                                {{ question.page.survey.responses.all|length }}</h4>
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div id="chart_1_2" class="chart">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <table class="table  table-hover choiceTable" id="sample_6">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>
+                                                                Answer Choices
+                                                            </th>
+                                                            <th>
+                                                                Responses
+                                                            </th>
+                                                            <th>Ratio</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for choice in question.choices.all %}
+                                                            <tr>
+                                                                <td>{{ choice.text }}</td>
+                                                                {% if question.questiontype.name == "Checkbox" %}
+                                                                    <td>{{ choice.checkanswers.all|length }}</td>
+                                                                    <td>{% widthratio choice.checkanswers.all|length question.answers.all|length 100 %}%</td>
+                                                                {% else %}
+                                                                    <td>{{ choice.answers.all|length }}</td>
+                                                                    <td>{% widthratio choice.answers.all|length question.answers.all|length 100 %}%</td>
+                                                                {% endif %}
+                                                            </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
+                            {% endif %}
+                            <br/>
+                            <hr/>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+
+
+{% endblock %}
+
+{% block pluginjs %}
+    <script type="text/javascript"
+            src="{% static 'assets/global/plugins/datatables/media/js/jquery.dataTables.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'assets/global/plugins/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js' %}"></script>
+{% endblock %}
+
+{% block script %}
+    <script>
+        jQuery(document).ready(function () {
+            $('.choiceTable').dataTable({
+                "order": [[ 2, "desc" ]]
+            });
+            $('.singleTextTable').dataTable({
+                "order": [[ 1, "desc" ]]
+            });
+
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load humanize %}
+{% block title %}
+    Survey List
+{% endblock %}
+
+{% block plugincss %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/global/plugins/datatables/extensions/ColReorder/css/dataTables.colReorder.min.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css' %}"/>
+{% endblock %}
+
+{% block header %}
+    Survey
+{% endblock %}
+
+{% block subheader %}
+    List
+{% endblock %}
+
+{% block breadcrumb %}
+
+    <ul class="page-breadcrumb breadcrumb">
+        <li>
+            <a href="{% url 'home' %}">Home</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li class="active">
+            Survey List
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-blue-hoki ">
+                <i class="icon-layers font-blue-hoki"></i>
+                {% if category %}Current category: {{ category }}
+                {% else %}All Surveys{% endif %}
+            </div>
+            <div class="actions">
+                <a href="javascript:;" class="btn btn-circle btn-default btn-icon-only fullscreen"></a>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="javascript:;" class="alert alert-info alert-borderless form-inline">
+                        <div class="form-group">
+                            Please Choose one of the categories
+                            <select class="form-control" id="form_control_1">
+                                {% for category in categories.all %}
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <button class="btn btn-success">Submit</button>
+                            <div class="form-control-focus">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table  table-hover" id="surveyList">
+                    <thead>
+                    <tr>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Category
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Responses
+                        </th>
+                        <th>
+                            Created Time
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for survey in surveys.all %}
+                        {% if survey.category.name == category.name %}
+                            <tr>
+                                <td>{{ survey.name }}</td>
+                                <td>{{ survey.category }}</td>
+                                <td>{{ survey.description }}</td>
+                                <td>{{ survey.responses.all|length }}</td>
+                                <td>{{ survey.created|naturaltime }}</td>
+                                <td><a class="btn default btn-xs blue-stripe" href="{% url "survey.do" survey.id%}">
+											Do Survey </a></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block pluginjs %}
+    <script type="text/javascript"
+            src="{% static 'assets/global/plugins/datatables/media/js/jquery.dataTables.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'assets/global/plugins/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js' %}"></script>
+{% endblock %}
+
+{% block script %}
+    <script>
+        jQuery(document).ready(function () {
+            $('#surveyList').dataTable({
+                "order": [[ 4, "desc" ]]
+            })
+        });
+    </script>
+{% endblock %}

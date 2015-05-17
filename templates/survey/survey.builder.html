@@ -15,11 +15,6 @@
 {% endblock %}
 
 
-{#    <a href="#surveyEdit" data-toggle="modal" role="button">{{ survey.name }}</a>#}
-
-{#    <div style="margin-top: 2px;"><i class="fa fa-tags fa-fw"></i>Category: {{ survey.category }}</div>#}
-
-
 {% block content %}
     <div class="portlet gren">
         <div class="portlet-title survey-head">
@@ -42,6 +37,11 @@
                     <li>
                         <a href="{% url 'survey.collect' survey.id %}">
                             Collector </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'survey.analyze' survey.id %}">
+                            Analyze
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -102,6 +102,6 @@
     <script>
         jQuery(document).ready(function () {
             surveyBuilder.init();
-        })
+        });
     </script>
 {% endblock %}

@@ -9,7 +9,23 @@
     <form action="{{ request.path }}" method="POST">
         <div class="portlet-body">
             <div>
-                {% bootstrap_form form layout='inline' %}
+                {% for field in form %}
+                    {% if field.label == 'Required' %}
+                        <div class="md-checkbox-list pull-right">
+                            <div class="md-checkbox" style="margin-bottom: 10px;">
+                                <input type="checkbox" id="id_required" name="required" class="md-check">
+                                <label for="id_required">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span>
+                                    Required </label>
+                            </div>
+                        </div>
+                    {% else %}
+                        {% bootstrap_field field %}
+                    {% endif %}
+                {% endfor %}
+                {#                                {% bootstrap_form form layout='inline' %}#}
 
                 <p class="note">Please create your choices for the answers:</p>
 
