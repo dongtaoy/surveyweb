@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView
 from django.views.generic import DetailView
 from django.http.response import HttpResponseForbidden
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.db.transaction import atomic
@@ -139,7 +140,7 @@ class SurveyDoView(SessionWizardView):
 def preview_survey_factory(request, *args, **kwargs):
     survey = Survey.objects.get(id=kwargs['survey'])
     if not (request.user.has_perm('survey.view_survey', survey)):
-        return HttpResponseForbidden()
+        raise PermissionDenied()
 
     ret_form_list = [ResponseForm for i in survey.pages.all()]
 
