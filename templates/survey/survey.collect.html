@@ -90,7 +90,7 @@
                                 {{ collector.get_status_display }}
                             </td>
                             <td>
-                                {{ collector.responses }}
+                                {{ collector.responses.all|length }}
                             </td>
                             <td>
                                 {{ collector.updated }}
@@ -102,63 +102,6 @@
                             </td>
                         </tr>
                         {% endfor %}
-                        <tr>
-                            <td>
-                                Web Link 1
-                            </td>
-                            <td>
-                                OPEN
-                            </td>
-                            <td>
-                                100
-                            </td>
-                            <td>
-                                Sunday, April 12, 2015 11:06 PM
-                            </td>
-                            <td>
-                                <a href="#" class="btn  btn-xs btn-default btn-circle">
-                                    <i class="fa fa-edit"></i>Edit
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Web Link 1
-                            </td>
-                            <td>
-                                OPEN
-                            </td>
-                            <td>
-                                100
-                            </td>
-                            <td>
-                                Sunday, April 12, 2015 11:06 PM
-                            </td>
-                            <td>
-                                <a href="#" class="btn  btn-xs btn-default btn-circle">
-                                    <i class="fa fa-edit"></i>Edit
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Web Link 1
-                            </td>
-                            <td>
-                                OPEN
-                            </td>
-                            <td>
-                                100
-                            </td>
-                            <td>
-                                Sunday, April 12, 2015 11:06 PM
-                            </td>
-                            <td>
-                                <a href="#" class="btn  btn-xs btn-default btn-circle">
-                                    <i class="fa fa-edit"></i>Edit
-                                </a>
-                            </td>
-                        </tr>
 
                         </tbody>
                     </table>
@@ -203,7 +146,7 @@
                                         Embed your survey on your website
                                     </div>
                                 </div>
-                                <a class="more" href="javascript:;">
+                                <a class="more" href="{% url 'collector.create' %}">
                                     Create collector<i class="m-icon-swapright m-icon-white"></i>
                                 </a>
                             </div>
