@@ -292,29 +292,32 @@
                          data-handle-color="#D7DCE2">
                         <ul class="feeds">
                             {% for survey in all_surveys %}
-                            <li>
-                                <div class="col1">
-                                    <div class="cont">
-                                        <div class="cont-col1">
-                                            <div class="label label-sm label-success">
-                                                {{ forloop.counter }}
+                                <li>
+                                    <div class="col1">
+                                        <div class="cont">
+                                            <div class="cont-col1">
+                                                <div class="label label-sm label-success">
+                                                    {{ forloop.counter }}
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="cont-col2 ">
-                                            <div class="desc ">
-                                                {{ survey.name }}  <a class="label label-sm label-info" href="{% url 'survey.do' survey.id %}">
-												Take a survey <i class="fa fa-share"></i>
-												</a>
+                                            <div class="cont-col2">
+                                                <div class="desc ">
+                                                    {{ survey.name }}
+                                                    <a class="label label-sm label-info"
+                                                       href="{% url 'survey.do' survey.id %}">
+                                                        Take a survey <i class="fa fa-share"></i>
+                                                    </a>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col2">
-                                    <div class="date">
-                                        {{ survey.created|date:"d M"|naturalday  }}
+                                    <div class="col2">
+                                        <div class="date">
+                                            {{ survey.created|date:"d M"|naturalday }}
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
                             {% endfor %}
                         </ul>
                     </div>
