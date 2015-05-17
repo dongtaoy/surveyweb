@@ -24,6 +24,8 @@ class DashboardView(TemplateView):
 
         today_responses = filter(lambda res: res.created == datetime.datetime.now(get_current_timezone()), total_responses)
 
+
+
         all_surveys = Survey.objects.all().order_by('created').reverse()
 
         return {"num_total_responses": len(total_responses), "num_today_responses": len(today_responses),
