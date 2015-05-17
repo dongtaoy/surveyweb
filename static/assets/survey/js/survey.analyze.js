@@ -89,7 +89,9 @@ var surveyAnalyze = (function () {
                     cursor: 'pointer',
                     dataLabels: {
                         enabled: true,
-                        format: '{point.percentage:.1f} %',
+                        formatter: function(){
+                            return "Choice " + (this.point.index + 1) + ": " + this.point.percentage + '%';
+                        },
                         style: {
                             color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                         }
