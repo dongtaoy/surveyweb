@@ -118,13 +118,7 @@ class ResponseForm(forms.ModelForm):
 
 
     def save(self, commit=True, **kwargs):
-        user = kwargs.pop('user')
-        response = super(ResponseForm, self).save(commit=False)
-        response.survey = self.page.survey
-        response.interviewee = user
-        response.collector = kwargs.pop('collector')
-        response.save()
-        print response
+        response = kwargs.pop('response')
         for field_name, field_value in self.cleaned_data.iteritems():
             if field_name.startswith("question_"):
                 if field_value != '' and field_value != []:
