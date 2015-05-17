@@ -4,7 +4,7 @@
 
 
 var surveyBuilder = (function () {
-
+    //configure the WYSI text editor
     var WYSIHTML5OPTIONS = {
         toolbar: {
             "html": true,
@@ -30,7 +30,7 @@ var surveyBuilder = (function () {
                 $(this).find("span").attr("class", "");
             });
 
-
+        //adjust the navbar to be at a fixed position while scrolling the screen
         var headerHeight = $('.page-header').height() + $('.survey-head').height();
         var maximumTop = $("#page-create-form > button").offset().top - $('#builder-navbar').height() - 25;
         var navbarAdjust = function () {
@@ -52,15 +52,20 @@ var surveyBuilder = (function () {
 
             }
         };
+
+        //rebind the event 'scroll'
         $(window)
             .off('scroll')
             .on('scroll', navbarAdjust);
     };
 
+
+    //the function of clicking on the navbar item that creates a specific type of question
     var initQuestionCreateAjax = function () {
         $(".nav-pills li a")
             .off('click')
             .on('click', function () {
+                //create a new container for edit if no currently unsaved edit container
                 if ($('.container-edit').length == 0) {
                     var notify = $.notify("Add new question...");
                     var pageNumber = $('#page-select').val();
@@ -69,6 +74,8 @@ var surveyBuilder = (function () {
                     var containerType = $(this).attr('id').substr(0, 2);
                     var url = null;
                     var data = null;
+
+                    //get different urls according to the type of question
                     if (containerType == 'QU') {
                         url = Django.url('question.create');
                         var questionTypeId = $(this).attr('id').replace(/[^\d.]/g, '');
@@ -91,21 +98,24 @@ var surveyBuilder = (function () {
 
                     $.get(url, data)
                         .done(function (data) {
+                            //add question to a new page or append to existing page
                             if (pagePortlet.find('.empty-page').length) {
                                 pagePortlet.find('.page-body').html($(data));
-
                             } else {
                                 pagePortlet.find('.page-body').append(data);
                             }
                             initQuestionPlugin();
 
-                            // bind question save button
+                            // bind submit to question save button
                             $('.container-edit form').submit(function () {
+                                //validate the question text not to be null
                                 if ($(this).find('textarea').val().length <= 0) {
                                     var notify = $.notify("Text field cannot be empty!");
                                     //notify.close();
                                     return false;
                                 }
+
+                                //validate the questions with choices to have at least one choice
                                 var sum = 0;
                                 var choices = $(this).find('input[placeholder="choice"]');
                                 if (choices.length > 0) {
@@ -118,12 +128,14 @@ var surveyBuilder = (function () {
                                         return false;
                                     }
                                 }
-                                $(this).closest('.container-edit').find('a').attr('disabled', true);
-                                $(this).closest('.container-edit').find('button').attr('disabled', true);
+
+                                //disable other button when submitting
+                                $(this).find(':submit').attr('disabled', true);
+                                $(this).find('button').attr('disabled', true);
                                 var notify = $.notify('Saving questions...');
                                 $(this).ajaxSubmit({
                                     success: function (response) {
-
+                                        //successfully created question, switch from edit view to display view
                                         $('.container-edit').remove();
                                         $(pagePortlet).find('.page-body').append(response);
                                         initQuestionAjax();
@@ -132,8 +144,8 @@ var surveyBuilder = (function () {
                                     }
 
                                 });
-                                $(this).closest('.container-edit').find('a').attr('disabled', true);
-                                $(this).closest('.container-edit').find('button').attr('disabled', true);
+
+
                                 notify.close();
                                 return false;
                             });
@@ -145,6 +157,7 @@ var surveyBuilder = (function () {
 
                             notify.close();
                         });
+                    //situation where last question editor is unsaved
                 } else {
                     $.notify({
                         message: "Please save your last question first!"
@@ -159,10 +172,12 @@ var surveyBuilder = (function () {
             });
     };
 
+    //function of editing existing questions by clicking on the 'Edit' buttons
     var initQuestionEditAjax = function () {
         $('.container-display-edit')
             .off('click')
             .on('click', function () {
+                //disable other buttons when event is sent
                 $(this).closest('.container-set').find('a').attr('disabled', true);
                 $(this).closest('.container-set').find('button').attr('disabled', true);
                 var container = $(this).closest("[id^=container-]");
@@ -176,15 +191,18 @@ var surveyBuilder = (function () {
                 }
                 $.get(url)
                     .done(function (data) {
+                        //display the edit view
                         container.closest('.container-set').hide();
                         container.closest('.container-set').after(data);
-                        //.replaceWith(data);
                         initQuestionPlugin();
                         $('.container-edit form').submit(function () {
+                            //validate the question text not to be null
                             if ($(this).find('textarea').val().length <= 0) {
                                 var notify = $.notify("Text field cannot be empty!");
                                 return false;
                             }
+
+                            //validate the questions with choices to have at least one choice
                             var sum = 0;
                             var choices = $(this).find('input[placeholder="choice"]');
                             if (choices.length > 0) {
@@ -197,21 +215,26 @@ var surveyBuilder = (function () {
                                     return false;
                                 }
                             }
-                            //if ($(this).find('input[placeholder="choice"]').val().length<=0){
-                            //    $.notify("Please fill in at least the first choice!");
-                            //    return false;
-                            //}
+
+                            //disable submit buttons when submitting
                             $(this).find(':submit').attr('disabled', true);
+                            $(this).find('button').attr('disabled', true);
+
                             var notify = $.notify('Saving questions...');
                             $(this).ajaxSubmit({
                                 success: function (response) {
                                     container.closest('.container-set').remove();
                                     $('.container-edit').replaceWith(response);
+
                                     initQuestionAjax();
                                     initDisplay();
                                 }
                             });
                             notify.close();
+
+                            container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
+                            container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
+
                             return false;
                         });
 
@@ -220,13 +243,16 @@ var surveyBuilder = (function () {
 
                             $('.container-edit').remove();
                             container.closest('.container-set').show();
-                            container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
-                            container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
+                            ////if cancelled  re-enable the buttons
+                            //container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
+                            //container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
                         });
                     })
+
             })
     };
 
+    //function that moves up the question container
     var initQuestionMoveUp = function () {
         $('.container-move-up')
             .off('click')
@@ -247,21 +273,19 @@ var surveyBuilder = (function () {
                         } else {
                             $.notify(data['content'].split('\n')[1]);
                         }
-                        container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
-                        container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
                     });
 
             });
     };
 
+    //function that moves down the question container
     var initQuestionMoveDown = function () {
         $('.container-move-down')
             .off('click')
             .on('click', function () {
+                //disable other buttons when moving down
                 $(this).closest('.container-set').find('a').attr('disabled', true);
                 $(this).closest('.container-set').find('button').attr('disabled', true);
-                console.log($)
-                console.log('movedown');
                 var container = $(this).closest('[id^=container-]');
                 var containerId = container.attr('id').replace(/[^\d.]/g, '');
                 $.post(Django.url('container.move.down', containerId))
@@ -269,13 +293,14 @@ var surveyBuilder = (function () {
                         if (data['status'] == 200) {
 
                             var order = $(container.closest('.container-set').find('.container-order')).text();
-                            //
+                            //rearrange the container order
                             $(container.closest('.container-set').find('.container-order')).text(parseInt(order) + 1);
                             $(container.closest('.container-set').next().find('.container-order')).text(order);
                             container.closest('.container-set').insertAfter(container.closest('.container-set').next());
                         } else {
                             $.notify(data['content'].split('\n')[1]);
                         }
+                        //re-enable the buttons
                         container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
                         container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
                     });
@@ -283,15 +308,17 @@ var surveyBuilder = (function () {
             });
     };
 
+    //function that deletes a question
     var initQuestionDelete = function () {
         $('.container-display-delete')
             .off('click')
             .on('click', function () {
+                //disable other buttons when deleting
                 $(this).closest('.container-set').find('a').attr('disabled', true);
                 $(this).closest('.container-set').find('button').attr('disabled', true);
-                console.log('click');
                 var container = $(this).closest('.container-set');
                 var containerid = $(this).closest('[id^=container-]').attr('id').replace(/[^\d.]/g, '');
+                //pop out the confirmation modal window
                 bootbox.dialog({
                     title: "Delete Confirmation",
                     message: "Are you sure?",
@@ -300,6 +327,7 @@ var surveyBuilder = (function () {
                             label: "Cancel",
                             className: "btn-default",
                             callback: function () {
+                                //if cancelled, re-enable the buttons
                                 container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
                                 container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
                             }
@@ -310,10 +338,12 @@ var surveyBuilder = (function () {
                             callback: function () {
                                 var notify = $.notify('Deleting....');
                                 $.post(Django.url('container.delete', containerid))
+                                    //deletion finished
                                     .success(function (response) {
                                         if (response['status'] == 200) {
                                             var page = container.closest('[id^=page-no-]');
                                             container.remove();
+                                            //re-set container order after one got deleted
                                             page.find('.container-order').each(function (i) {
                                                 $(this).text(i + 1);
                                             });
@@ -322,6 +352,7 @@ var surveyBuilder = (function () {
                                             notify.update('type', "danger");
                                             notify.update('message', "Something went wrong.... Please try refreshing your browser.");
                                         }
+                                        //re-enable the buttons
                                         container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
                                         container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
                                     })
@@ -332,6 +363,7 @@ var surveyBuilder = (function () {
             });
     };
 
+    //some plugin initializations
     var initQuestionPlugin = function () {
         $('.container-edit').attr('tabindex', -1).focus();
         $('.container-edit').find('textarea').wysihtml5(WYSIHTML5OPTIONS);
@@ -345,14 +377,14 @@ var surveyBuilder = (function () {
         initQuestionDelete();
     };
 
-
+    //function that creates a page
     var initPageCreateAjax = function () {
 
         var notify;
         $('#page-create-form')
             .off('submit')
             .on('submit', function () {
-
+                //disable buttons when new page being created
                 $(this).find(':submit').attr('disabled', true);
                 $(this).ajaxSubmit({
                     beforeSubmit: function () {
@@ -360,24 +392,25 @@ var surveyBuilder = (function () {
                     },
                     success: function (response) {
                         notify.close();
+                        //insert a new page div
                         $(response).insertBefore('#page-create-form');
-                        //console.
+                        //re-enable buttons
                         $('#page-create-form').find(':submit').attr('disabled', false);
                         initPageDeleteAjax();
                         initPageEditAjax();
                         initDisplay();
-                        //console.log($('[id^=page-no-]').last().position().top);
-                        //$('[id^=page-no-]').last().attr('tabindex', -1).focus();
                     }
                 });
                 return false
             });
     };
 
+    //function that deletes a page
     var initPageDeleteAjax = function () {
         $('.actions a.page-delete')
             .off('click')
             .on('click', function () {
+                //prevent user from deleting the only page left
                 if ($('[id^=page-no-]').length == 1) {
                     $.notify({
                         message: 'Cannot delete the last page!'
@@ -386,12 +419,13 @@ var surveyBuilder = (function () {
                     });
                     return;
                 }
+                //disable buttons
                 $(this).closest('.portlet-title').find('a').attr('disabled', true);
                 $(this).closest('.portlet-title').find('button').attr('disabled', true);
                 var pagePortlet = $(this).closest('[id^=page-no-]');
                 var pageId = pagePortlet.attr('id').replace(/[^\d.]/g, '');
                 var pageOrder = pagePortlet.find('.page-order').val();
-
+                //pop out confirmation window
                 bootbox.dialog({
                     title: "Delete Confirmation",
                     message: "Are you sure?",
@@ -401,20 +435,16 @@ var surveyBuilder = (function () {
                             className: "btn-default",
                             callback: function () {
                                 pagePortlet.find('.actions > a').attr('disabled', false);
-                                //$(this).closest('.portlet-title').find('a').attr('disabled', false);
-                                //$(this).closest('.portlet-title').find('button').attr('disabled', false);
                             }
                         },
                         deleteBtn: {
                             label: "Confirm",
                             className: "btn-danger",
                             callback: function () {
-                                //pagePortlet.find('.actions > a').attr('disabled', true);
                                 // Post ajax request to delete a page
                                 var notify = $.notify("Deleting page...");
                                 $.post(Django.url('page.delete', pageId), function (response) {
                                     // if successfully deleted a page
-
                                     if (response['status'] == 200) {
 
                                         // remove the current portlet
@@ -440,19 +470,19 @@ var surveyBuilder = (function () {
             });
     };
 
+    //function that moves a page up or down
     var initPageEditAjax = function () {
         $('.page-edit')
             .off('click')
             .on('click', function () {
-                //$(this).closest('.portlet-title').find('a').attr('disabled', true);
-                //$(this).closest('.portlet-title').find('button').attr('disabled', true);
-
                 var notify = $.notify("Moving pages...");
                 var pagePortlet = $(this).closest('[id^=page-no-]');
                 var pageId = pagePortlet.attr('id').replace(/[^\d.]/g, '');
                 var pageOrder = pagePortlet.find('.page-order').val();
-                pagePortlet.find('.actions > a').attr('disabled', true);
 
+                //diable buttons when moving
+                pagePortlet.find('.actions > a').attr('disabled', true);
+                //determine direction of movement
                 var isUp = false;
                 if (/up/.test($(this).text().toLowerCase())) {
                     isUp = true;
@@ -463,6 +493,7 @@ var surveyBuilder = (function () {
                 }
                 $.post(Django.url('page.edit', pageId), {"page": pageId, "order": pageOrder})
                     .done(function (response) {
+                        //successfully moved
                         if (response['status'] == 200) {
                             $(pagePortlet).find('.caption-subject.bold.uppercase.page').text('Page ' + pageOrder);
                             $(pagePortlet).find('.page-order').val(pageOrder);
@@ -482,6 +513,8 @@ var surveyBuilder = (function () {
                             var error = response['content'].split('\n')[1];
                             notify.update('message', error);
                         }
+
+                        //re-enable the buttons
                         pagePortlet.find('.actions > a').attr('disabled', false);
 
 
@@ -489,7 +522,7 @@ var surveyBuilder = (function () {
             });
     };
 
-
+    //initialize the builder
     var initDisplay = function () {
         initNavbar();
         initPageSelect();
@@ -499,6 +532,7 @@ var surveyBuilder = (function () {
         $(window).scroll();
     };
 
+    //function that determines page number of each page according to their position
     var initPageNumDisplay = function () {
         var currentTop = $(document).scrollTop();
 
@@ -525,6 +559,7 @@ var surveyBuilder = (function () {
             })
     };
 
+    //function used to jump to selected page from navbar
     var initPageDirect = function () {
         var pageNumber = $("#survey-pages").children("div").length;
         var toleranceHeight = 25;
@@ -540,6 +575,7 @@ var surveyBuilder = (function () {
         });
     };
 
+    //init choices in page navigator in navbar
     var initPageSelect = function () {
         var pageNumber = $("#survey-pages").children("div").length;
         $("#page-select").find('option').remove();
@@ -549,6 +585,7 @@ var surveyBuilder = (function () {
         $("#page-select").val(pageNumber);
     };
 
+    //init selectable questions in navbar
     var initQuestionTool = function () {
         $("[id^='container-']")
             .off('mouseenter')
