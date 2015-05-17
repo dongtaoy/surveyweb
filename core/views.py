@@ -26,6 +26,7 @@ class DashboardView(TemplateView):
 
         today_responses = []
 
+
         for response in total_responses:
             if response.created.date() > (datetime.datetime.now(tz=get_current_timezone()) - datetime.timedelta(days=1)).date():
                 today_responses.append(response)
