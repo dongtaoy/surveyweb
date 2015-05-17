@@ -6,7 +6,7 @@
             <span class="caption-subject bold uppercase">Checkbox Editor</span>
         </div>
     </div>
-    <form action="{{ request.path }}" method="POST">
+    <form action="{{ request.path }}" method="POST" novalidate="novalidate">
         <div class="portlet-body">
             <div>
                 {% for field in form %}

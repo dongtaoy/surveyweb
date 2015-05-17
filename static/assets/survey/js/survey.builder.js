@@ -106,6 +106,16 @@ var surveyBuilder = (function () {
                                     //notify.close();
                                     return false;
                                 }
+                                var sum = 0;
+                                var choices = $(this).find('input[placeholder="choice"]');
+                                $(choices).each(function () {
+                                    sum += $(this).val().length
+                                });
+
+                                if (sum <= 0) {
+                                    $.notify("Must fill in at least one choice!");
+                                    return false;
+                                }
                                 $(this).closest('.container-edit').find('a').attr('disabled', true);
                                 $(this).closest('.container-edit').find('button').attr('disabled', true);
                                 var notify = $.notify('Saving questions...');
@@ -171,9 +181,22 @@ var surveyBuilder = (function () {
                         $('.container-edit form').submit(function () {
                             if ($(this).find('textarea').val().length <= 0) {
                                 var notify = $.notify("Text field cannot be empty!");
-                                notify.close();
                                 return false;
                             }
+                            var sum = 0;
+                            var choices = $(this).find('input[placeholder="choice"]');
+                            $(choices).each(function () {
+                                sum += $(this).val().length
+                            });
+
+                            if (sum <= 0) {
+                                $.notify("Must fill in at least one choice!");
+                                return false;
+                            }
+                            //if ($(this).find('input[placeholder="choice"]').val().length<=0){
+                            //    $.notify("Please fill in at least the first choice!");
+                            //    return false;
+                            //}
                             $(this).find(':submit').attr('disabled', true);
                             var notify = $.notify('Saving questions...');
                             $(this).ajaxSubmit({
