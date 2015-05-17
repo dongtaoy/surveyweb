@@ -2,6 +2,7 @@
  * Created by dongtaoy on 5/17/15.
  */
 var surveyAnalyze = (function () {
+
     var initCharts = function () {
         $('[id^=chart]').each(function () {
             var type = $(this).attr('id').split('_')[1],
@@ -27,7 +28,7 @@ var surveyAnalyze = (function () {
         })
     };
 
-    var BAR_CHART_OPTIONS = function (categories ,data) {
+    var BAR_CHART_OPTIONS = function (categories, data) {
         return {
             chart: {
                 type: 'bar'
@@ -59,9 +60,9 @@ var surveyAnalyze = (function () {
                     }
                 }
             },
-            tooltip :{
-                formatter:function(){
-                    return '<b>'+ this.point.name +'</b>: ' +' %'
+            tooltip: {
+                formatter: function () {
+                    return 'Total responses for choice <b>' + this.point.category + '</b>: <strong>' + this.point.y +'</strong>';
                 }
             },
             series: [{
@@ -93,6 +94,11 @@ var surveyAnalyze = (function () {
                             color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                         }
                     }
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    return 'Total responses for choice <b>' + this.point.name + '</b>: <strong>' + this.point.percentage + '%' + '</strong>';
                 }
             },
             series: [{

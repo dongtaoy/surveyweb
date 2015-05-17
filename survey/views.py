@@ -3,6 +3,7 @@ from formtools.wizard.views import SessionWizardView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView
 from django.views.generic import DetailView
+from django.http.response import HttpResponseForbidden
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.db.transaction import atomic
@@ -136,7 +137,11 @@ class SurveyDoView(SessionWizardView):
 
 
 def preview_survey_factory(request, *args, **kwargs):
-    ret_form_list = [ResponseForm for i in Survey.objects.get(id=kwargs['survey']).pages.all()]
+    survey = Survey.objects.get(id=kwargs['survey'])
+    if not (request.user.has_perm('survey.view_survey', survey)):
+        return HttpResponseForbidden()
+
+    ret_form_list = [ResponseForm for i in survey.pages.all()]
 
     class ReturnClass(SurveyPreviewView):
         form_list = ret_form_list
