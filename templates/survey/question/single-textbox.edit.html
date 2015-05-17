@@ -7,7 +7,7 @@
             <span class="caption-subject bold uppercase"> Single Question Editing</span>
         </div>
     </div>
-    <form action="{{ request.path }}" method="POST">
+    <form action="{{ request.path }}" method="POST" novalidate="novalidate">
         <div class="portlet-body">
             {% for field in form %}
                     {% if field.label == 'Required' %}

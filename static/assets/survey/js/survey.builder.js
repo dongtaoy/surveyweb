@@ -101,10 +101,9 @@ var surveyBuilder = (function () {
 
                             // bind question save button
                             $('.container-edit form').submit(function () {
-
                                 if ($(this).find('textarea').val().length<=0){
                                     var notify = $.notify("Text field cannot be empty!");
-                                    notify.close();
+                                    //notify.close();
                                     return false;
                                 }
                                 $(this).closest('.container-edit').find('a').attr('disabled', true);
