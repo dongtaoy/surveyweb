@@ -4,29 +4,47 @@
 var surveyAnalyze = (function () {
     var initCharts = function () {
         $('[id^=chart]').each(function () {
-            var type = $(this).attr('id').split('_')[1];
-            var id = $(this).attr('id').split('_')[2];
-            var chart = $(this);
-            $.getJSON(Django.url('question.data', id), {'type': type})
-                .success(function (response) {
-                    if (response['status'] == 200) {
-                        if (type == 'SC') {
-                            var options = PIE_CHART_OPTIONS(response['content']);
-                            chart.highcharts(options);
-                        }
-                        if (type == 'MC') {
-                            var categories = $('#question_table_'+id);
-                            console.log(categories);
-                            chart.highcharts(BAR_CHART_OPTIONS(response['content']));
-                        }
-                    }
+            var type = $(this).attr('id').split('_')[1],
+                id = $(this).attr('id').split('_')[2],
+                chart = $(this),
+                table = $('#question_table_' + id + ' tbody tr'),
+                data = [];
+            if (type != 'checkbox') {
+                $(table).each(function () {
+                    data.push([$(this).find('td:first').text(), parseInt($(this).find('td:last').text())]);
                 });
+                chart.highcharts(PIE_CHART_OPTIONS(data));
+            }
+            else {
+                var categories = [];
+                $(table).each(function () {
+                    categories.push($(this).find('td:first').text());
+                    data.push(parseInt($(this).find('td:nth-child(2)').text()));
+                });
+                chart.highcharts(BAR_CHART_OPTIONS(categories, data));
+            }
+
+
+            //$.getJSON(Django.url('question.data', id), {'type': type})
+            //    .success(function (response) {
+            //        if (response['status'] == 200) {
+            //            if (type == 'SC') {
+            //                var options = PIE_CHART_OPTIONS(response['content']);
+            //                chart.highcharts(options);
+            //            }
+            //            if (type == 'MC') {
+            //                var categories = $('#question_table_'+id);
+            //                console.log(categories);
+            //                chart.highcharts(BAR_CHART_OPTIONS(response['content']));
+            //            }
+            //        }
+            //    });
 
 
         })
     };
 
-    var BAR_CHART_OPTIONS = function (data) {
+    var BAR_CHART_OPTIONS = function (categories ,data) {
         return {
             chart: {
                 type: 'bar'
@@ -35,13 +53,14 @@ var surveyAnalyze = (function () {
                 text: ''
             },
             xAxis: {
-                categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+                categories: categories,
                 title: {
                     text: null
                 }
             },
             yAxis: {
                 min: 0,
+                minTickInterval: 1,
                 title: {
                     text: 'Number of responses',
                     align: 'high'
@@ -58,8 +77,8 @@ var surveyAnalyze = (function () {
                 }
             },
             series: [{
-                name: ' ',
-                data: [107, 31, 635, 203, 2]
+                name: 'responses',
+                data: data
             }]
         }
     };

@@ -60,23 +60,25 @@
                     // last child element of the form's container:
 
                     //row.append('<a class="' + options.deleteCssClass + '" href="javascript:void(0)">' + options.deleteText +'</a>');
-                    //console.log($(row));
                 }
                 row.find('.delete-row').click(function () {
                     var row = $(this).parents('.' + options.formCssClass),
                         del = row.find('input:hidden[id $= "-DELETE"]'),
                         buttonRow = row.siblings("a." + addCssSelector + ', .' + options.formCssClass + '-add'),
-                        forms;
+                        forms,
+                        hiddenForm = $('input:hidden[id$=text]').length;
                     if (del.length) {
                         // We're dealing with an inline formset.
                         // Rather than remove this form from the DOM, we'll mark it as deleted
                         // and hide it, then let Django handle the deleting:
-
-                        del.val('on');
-                        row.hide();
-                        forms = $('.' + options.formCssClass).not(':hidden');
+                        //if()
+                        if (totalForms.val() - hiddenForm != 1) {
+                            del.val('on');
+                            row.hide();
+                            forms = $('.' + options.formCssClass).not(':hidden');
+                        }
                     } else {
-                        if (totalForms.val() != 1) {
+                        if (totalForms.val() - hiddenForm != 1) {
                             row.remove();
                             // Update the TOTAL_FORMS count:
                             forms = $('.' + options.formCssClass).not('.formset-custom-template');
@@ -84,23 +86,25 @@
                         }
                     }
                     if (forms) {
+                        changeFormOrder = [];
                         for (var i = 0, formCount = forms.length; i < formCount; i++) {
                             // Apply `extraClasses` to form rows so they're nicely alternating:
                             applyExtraClasses(forms.eq(i), i);
                             if (!del.length) {
                                 // Also update names and IDs for all child controls (if this isn't
                                 // a delete-aeq(ible inline formset) so they remain in sequence:
-                                if(i == 0 ){
-                                    forms.eq(i).find('[type=text]').attr('required', true);
-                                }
-                                forms.eq(i).find('.input-group-addon').text((i + 1) + '.');
                                 forms.eq(i).find(childElementSelector).each(function () {
                                     updateElementIndex($(this), options.prefix, i);
                                 });
-                            }else{
-                                forms.eq(i).find('.input-group-addon').text((i + 1) + '.');
+                            }
+                            if (forms.eq(i).is(':visible')) {
+                                changeFormOrder.push(forms.eq(i));
                             }
                         }
+                        $(changeFormOrder).each(function (i) {
+                            $(this).find('.input-group-addon').text((i+1)+'.')
+
+                        });
                     }
                     // Check if we need to show the add button:
                     if (buttonRow.is(':hidden') && showAddButton()) buttonRow.show();
@@ -186,12 +190,12 @@
             addButton.click(function () {
                 var formCount = parseInt(totalForms.val()),
                     row = options.formTemplate.clone(true).removeClass('formset-custom-template'),
-                    buttonRow = $($(this).parents('tr.' + options.formCssClass + '-add').get(0) || this);
+                    buttonRow = $($(this).parents('tr.' + options.formCssClass + '-add').get(0) || this),
+                    hiddenForm = $('input:hidden[id$=text]').length;
                 applyExtraClasses(row, formCount);
                 row.insertBefore(buttonRow).show();
                 row.find(childElementSelector).each(function () {
-                    //console.log(formCount);
-                    row.find('.input-group-addon').text((formCount + 1) + '.');
+                    row.find('.input-group-addon').text((formCount - hiddenForm + 1) + '.');
                     updateElementIndex($(this), options.prefix, formCount);
                 });
                 totalForms.val(formCount + 1);
