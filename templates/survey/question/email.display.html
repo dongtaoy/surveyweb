@@ -5,9 +5,14 @@
         <br/>
 
         <form>
-            <div class="form-group form-md-line-input">
-                <input type="text" class="form-control" placeholder="Answer Here"/>
-                <label for="form_control_1">Please answers the question</label>
+            <div class="form-group form-md-line-input has-info">
+                <div class="input-group">
+											<span class="input-group-addon">
+											<i class="fa fa-envelope"></i>
+											</span>
+                    <input type="text" class="form-control" placeholder="george@test.com" readonly/>
+                    <label for="form_control_1">Email:</label>
+                </div>
             </div>
         </form>
         <div class="edit-btn-group" id="edit-btn-group-{{ question.id }}" style="visibility: hidden">

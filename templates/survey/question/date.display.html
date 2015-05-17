@@ -5,9 +5,14 @@
         <br/>
 
         <form>
-            <div class="form-group form-md-line-input">
-                <input type="text" class="form-control" placeholder="Answer Here" readonly/>
-                <label for="form_control_1">Please answer the question</label>
+            <div class="form-group form-md-line-input has-info">
+                <div class="input-group">
+											<span class="input-group-addon">
+											<i class="fa fa-calendar"></i>
+											</span>
+                    <input type="text" class="form-control" placeholder="2011-02-22" readonly/>
+                    <label for="form_control_1">Date:</label>
+                </div>
             </div>
         </form>
         <div class="edit-btn-group" id="edit-btn-group-{{ question.id }}" style="visibility: hidden">
