@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>SurveyWeb | {% block title %} {% endblock %}</title>
+    <title>SurveyWeb | {{ survey.name }}</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -22,7 +22,7 @@
     <div class="navbar" role="navigation">
         <div class="navbar-header navbar-fixed-top  navbar-default">
             <div class="container">
-                <p href="" class="navbar-brand">{{ survey.name }} - Preview</p>
+                <p href="" class="navbar-brand">{{ survey.name }}</p>
             </div>
         </div>
     </div>
