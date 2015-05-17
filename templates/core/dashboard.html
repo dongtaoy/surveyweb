@@ -292,6 +292,7 @@
                          data-handle-color="#D7DCE2">
                         <ul class="feeds">
                             {% for survey in all_surveys %}
+                                {% if survey.collectors.all.0 %}
                                 <li>
                                     <div class="col1">
                                         <div class="cont">
@@ -317,6 +318,7 @@
                                         </div>
                                     </div>
                                 </li>
+                                {% endif %}
                             {% endfor %}
                         </ul>
                     </div>
