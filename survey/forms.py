@@ -13,25 +13,6 @@ class SurveyForm(forms.ModelForm):
         exclude = ['creator', 'status']
 
 
-class IgnoreSameValueInlineFormSet(BaseInlineFormSet):
-    def clean(self):
-        super(IgnoreSameValueInlineFormSet, self).clean()
-        print 'in'
-        values = set()
-        for form in self.forms:
-            if 'text' in form.cleaned_data.keys():
-                print form.cleaned_data['text']
-                # if form.cleaned_data['text'] in values:
-                # del form
-                values.add(form.cleaned_data['text'])
-
-                # for form in self.forms:
-                # if 'text' in form.cleaned_data.keys():
-                # print form.cleaned_data['text']
-                #         if form.cleaned_data['text'] not in values:
-                #             del form
-
-
 ChoiceFormSet = inlineformset_factory(QuestionContainer,
                                       Choice,
                                       fields=('text', ),
