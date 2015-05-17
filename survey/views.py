@@ -148,8 +148,13 @@ class SurveyDoView(SessionWizardView):
     template_name = 'survey/survey.do.html'
 
     def done(self, form_list, **kwargs):
+        from django.contrib.auth.models import User
         collector = ResponseCollector.objects.get(uuid=self.kwargs['collectuuid'])
-        response = Response.objects.create(survey=collector.survey, interviewee=self.request.user, collector=collector)
+        if not self.request.user.is_authenticated():
+            user = User.objects.get(id=-1)
+        else:
+            user = self.request.user
+        response = Response.objects.create(survey=collector.survey, interviewee=user, collector=collector)
         for form in form_list:
             form.save(user=self.request.user, response=response)
         return redirect(reverse_lazy('home'))

@@ -3,11 +3,12 @@
  */
 var surveyDetail = (function () {
 
-
+    //function that deletes a whole survey
     var initSurveyDeleteAjax = function () {
         $('.deleteSurvey')
             .off('click')
             .on('click', function () {
+                //pop out a confirmation window
                 bootbox.dialog({
                     title: "Delete Confirmation",
                     message: "Are you sure?",
@@ -28,7 +29,7 @@ var surveyDetail = (function () {
             });
     };
 
-
+    //function that inits the chart in the summary(detail) page
     var initBarChart = function (chart_data) {
         $('#trend_chart').highcharts({
             title: {

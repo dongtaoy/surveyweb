@@ -22,7 +22,10 @@ class DashboardView(TemplateView):
             itertools.chain.from_iterable(map(
                 lambda s: getattr(s, "responses").all(), self.request.user.surveys.all())))
 
-        today_responses = filter(lambda res: res.created == datetime.datetime.now(get_current_timezone()), total_responses)
+        today_responses = map(lambda x:x.created, total_responses)
+        print today_responses
+
+
 
         all_surveys = Survey.objects.all().order_by('created').reverse()
 
