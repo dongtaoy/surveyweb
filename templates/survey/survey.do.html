@@ -56,9 +56,9 @@
                     <span style="font-size: 17px;"><b>Help
                         Text {{ forloop.counter }}: </b> {{ field.label | safe }}</span>
                 {% else %}
-                    <span style="font-size: 17px;"><b>Question {{ forloop.counter }}: </b> {% bootstrap_label field.label %}</span>
+                    <span style="font-size: 17px;"><b>Question {{ forloop.counter }}: </b> </span>
                 {% endif %}
-                {% bootstrap_field field layout='inline' %}
+                {% bootstrap_field field %}
                 <hr/>
             {% endfor %}
 

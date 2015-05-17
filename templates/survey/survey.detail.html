@@ -141,7 +141,7 @@
 
                         <p>The data trends chart shows you when you received responses to your survey.</p>
 
-                        <div id="chart_1_1" class="chart"></div>
+                        <div id="trend_chart"></div>
                     </div>
                     <!-- END DROPDOWNS PORTLET-->
                 </div>
@@ -150,13 +150,11 @@
     </div>
 
 
-
 {% endblock %}
 
 {% block pluginjs %}
-    <script src="{% static 'assets/global/plugins/flot/jquery.flot.min.js' %}"></script>
 
-
+    <script src="{% static 'assets/global/plugins/highcharts/highcharts.js' %}"></script>
     <script src="{% static 'assets/global/plugins/bootbox/bootbox.min.js' %}"></script>
     <script src="{% static 'assets/survey/js/survey.detail.js' %}"></script>
     {% django_js jquery=false i18n=false %}
@@ -165,7 +163,8 @@
 {% block script %}
     <script>
         jQuery(document).ready(function () {
-            surveyDetail.init();
+            var chart_data = {{ survey.get_num_responses | safe }};
+            surveyDetail.init(chart_data);
 
         });
     </script>

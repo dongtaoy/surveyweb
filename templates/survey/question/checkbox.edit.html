@@ -11,9 +11,10 @@
             <div>
                 {% for field in form %}
                     {% if field.label == 'Required' %}
+
                         <div class="md-checkbox-list pull-right">
                             <div class="md-checkbox" style="margin-bottom: 10px;">
-                                <input type="checkbox" id="id_required" name="required" class="md-check">
+                                {{ field }}
                                 <label for="id_required">
                                     <span></span>
                                     <span class="check"></span>

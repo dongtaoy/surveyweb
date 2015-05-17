@@ -2,6 +2,7 @@ __author__ = 'dongtao'
 from django.db import models
 from django.contrib.auth.models import User, Permission, ContentType
 from guardian.shortcuts import assign_perm
+from django.utils.timezone import get_current_timezone
 
 
 class Category(models.Model):
@@ -49,6 +50,21 @@ class Survey(models.Model):
 
         return list(itertools.chain.from_iterable(map(lambda p: getattr(p, 'containers').all(), self.pages.all())))
 
+    def get_num_responses(self, days=30):
+        import datetime
+        import calendar
+        import pytz
+
+        data = []
+        for day in reversed(range(0, days)):
+            temp_date = datetime.datetime.now(tz=pytz.UTC) - datetime.timedelta(days=day)
+            print self.responses.filter(created__startswith=temp_date.date())
+            data.append(
+                [calendar.timegm(temp_date.timetuple()) * 1000,
+                 len(self.responses.filter(created__startswith=temp_date.date()))])
+
+        return data
+
 
 class Page(models.Model):
     title = models.CharField(max_length=50, null=False, blank=False, default='Add a title')
@@ -92,7 +108,7 @@ class Container(models.Model):
         ordering = ['order']
 
     # def get_name(self):
-    #     pass
+    # pass
 
     def has_change_permission(self, user):
         if self.type == Container.TEXT:
@@ -112,7 +128,6 @@ class Container(models.Model):
         if self.order is None:
             self.order = self.page.containers.count() + 1
         super(Container, self).save(*args, **kwargs)
-
 
 
 class ImageContainer(Container):
@@ -150,8 +165,6 @@ class QuestionType(models.Model):
 
     class Meta:
         ordering = ['order']
-
-
 
 
     def get_name(self):
@@ -236,7 +249,6 @@ class AnswerBase(models.Model):
     type = models.CharField(choices=choices, max_length=2, null=False, blank=False, default=TEXT)
 
 
-
 class AnswerText(AnswerBase):
     text = models.TextField(null=False, blank=False)
 
@@ -247,7 +259,6 @@ class AnswerChoice(AnswerBase):
 
 class AnswerCheck(AnswerBase):
     choices = models.ManyToManyField(Choice, related_name='checkanswers')
-
 
 
 class AnswerElo(AnswerBase):

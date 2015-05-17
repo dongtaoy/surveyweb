@@ -4,11 +4,10 @@
 var surveyDetail = (function () {
 
 
-
     var initSurveyDeleteAjax = function () {
         $('.deleteSurvey')
             .off('click')
-            .on('click', function(){
+            .on('click', function () {
                 bootbox.dialog({
                     title: "Delete Confirmation",
                     message: "Are you sure?",
@@ -30,64 +29,52 @@ var surveyDetail = (function () {
     };
 
 
-    var initBarChart = function () {
-        // bar chart:
-        var data = GenerateSeries(0);
+    var initBarChart = function (chart_data) {
+        $('#trend_chart').highcharts({
+            title: {
+                text: ''
+            },
 
-        function GenerateSeries(added) {
-            var data = [];
-            var start = 100 + added;
-            var end = 200 + added;
-
-            for (i = 1; i <= 20; i++) {
-                var d = Math.floor(Math.random() * (end - start + 1) + start);
-                data.push([i, d]);
-                start++;
-                end++;
-            }
-
-            return data;
-        }
-
-        var options = {
-            series: {
-                bars: {
-                    show: true
+            xAxis: {
+                type: 'datetime',
+                title: {
+                    text: 'Date'
                 }
             },
-            bars: {
-                barWidth: 0.8,
-                lineWidth: 0, // in pixels
-                shadowSize: 0,
-                align: 'left'
+
+            yAxis: {
+                title: {
+                    text: 'number of Responses'
+                },
+                tickInterval:1,
+                min:0
+
             },
 
-            grid: {
-                tickColor: "#eee",
-                borderColor: "#eee",
-                borderWidth: 1
-            }
+            tooltip: {
+                crosshairs: true,
+                shared: true,
+                xDateFormat: '%A, %Y-%m-%d'
+            },
+
+            legend: {
+                enabled: false
+            },
+
+            series: [{
+                name: 'responses',
+                data: chart_data
+            }]
+        })
 
 
-        };
-
-        if ($('#chart_1_1').size() !== 0) {
-            $.plot($("#chart_1_1"), [{
-                data: data,
-                lines: {
-                    lineWidth: 1
-                },
-                shadowSize: 0
-            }], options);
-        }
     };
 
 
     return {
-        init: function () {
+        init: function (chart_data) {
             initSurveyDeleteAjax();
-
-            initBarChart()
+            initBarChart(chart_data)
         }
     }
 

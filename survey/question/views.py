@@ -1,7 +1,9 @@
 __author__ = 'dongtaoy'
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.http import HttpResponse
 from django.shortcuts import render
+from django.http.response import HttpResponseForbidden
+from django_ajax.decorators import ajax
+
 from survey.models import QuestionContainer, QuestionType
 from survey.forms import QuestionForm, ChoiceFormSet
 
@@ -92,3 +94,16 @@ class QuestionUpdateView(UpdateView):
         return render(self.request, question.questiontype.get_display_template_name(), {'question': question})
 
 
+@ajax
+def question_data(request, question_pk=None):
+    question = QuestionContainer.objects.get(id=question_pk)
+    if not question.has_change_permission(request.user):
+        return HttpResponseForbidden()
+    data = []
+    if request.GET['type'] == 'SC':
+        for choice in question.choices.all():
+            data.append([choice.text, len(choice.answers.all())*1.0 / len(question.answers.all()) * 100])
+    elif request.GET['type'] == 'MC':
+        for choice in question.choices.all():
+            data.append([choice.text, len(choice.checkanswers.all())*1.0 / len(question.answers.all()) * 100])
+    return data

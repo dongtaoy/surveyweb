@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load js %}
 {% block title %}
     Survey Analysis
 {% endblock %}
@@ -61,7 +62,6 @@
                         {% for container in page.containers.all %}
                             {% if container.type == 'QU' %}
                                 {% with container.questioncontainer as question %}
-
                                     {% if question.questiontype.name == "Single Textbox" %}
                                         <div>
                                             <h2 style="text-align: center;">
@@ -100,6 +100,7 @@
                                             </div>
                                         </div>
                                     {% else %}
+
                                         <div>
                                             <h2 style="text-align: center;">
                                                 <b>Question {{ question.order }}: {{ question.question|safe }}</b></h2>
@@ -109,11 +110,11 @@
 
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <div id="chart_1_2" class="chart">
+                                                    <div id="chart_{{ question.answers.first.type }}_{{ question.id }}" class="chart">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <table class="table  table-hover" id="sample_6">
+                                                    <table class="table  table-hover" id="question_table_{{ question.id }}">
                                                         <thead>
                                                         <tr>
                                                             <th>
@@ -154,7 +155,6 @@
             </div>
         {% endfor %}
     </div>
-    </div>
 
 
 {% endblock %}
@@ -166,14 +166,18 @@
             src="{% static 'assets/global/plugins/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js' %}"></script>
     <script type="text/javascript"
             src="{% static 'assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js' %}"></script>
-    <script src="{% static 'assets/admin/pages/scripts/charts-flotcharts.js' %}"></script>
-    <script src="{% static 'assets/global/plugins/flot/jquery.flot.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'assets/global/plugins/highcharts/highcharts.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'assets/survey/js/survey.analyze.js' %}"></script>
+    {% django_js jquery=false i18n=false %}
 {% endblock %}
 
 {% block script %}
     <script>
         jQuery(document).ready(function () {
-            $('.table').dataTable();
+            $('.table').dataTable()
+            surveyAnalyze.init();
         });
     </script>
 {% endblock %}

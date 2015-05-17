@@ -13,7 +13,7 @@
                     {% if field.label == 'Required' %}
                         <div class="md-checkbox-list pull-right">
                             <div class="md-checkbox">
-                                <input type="checkbox" id="id_required" name="required" class="md-check">
+                                {{ field }}
                                 <label for="id_required">
                                     <span></span>
                                     <span class="check"></span>
@@ -30,11 +30,13 @@
             <br/>
         </div>
         <div class="portlet-footer">
+            <div class="row">
+                <br>
+            </div>
             <div class="row" style="margin: 0px;">
                 <div class="pull-right">
-                    {% buttons submit='OK' layout='inline' %}
-                        <button class="btn btn-warning cancel" type="button">Cancel</button>
-                    {% endbuttons %}
+                    <button class="btn btn-success" type="submit">Save</button>
+                    <button class="btn btn-warning cancel" type="button">Cancel</button>
                 </div>
             </div>
         </div>
