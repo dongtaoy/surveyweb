@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.db.transaction import atomic
 from guardian.mixins import PermissionRequiredMixin
-from survey.models import Survey, QuestionType, Page, Response, Category
+from survey.models import Survey, QuestionType, Page, ResponseCollector, Category
 from survey.forms import SurveyForm, ResponseForm
 
 
@@ -92,11 +92,18 @@ class SurveyCollectView(PermissionRequiredMixin, DetailView):
     raise_exception = True
 
     def get_object(self, queryset=None):
+        import uuid
         object = super(SurveyCollectView, self).get_object(queryset)
         if object.status != Survey.OPEN:
             object.status = Survey.OPEN
             object.save()
+        if len(object.collectors.all()) == 0:
+            ResponseCollector.objects.create(survey=object,
+                                             status=ResponseCollector.OPEN,
+                                             name="Web collector 1",
+                                             uuid=str(uuid.uuid4()))
         return object
+
 
 
 class SurveyPreviewView(SessionWizardView):

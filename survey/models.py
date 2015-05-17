@@ -2,7 +2,6 @@ __author__ = 'dongtao'
 from django.db import models
 from django.contrib.auth.models import User, Permission, ContentType
 from guardian.shortcuts import assign_perm
-from django.utils.timezone import get_current_timezone
 
 
 class Category(models.Model):
@@ -17,7 +16,7 @@ class Survey(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
     creator = models.ForeignKey(User, null=False, blank=False, related_name="surveys")
     description = models.TextField(null=True, blank=True)
-    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL, default=1)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     OPEN = 'OP'
@@ -236,9 +235,26 @@ class EloItem(models.Model):
     question = models.ForeignKey(QuestionContainer, null=False, blank=False)
 
 
+class ResponseCollector(models.Model):
+    survey = models.ForeignKey(Survey, related_name='collectors')
+    uuid = models.CharField(max_length=36)
+    name = models.CharField(max_length=20)
+    OPEN = 'OP'
+    CLOSED = 'CL'
+    STATUS_CHOICES = (
+        (OPEN, 'OPEN'),
+        (CLOSED, 'CLOSED')
+    )
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES)
+    #
+    # def create(self, survey):
+    #
+
+
 class Response(models.Model):
     survey = models.ForeignKey(Survey, null=False, blank=False, related_name="responses")
     interviewee = models.ForeignKey(User, null=False, blank=False, related_name="responses")
+    collector = models.ForeignKey(ResponseCollector, null=True, blank=False, related_name="responses")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -265,6 +281,7 @@ class AnswerCheck(AnswerBase):
 class AnswerElo(AnswerBase):
     item = models.ForeignKey(EloItem, null=False, blank=False)
     current_rating = models.FloatField(null=False, blank=False)
+
 
 
 

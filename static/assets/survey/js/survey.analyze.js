@@ -38,9 +38,13 @@ var surveyAnalyze = (function () {
             },
             xAxis: {
                 categories: categories,
-                title: {
-                    text: null
+
+                labels: {
+                    formatter: function () {
+                        return "Choice " + ($.inArray(this.value, categories) + 1);
+                    }
                 }
+
             },
             yAxis: {
                 min: 0,
@@ -62,7 +66,7 @@ var surveyAnalyze = (function () {
             },
             tooltip: {
                 formatter: function () {
-                    return 'Total responses for choice <b>' + this.point.category + '</b>: <strong>' + this.point.y +'</strong>';
+                    return 'Total responses for choice <b>' + this.point.category + '</b>: <strong>' + this.point.y + '</strong>';
                 }
             },
             series: [{
@@ -89,7 +93,7 @@ var surveyAnalyze = (function () {
                     cursor: 'pointer',
                     dataLabels: {
                         enabled: true,
-                        formatter: function(){
+                        formatter: function () {
                             return "Choice " + (this.point.index + 1) + ": " + this.point.percentage + '%';
                         },
                         style: {
