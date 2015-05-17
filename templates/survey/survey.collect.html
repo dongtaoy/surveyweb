@@ -81,18 +81,19 @@
                         </tr>
                         </thead>
                         <tbody>
+                        {% for collector in survey.collectors.all %}
                         <tr>
                             <td>
-                                Web Link 1
+                                {{ collector.name }}
                             </td>
                             <td>
-                                OPEN
+                                {{ collector.get_status_display }}
                             </td>
                             <td>
-                                100
+                                {{ collector.responses }}
                             </td>
                             <td>
-                                Sunday, April 12, 2015 11:06 PM
+                                {{ collector.updated }}
                             </td>
                             <td>
                                 <a href="#" class="btn  btn-xs btn-default btn-circle">
@@ -100,6 +101,7 @@
                                 </a>
                             </td>
                         </tr>
+                        {% endfor %}
                         <tr>
                             <td>
                                 Web Link 1
