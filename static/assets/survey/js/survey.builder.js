@@ -108,13 +108,15 @@ var surveyBuilder = (function () {
                                 }
                                 var sum = 0;
                                 var choices = $(this).find('input[placeholder="choice"]');
-                                $(choices).each(function () {
-                                    sum += $(this).val().length
-                                });
+                                if (choices.length > 0) {
+                                    $(choices).each(function () {
+                                        sum += $(this).val().length
+                                    });
 
-                                if (sum <= 0) {
-                                    $.notify("Must fill in at least one choice!");
-                                    return false;
+                                    if (sum <= 0) {
+                                        $.notify("Must fill in at least one choice!");
+                                        return false;
+                                    }
                                 }
                                 $(this).closest('.container-edit').find('a').attr('disabled', true);
                                 $(this).closest('.container-edit').find('button').attr('disabled', true);
@@ -185,13 +187,15 @@ var surveyBuilder = (function () {
                             }
                             var sum = 0;
                             var choices = $(this).find('input[placeholder="choice"]');
-                            $(choices).each(function () {
-                                sum += $(this).val().length
-                            });
+                            if (choices.length > 0) {
+                                $(choices).each(function () {
+                                    sum += $(this).val().length
+                                });
 
-                            if (sum <= 0) {
-                                $.notify("Must fill in at least one choice!");
-                                return false;
+                                if (sum <= 0) {
+                                    $.notify("Must fill in at least one choice!");
+                                    return false;
+                                }
                             }
                             //if ($(this).find('input[placeholder="choice"]').val().length<=0){
                             //    $.notify("Please fill in at least the first choice!");
