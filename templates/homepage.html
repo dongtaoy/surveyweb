@@ -57,6 +57,7 @@ License: You must have a valid license purchased only from themeforest (the abov
     <link href="{% static 'assets/frontend/onepage/css/style-responsive.css' %}" rel="stylesheet">
     <link href="{% static 'assets/frontend/onepage/css/themes/red.css' %}" rel="stylesheet" id="style-color">
     <link href="{% static 'assets/frontend/onepage/css/custom.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/core/css/style.css' %}"/>
     <!-- Theme styles END -->
 </head>
 <!--DOC: menu-always-on-top class to the body element to set menu on top -->
@@ -67,8 +68,8 @@ License: You must have a valid license purchased only from themeforest (the abov
         <div class="row">
             <!-- Logo BEGIN -->
             <div class="col-md-2 col-sm-2">
-                <a class="scroll site-logo" href="#promo-block"><img
-                        src="{% static 'assets/frontend/onepage/img/logo/red.png' %}" alt="Metronic One Page"></a>
+                <a class="scroll" href="#promo-block" id="onepage-logo"><img
+                        src="{% static 'assets/core/img/logo-red.png' %}" alt="Verders"></a>
             </div>
             <!-- Logo END -->
             <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
