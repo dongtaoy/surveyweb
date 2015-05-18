@@ -44,6 +44,7 @@ var surveyCollect = (function () {
     //generate and keep in clipboard a hashed link to current survey that can be shared
     var initCollectShare = function () {
         $(".collect-share").each(function () {
+            
             var client = new ZeroClipboard($(this));
             client.on("ready", function (readyEvent) {
                 //bind the function to 'aftercopy' event

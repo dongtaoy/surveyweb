@@ -103,6 +103,10 @@
     -webkit-transform: translateX(420px) translateZ(288px) rotateY(-45deg);
     transform: translateX(420px) translateZ(288px) rotateY(-45deg);
 }
+#carousel img:nth-child(4){
+    visibility: hidden;
+}
+
 #carousel img:nth-child(5){
     visibility: hidden;
 }
