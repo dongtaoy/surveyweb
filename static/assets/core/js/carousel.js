@@ -1,9 +1,13 @@
-var total = 13;
-var current = 1;
-var DURATION = 1000;
-var nextClick = 0;
-var backClick = 0;
 
+var total = 13; //total number of slides in carousel
+var current = 1; //Current slide index
+var DURATION = 1000; //Duration for animation
+var nextClick = 0; // Record the time of next button clicked
+var backClick = 0; // Record the time of back button clicked
+
+/**
+* getRotationDegrees function is used to get the rotation angle of slide
+* */
 function getRotationDegrees(obj) {
     var matrix = obj.css("transform");
     if (matrix !== 'none') {
@@ -16,6 +20,10 @@ function getRotationDegrees(obj) {
     }
     return angle;
 };
+
+/**
+* getTranslateX is used to get current X-coordinates of the slide
+* */
 function getTranslateX(obj) {
     var matrix = obj.css("transform");
     if (matrix !== 'none') {
@@ -28,6 +36,8 @@ function getTranslateX(obj) {
     return x;
 };
 
+
+// guard for multiple click  and alert
 var clicked = false;
 var alerted = false;
 
@@ -38,6 +48,7 @@ moveNext = function () {
     }
     clicked = true;
 
+    // End of the slide
     if (current == total) {
         clicked = false;
 
@@ -52,6 +63,8 @@ moveNext = function () {
 
     alerted = false;
 
+
+    //get current slide info
     var obj = $("#carousel > img:nth-child(" + current + ")");
     var x = getTranslateX(obj);
     var angle = getRotationDegrees(obj);
@@ -62,6 +75,8 @@ moveNext = function () {
         rotateY: angle + 'deg',
         duration: DURATION
     });
+
+    //move the left side of current slide to right
     obj.css("transform", "translateZ( 288px ) translateX(" + x + "px) rotateY(   " + angle + "deg )");
     var left = current - 1;
     while (left > 0) {
@@ -70,7 +85,7 @@ moveNext = function () {
         var left_x = getTranslateX(left_obj);
         var left_angle = getRotationDegrees(left_obj);
         left_x -= 20;
-        if (left_x < -260) {
+        if (left_x < -240) {
             left_obj.css("visibility", "hidden");
         } else {
             left_obj.css("visibility", "visible");
@@ -83,6 +98,7 @@ moveNext = function () {
         left -= 1;
     }
 
+    // Move the right side of current side to further right
     var right = current + 1;
     var new_obj = $("#carousel > img:nth-child(" + right + ")");
     var new_x = getTranslateX(new_obj);
@@ -97,6 +113,8 @@ moveNext = function () {
     new_obj.css("transform", "translateZ( 500px ) translateX(" + x + "px) rotateY(   " + new_angle + "deg )");
     right += 1;
 
+
+    // Only display 2 slide on each side of the current side
     while (right <= total) {
         var right_obj = $("#carousel > img:nth-child(" + right + ")");
         var right_x = getTranslateX(right_obj);
@@ -139,10 +157,12 @@ moveBack = function () {
 
     alerted = false;
 
+    //  get current slide info
     var obj = $("#carousel > img:nth-child(" + current + ")");
     var x = getTranslateX(obj);
     var angle = getRotationDegrees(obj);
 
+    // move the right side of current slides to left
     angle -= 45;
     x = 200;
     obj.transition({
@@ -164,12 +184,13 @@ moveBack = function () {
     new_obj.css("transform", "translateZ( 500px ) translateX(" + x + "px) rotateY(   " + new_angle + "deg )");
     left -= 1;
 
+    // move the left side of current slides to left further
     while (left > 0) {
         var left_obj = $("#carousel > img:nth-child(" + left + ")");
         var left_x = getTranslateX(left_obj);
         var left_angle = getRotationDegrees(left_obj);
         left_x += 20;
-        if (left_x < -260) {
+        if (left_x < -240) {
             left_obj.css("visibility", "hidden");
         } else {
             left_obj.css("visibility", "visible");
@@ -182,13 +203,15 @@ moveBack = function () {
         left -= 1;
     }
 
+
+    // Only display 2 slide on each side of the current side
     var right = current + 1;
     while (right <= total) {
         var right_obj = $("#carousel > img:nth-child(" + right + ")");
         var right_x = getTranslateX(right_obj);
         var right_angle = getRotationDegrees(right_obj);
         right_x += 20;
-        if (right_x > 260) {
+        if (right_x > 240) {
             right_obj.css("visibility", "hidden");
         } else {
             right_obj.css("visibility", "visible");
@@ -206,6 +229,9 @@ moveBack = function () {
     }, DURATION);
 };
 
+/**
+* for multiple button click purpose
+* */
 function nextClick_loop(total_click) {
     setTimeout(function () {
         if (total_click <= 0) {
@@ -247,6 +273,9 @@ $("#backCarousel").click(function () {
     backClick_loop(backClick - 1);
 });
 
+/**
+* for image clickable purpose
+* */
 for (var i = 1; i <= total; i++) {
     $("#carousel > img:nth-child(" + i + ")").click(function () {
         var position = $(this).index() + 1;
@@ -263,4 +292,16 @@ for (var i = 1; i <= total; i++) {
             backClick_loop(Math.abs(diff) - 1);
         }
     })
-};
+}
+
+/**
+ * for keyboard adjusting carousel purpose
+ */
+$("body").keydown(function(e) {
+  if(e.keyCode == 37) { // left
+      moveBack();
+  }
+  else if(e.keyCode == 39) { // right
+      moveNext();
+  }
+});
