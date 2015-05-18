@@ -61,3 +61,8 @@
     margin: 20px auto;
 
 }
+
+.dashboard-block a{
+    cursor: crosshair;
+    font-size: 100px;
+}
