@@ -12,7 +12,7 @@ from guardian.mixins import PermissionRequiredMixin
 from survey.models import Survey, QuestionType, Page, ResponseCollector, Category, Response
 from survey.forms import SurveyForm, ResponseForm
 
-
+#list all surveys
 class SurveyListView(ListView):
     model = Survey
     template_name = "survey/survey.list.html"
@@ -40,6 +40,7 @@ class SurveyListView(ListView):
         return context
 
 
+#view detail of a survey
 class SurveyDetailView(PermissionRequiredMixin, DetailView):
     model = Survey
     template_name = "survey/survey.detail.html"
@@ -49,6 +50,7 @@ class SurveyDetailView(PermissionRequiredMixin, DetailView):
     raise_exception = True
 
 
+#create a survey
 class SurveyCreateView(CreateView):
     template_name = "survey/survey.create.html"
     success_url = reverse_lazy("view.detail")
@@ -64,6 +66,7 @@ class SurveyCreateView(CreateView):
         return redirect(reverse_lazy("survey.detail", kwargs={"survey": survey.id}))
 
 
+#enter survey builder to edit a survey
 class SurveyUpdateView(PermissionRequiredMixin, UpdateView):
     form_class = SurveyForm
     model = Survey
@@ -88,6 +91,7 @@ class SurveyUpdateView(PermissionRequiredMixin, UpdateView):
         #     return HttpResponse(1)
 
 
+#delete a survey
 class SurveyDeleteView(PermissionRequiredMixin, DeleteView):
     model = Survey
     pk_url_kwarg = 'survey'
@@ -95,6 +99,7 @@ class SurveyDeleteView(PermissionRequiredMixin, DeleteView):
     success_url = reverse_lazy("dashboard")
 
 
+#enter collector for a specific survey
 class SurveyCollectView(PermissionRequiredMixin, DetailView):
     model = Survey
     template_name = "survey/survey.collect.html"
@@ -117,7 +122,7 @@ class SurveyCollectView(PermissionRequiredMixin, DetailView):
         return object
 
 
-
+#preview a survey
 class SurveyPreviewView(SessionWizardView):
     template_name = 'survey/survey.do.html'
 
@@ -135,6 +140,7 @@ class SurveyPreviewView(SessionWizardView):
         }
 
 
+#enter analysis page of a survey
 class SurveyAnalyzeView(PermissionRequiredMixin, DetailView):
     model = Survey
     template_name = "survey/survey.analyze.html"
@@ -144,6 +150,7 @@ class SurveyAnalyzeView(PermissionRequiredMixin, DetailView):
     raise_exception = True
 
 
+#enter a page to do a survey
 class SurveyDoView(SessionWizardView):
     template_name = 'survey/survey.do.html'
 
@@ -170,7 +177,7 @@ class SurveyDoView(SessionWizardView):
             'page': Page.objects.get(order=int(step) + 1, survey=self.kwargs['survey'])
         }
 
-
+#render all forms in a survey
 def preview_survey_factory(request, *args, **kwargs):
     survey = Survey.objects.get(id=kwargs['survey'])
     if not (request.user.has_perm('survey.view_survey', survey)):
@@ -184,6 +191,7 @@ def preview_survey_factory(request, *args, **kwargs):
     return ReturnClass.as_view()(request, *args, **kwargs)
 
 
+#render all forms in a survey for others to do
 def do_survey_factory(request, *args, **kwargs):
     collect = ResponseCollector.objects.get(uuid=kwargs['collectuuid'])
     kwargs['survey'] = collect.survey.id

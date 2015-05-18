@@ -95,6 +95,7 @@
                     <tbody>
 
                     {% for survey in surveys %}
+                        {% if survey.collectors.all.0 %}
                         <tr>
                             <td>{{ survey.name }}</td>
                             <td>{{ survey.category }}</td>
@@ -102,9 +103,10 @@
                             <td>{{ survey.responses.all|length }}</td>
                             <td>{{ survey.created|naturaltime }}</td>
                             <td><a class="label label-info" href="{% url 'survey.do' survey.collectors.all.0.uuid %}">
-                                Take a survey <i class="fa fa-share"></i>
+                                Take a survey <i class="fa fa-share"></i></a>
                             </td>
                         </tr>
+                        {% endif %}
                     {% endfor %}
                     </tbody>
                 </table>
