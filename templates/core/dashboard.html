@@ -293,31 +293,32 @@
                         <ul class="feeds">
                             {% for survey in all_surveys %}
                                 {% if survey.collectors.all.0 %}
-                                <li>
-                                    <div class="col1">
-                                        <div class="cont">
-                                            <div class="cont-col1">
-                                                <div class="label label-sm label-success">
-                                                    {{ forloop.counter }}
+                                    {% if survey.collectors.all.0.status == 'OP' %}
+                                        <li>
+                                            <div class="col1">
+                                                <div class="cont">
+                                                    <div class="cont-col1">
+                                                        <div class="label label-sm ">
+                                                        </div>
+                                                    </div>
+                                                    <div class="cont-col2">
+                                                        <div class="desc ">
+                                                            {{ survey.name }}
+                                                            <a class="label label-sm label-info"
+                                                               href="{% url 'survey.do' survey.collectors.all.0.uuid %}">
+                                                                Take a survey <i class="fa fa-share"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="cont-col2">
-                                                <div class="desc ">
-                                                    {{ survey.name }}
-                                                    <a class="label label-sm label-info"
-                                                       href="{% url 'survey.do' survey.collectors.all.0.uuid %}">
-                                                        Take a survey <i class="fa fa-share"></i>
-                                                    </a>
+                                            <div class="col2">
+                                                <div class="date">
+                                                    {{ survey.created|date:"d M"|naturalday }}
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col2">
-                                        <div class="date">
-                                            {{ survey.created|date:"d M"|naturalday }}
-                                        </div>
-                                    </div>
-                                </li>
+                                        </li>
+                                    {% endif %}
                                 {% endif %}
                             {% endfor %}
                         </ul>

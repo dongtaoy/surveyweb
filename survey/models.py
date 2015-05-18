@@ -57,7 +57,6 @@ class Survey(models.Model):
         data = []
         for day in reversed(range(0, days)):
             temp_date = datetime.datetime.now(tz=pytz.UTC) - datetime.timedelta(days=day)
-            print self.responses.filter(created__startswith=temp_date.date())
             data.append(
                 [calendar.timegm(temp_date.timetuple()) * 1000,
                  len(self.responses.filter(created__startswith=temp_date.date()))])
