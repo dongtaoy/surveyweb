@@ -1,5 +1,5 @@
 
-var total = 13; //total number of slides in carousel
+var total = 10; //total number of slides in carousel
 var current = 1; //Current slide index
 var DURATION = 1000; //Duration for animation
 var nextClick = 0; // Record the time of next button clicked
