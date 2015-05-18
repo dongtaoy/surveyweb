@@ -13,7 +13,7 @@
         <div class="portlet-title">
             <div class="caption font-blue-hoki">
                 <a
-                   style="font-size: 25px;">{{ survey.name }}</a><br/>
+                   style="font-size: 25px;cursor: default;color: grey;">{{ survey.name }}</a><br/>
             <span style="font-size: 12px;margin-top: 2px;color: grey;"><i
                     class="fa fa-tags fa-fw"></i>Category: {{ survey.category }}</span>
             </div>
@@ -107,7 +107,7 @@
                     <div class="portlet-body util-btn-group-margin-bottom-5">
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 margin-bottom-10">
-                                <a class="dashboard-stat dashboard-stat-light grey" href="{% url 'survey.analyze' survey.id %}">
+                                <a class="dashboard-stat dashboard-stat-light grey" href="{% url 'survey.analyze' survey.id %}" style="cursor: default;">
                                     <div class="visual">
                                         <i class="fa fa-archive fa-icon-medium"></i>
                                     </div>
@@ -124,7 +124,7 @@
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 {#                                {% if survey.get_status_display == 'DRAFT' %}#}
                                     <a class="dashboard-stat dashboard-stat-light grey"
-                                       href="{% url 'survey.builder' survey.id %}">
+                                       href="{% url 'survey.builder' survey.id %}" style="cursor: default;">
                                         <div class="visual">
                                             <i class="fa fa-bell"></i>
                                         </div>
