@@ -177,13 +177,13 @@ var surveyBuilder = (function () {
         $('.container-display-edit')
             .off('click')
             .on('click', function () {
-                //disable other buttons when event is sent
-                $(this).closest('.container-set').find('a').attr('disabled', true);
-                $(this).closest('.container-set').find('button').attr('disabled', true);
                 var container = $(this).closest("[id^=container-]");
                 var containerId = container.attr('id').replace(/[^\d.]/g, '');
                 var containerType = container.attr('id').split('-')[1];
                 var url = null;
+                //disable other buttons when event is sent
+                container.find('a').attr('disabled', true);
+                container.find('button').attr('disabled', true);
                 if (containerType == 'TE') {
                     url = Django.url('container.text.edit', containerId)
                 } else if (containerType == 'QU') {
@@ -191,6 +191,9 @@ var surveyBuilder = (function () {
                 }
                 $.get(url)
                     .done(function (data) {
+                        //re-enable the buttons
+                        container.find('a').attr('disabled', false);
+                        container.find('button').attr('disabled', false);
                         //display the edit view
                         container.closest('.container-set').hide();
                         container.closest('.container-set').after(data);
@@ -232,8 +235,7 @@ var surveyBuilder = (function () {
                             });
                             notify.close();
 
-                            container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
-                            container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
+
 
                             return false;
                         });
@@ -243,7 +245,7 @@ var surveyBuilder = (function () {
 
                             $('.container-edit').remove();
                             container.closest('.container-set').show();
-                            ////if cancelled  re-enable the buttons
+                            //
                             //container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
                             //container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
                         });
@@ -257,10 +259,11 @@ var surveyBuilder = (function () {
         $('.container-move-up')
             .off('click')
             .on('click', function () {
-                $(this).closest('.container-set').find('a').attr('disabled', true);
-                $(this).closest('.container-set').find('button').attr('disabled', true);
+
                 var container = $(this).closest('[id^=container-]');
                 var containerId = container.attr('id').replace(/[^\d.]/g, '');
+                container.find('a').attr('disabled', true);
+                container.find('button').attr('disabled', true);
                 $.post(Django.url('container.move.up', containerId))
                     .success(function (data) {
                         if (data['status'] == 200) {
@@ -273,6 +276,8 @@ var surveyBuilder = (function () {
                         } else {
                             $.notify(data['content'].split('\n')[1]);
                         }
+                        container.find('a').attr('disabled', false);
+                        container.find('button').attr('disabled', false);
                     });
 
             });
@@ -283,11 +288,11 @@ var surveyBuilder = (function () {
         $('.container-move-down')
             .off('click')
             .on('click', function () {
-                //disable other buttons when moving down
-                $(this).closest('.container-set').find('a').attr('disabled', true);
-                $(this).closest('.container-set').find('button').attr('disabled', true);
                 var container = $(this).closest('[id^=container-]');
                 var containerId = container.attr('id').replace(/[^\d.]/g, '');
+                //disable other buttons when moving down
+                container.find('a').attr('disabled', true);
+                container.find('button').attr('disabled', true);
                 $.post(Django.url('container.move.down', containerId))
                     .success(function (data) {
                         if (data['status'] == 200) {
@@ -301,8 +306,8 @@ var surveyBuilder = (function () {
                             $.notify(data['content'].split('\n')[1]);
                         }
                         //re-enable the buttons
-                        container.closest('.container-set').closest('.container-set').find('a').attr('disabled', false);
-                        container.closest('.container-set').closest('.container-set').find('button').attr('disabled', false);
+                        container.find('a').attr('disabled', false);
+                        container.find('button').attr('disabled', false);
                     });
 
             });
