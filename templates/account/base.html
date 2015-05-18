@@ -41,6 +41,7 @@
     <link href="{% static 'assets/core/css/style.css' %}" rel="stylesheet" type="text/css">
     <!-- END THEME STYLES -->
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
+
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -94,7 +95,7 @@
     jQuery(document).ready(function () {
         Metronic.init(); // init metronic core components
         Layout.init(); // init current layout
-{#        Demo.init();#}
+        {#        Demo.init();#}
         // init background slide images
         $.backstretch([
                     "{% static "assets/admin/pages/media/bg/1.jpg" %}",
