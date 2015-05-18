@@ -194,8 +194,9 @@ def preview_survey_factory(request, *args, **kwargs):
 #render all forms in a survey for others to do
 def do_survey_factory(request, *args, **kwargs):
     collect = ResponseCollector.objects.get(uuid=kwargs['collectuuid'])
+    if collect.status == ResponseCollector.CLOSED:
+        raise PermissionDenied()
     kwargs['survey'] = collect.survey.id
-    print collect.survey
     ret_form_list = [ResponseForm for i in collect.survey.pages.all()]
 
     # return HttpResponseForbidden()

@@ -96,6 +96,7 @@
 
                     {% for survey in surveys %}
                         {% if survey.collectors.all.0 %}
+                            {% if survey.collectors.all.0.status == 'OP' %}
                         <tr>
                             <td>{{ survey.name }}</td>
                             <td>{{ survey.category }}</td>
@@ -106,6 +107,7 @@
                                 Take a survey <i class="fa fa-share"></i></a>
                             </td>
                         </tr>
+                                {% endif %}
                         {% endif %}
                     {% endfor %}
                     </tbody>
