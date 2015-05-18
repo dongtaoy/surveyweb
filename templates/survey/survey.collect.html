@@ -21,6 +21,7 @@
 {% endblock %}
 
 {% block content %}
+
     <div class="portlet gren">
         <div class="portlet-title">
             <div class="caption font-blue-hoki">
@@ -51,6 +52,8 @@
                 </ul>
             </div>
         </div>
+        <a href="{% url 'collect.create' survey.id %}" class="btn blue-hoki btn-block"> <i class="fa fa-globe fa-fw"></i>CREATE WEBSITE COLLECTOR</a>
+        <br/>
         <div class="portlet-body">
             <div class="portlet light bordered">
                 <div class="portlet-title">
@@ -100,8 +103,7 @@
                                     <div class="btn-group btn-group-circle">
                                         <button class="btn  btn-xs btn-default collect-share"
                                                 id="copy-button-{{ collect.id }}"
-                                                data-clipboard-text="
-                                                        {{ request.get_host }}{% url 'survey.do' collect.uuid %} "
+                                                data-clipboard-text="{{ request.get_host }}{% url 'survey.do' collect.uuid %} "
                                                 title="Click to copy me."><i class="fa fa-share fa-fw"></i>Share
                                         </button>
                                         <a href="{% url 'collect.edit' survey.id collect.id %}"
@@ -121,95 +123,96 @@
                     </table>
                 </div>
             </div>
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption font-yellow-crusta ">
-                        <i class="icon-share font-yellow-crusta"></i> ADD A NEW COLLECTOR
-                    </div>
-                </div>
-                <div class="portlet-body">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <div class="dashboard-stat grey-cararra">
-                                <div class="visual">
-                                    <i class="fa fa-envelope-o"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">
-                                        Email
-                                    </div>
-                                    <div class="desc pull-right" style="font-size: 10px;width: 100px;">
-                                        Ideal for tracking your survey respondents
-                                    </div>
-                                </div>
-                                <a class="more" href="javascript:;">
-                                    Create collector<i class="m-icon-swapright m-icon-white"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <div class="dashboard-stat grey-cararra">
-                                <div class="visual">
-                                    <i class="fa fa-globe"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">
-                                        Website
-                                    </div>
-                                    <div class="desc pull-right" style="font-size: 10px;width: 100px;">
-                                        Embed your survey on your website
-                                    </div>
-                                </div>
-                                <a class="more" href="{% url 'collect.create' survey.id %}">
-                                    Create collector<i class="m-icon-swapright m-icon-white"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <div class="dashboard-stat grey-cararra">
-                                <div class="visual">
-                                    <i class="fa fa-facebook-square"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">
-                                        Facebook
-                                    </div>
-                                    <div class="desc pull-right" style="font-size: 10px;width: 100px;">
-                                        Post your survey on Facebook
-                                    </div>
-                                </div>
-                                <a class="more" href="javascript:;">
-                                    Create collector<i class="m-icon-swapright m-icon-white"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <div class="dashboard-stat grey-cararra">
-                                <div class="visual">
-                                    <i class="fa fa-edit"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">
-                                        Manual
-                                    </div>
-                                    <div class="desc pull-right" style="font-size: 10px;width: 100px;">
-                                        Manually enter responses
-                                    </div>
-                                </div>
-                                {% if survey.collectors.all.0.status == 'OP' %}
-                                    <a class="more" href="{% url "survey.do" survey.collectors.all.0.uuid %}" target="_blank">
-                                        Create collector<i class="m-icon-swapright m-icon-white"></i>
-                                    </a>
-                                {% else %}
-                                    <a class="more" onclick="alert('There is no open colloctors!');">
-                                        Create collector<i class="m-icon-swapright m-icon-white"></i>
-                                    </a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            {#            <div class="portlet light bordered">#}
+            {#                <div class="portlet-title">#}
+            {#                    <div class="caption font-yellow-crusta ">#}
+            {#                        <i class="icon-share font-yellow-crusta"></i> ADD A NEW COLLECTOR#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#                <div class="portlet-body">#}
+            {#                    <div class="row">#}
+            {#                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">#}
+            {#                            <div class="dashboard-stat grey-cararra">#}
+            {#                                <div class="visual">#}
+            {#                                    <i class="fa fa-envelope-o"></i>#}
+            {#                                </div>#}
+            {#                                <div class="details">#}
+            {#                                    <div class="number">#}
+            {#                                        Email#}
+            {#                                    </div>#}
+            {#                                    <div class="desc pull-right" style="font-size: 10px;width: 100px;">#}
+            {#                                        Ideal for tracking your survey respondents#}
+            {#                                    </div>#}
+            {#                                </div>#}
+            {#                                <a class="more" href="javascript:;">#}
+            {#                                    Create collector<i class="m-icon-swapright m-icon-white"></i>#}
+            {#                                </a>#}
+            {#                            </div>#}
+            {#                        </div>#}
+            {#                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">#}
+            {#                            <div class="dashboard-stat grey-cararra">#}
+            {#                                <div class="visual">#}
+            {#                                    <i class="fa fa-globe"></i>#}
+            {#                                </div>#}
+            {#                                <div class="details">#}
+            {#                                    <div class="number">#}
+            {#                                        Website#}
+            {#                                    </div>#}
+            {#                                    <div class="desc pull-right" style="font-size: 10px;width: 100px;">#}
+            {#                                        Embed your survey on your website#}
+            {#                                    </div>#}
+            {#                                </div>#}
+            {#                                <a class="more" href="{% url 'collect.create' survey.id %}">#}
+            {#                                    Create collector<i class="m-icon-swapright m-icon-white"></i>#}
+            {#                                </a>#}
+            {#                            </div>#}
+            {#                        </div>#}
+            {#                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">#}
+            {#                            <div class="dashboard-stat grey-cararra">#}
+            {#                                <div class="visual">#}
+            {#                                    <i class="fa fa-facebook-square"></i>#}
+            {#                                </div>#}
+            {#                                <div class="details">#}
+            {#                                    <div class="number">#}
+            {#                                        Facebook#}
+            {#                                    </div>#}
+            {#                                    <div class="desc pull-right" style="font-size: 10px;width: 100px;">#}
+            {#                                        Post your survey on Facebook#}
+            {#                                    </div>#}
+            {#                                </div>#}
+            {#                                <a class="more" href="javascript:;">#}
+            {#                                    Create collector<i class="m-icon-swapright m-icon-white"></i>#}
+            {#                                </a>#}
+            {#                            </div>#}
+            {#                        </div>#}
+            {#                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">#}
+            {#                            <div class="dashboard-stat grey-cararra">#}
+            {#                                <div class="visual">#}
+            {#                                    <i class="fa fa-edit"></i>#}
+            {#                                </div>#}
+            {#                                <div class="details">#}
+            {#                                    <div class="number">#}
+            {#                                        Manual#}
+            {#                                    </div>#}
+            {#                                    <div class="desc pull-right" style="font-size: 10px;width: 100px;">#}
+            {#                                        Manually enter responses#}
+            {#                                    </div>#}
+            {#                                </div>#}
+            {#                                {% if survey.collectors.all.0.status == 'OP' %}#}
+            {#                                    <a class="more" href="{% url "survey.do" survey.collectors.all.0.uuid %}" target="_blank">#}
+            {#                                        Create collector<i class="m-icon-swapright m-icon-white"></i>#}
+            {#                                    </a>#}
+            {#                                {% else %}#}
+            {#                                    <a class="more" onclick="alert('There is no open colloctors!');">#}
+            {#                                        Create collector<i class="m-icon-swapright m-icon-white"></i>#}
+            {#                                    </a>#}
+            {#                                {% endif %}#}
+            {#                            </div>#}
+            {#                        </div>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#            </div>#}
         </div>
     </div>
 
