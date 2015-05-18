@@ -23,6 +23,11 @@ class CollectCreateView(CreateView):
             raise PermissionDenied()
         return super(CollectCreateView, self).dispatch(request, args, kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super(CollectCreateView, self).get_context_data(**kwargs)
+        context['surveyid'] = self.kwargs['survey']
+        return context
+
     def form_valid(self, form):
         print self
         import uuid
@@ -39,6 +44,11 @@ class CollectUpdateView(UpdateView):
     pk_url_kwarg = "collect"
     template_name = "survey/collect/survey.collect.edit.html"
     # success_url = reverse_lazy('survey.collect', kwargs={'survey': self.object.survey.id}))
+
+    def get_context_data(self, **kwargs):
+        context = super(CollectUpdateView, self).get_context_data(**kwargs)
+        context['surveyid'] = self.kwargs['survey']
+        return context
 
     def get_success_url(self):
         return reverse_lazy('survey.collect', kwargs={'survey': self.object.survey.id})

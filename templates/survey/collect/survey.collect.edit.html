@@ -5,10 +5,14 @@
 {% block plugincss %}
 {% endblock %}
 {% block header %}
-    Collect
+    WEBSITE COLLECTOR
 {% endblock %}
 {% block subHeader %}
-    Configuration
+    {% if collect %}
+        CONFIGURATION
+    {% else %}
+        CREATE
+    {% endif %}
 {% endblock %}
 {% block breadcrumb %}
     <ul class="page-breadcrumb breadcrumb">
@@ -16,18 +20,33 @@
             <a href="{% url 'home' %}">Home</a>
             <i class="fa fa-circle"></i>
         </li>
-        <li class="active">
-            Collect
+        <li>
+            <a href="{% url 'survey.collect' surveyid %}">Collector</a>
+            <i class="fa fa-circle"></i>
         </li>
+        {% if collect %}
+
+            <li class="active">
+                Collector configuration
+            </li>
+        {% else %}
+            <li class="active">
+                New Collector
+            </li>
+        {% endif %}
     </ul>
 {% endblock %}
 {% block content %}
     <div class="row">
         <div class="col-md-12">
-            <div class="portlet box green-haze">
+            <div class="portlet box blue-hoki">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="fa fa-ge"></i>Collect Edit
+                        {% if collect %}
+                            <i class="fa fa-globe fa-fw"></i>WEBSITE COLLECTOR CONFIGURATION
+                        {% else %}
+                            <i class="fa fa-globe fa-fw"></i>WEBSITE COLLECTOR CREATE
+                        {% endif %}
                     </div>
                 </div>
                 <div class="portlet-body">
