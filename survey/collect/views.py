@@ -14,7 +14,7 @@ from survey.forms import CollectForm
 class CollectCreateView(CreateView):
     model = ResponseCollector
     form_class = CollectForm
-    template_name = "survey/collect/survey.Collect.edit.html"
+    template_name = "survey/collect/survey.collect.edit.html"
 
     def dispatch(self, request, *args, **kwargs):
         # print kwargs
